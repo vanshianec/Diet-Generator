@@ -1,4 +1,7 @@
 package diet.dietgenerator.service.services;
 
-public interface UserService {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface UserService extends UserDetailsService {
+    //TODO createSomethingForUser(String username, SomethingCreateServiceModel something);
 }
