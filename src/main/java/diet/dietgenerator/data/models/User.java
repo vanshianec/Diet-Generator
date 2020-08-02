@@ -2,16 +2,14 @@ package diet.dietgenerator.data.models;
 
 import diet.dietgenerator.data.models.base.BaseEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
 @Getter
 @Setter
 public class User extends BaseEntity {
@@ -24,4 +22,15 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany
+    private Set<Role> roles;
+
+    /* should be loaded with EAGER to keep up with the session */
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> authorities;
+
+    public User() {
+        authorities = new HashSet<>();
+    }
 }
