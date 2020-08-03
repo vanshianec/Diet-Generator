@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HashingServiceImpl implements HashingService {
 
+    //TODO make as a bean in config
     private final PasswordEncoder passwordEncoder;
 
     public HashingServiceImpl(PasswordEncoder passwordEncoder) {
