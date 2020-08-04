@@ -17,15 +17,42 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private UserService userService;
 
+    @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //TODO
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/")
+                .permitAll()
+                .antMatchers("/favicon.ico", "/js/*", "/css/*", "/img/*")
+                .permitAll()
+                .antMatchers()
+                .permitAll()
+                .antMatchers("/register")
+                .permitAll()
+                .antMatchers("/login")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successForwardUrl("/")
+                .successHandler(authenticationSuccessHandler)
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Bean
