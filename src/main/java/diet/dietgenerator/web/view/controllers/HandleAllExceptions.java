@@ -9,8 +9,9 @@ public class HandleAllExceptions {
 
     @ExceptionHandler(Throwable.class)
     public ModelAndView handleException(Throwable exception) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("message", exception.getMessage());
+        ModelAndView modelAndView = new ModelAndView("error/error.html");
+        modelAndView.addObject("exceptionMessage", exception.getMessage());
         return modelAndView;
     }
+
 }

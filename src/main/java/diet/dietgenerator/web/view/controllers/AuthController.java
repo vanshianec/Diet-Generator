@@ -23,9 +23,10 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLoginForm(@RequestParam(required = false) String error, Model model) {
-        if(error != null) {
-            model.addAttribute("error", error);
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        //TODO set error message
+        if (error != null) {
+            model.addAttribute("message", "Invalid username or password");
         }
 
         return "auth/login.html";

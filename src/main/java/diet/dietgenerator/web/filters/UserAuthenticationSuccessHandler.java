@@ -23,7 +23,6 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         this.authenticatedUserService = authenticatedUserService;
     }
 
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String username = authenticatedUserService.getUsername();
@@ -32,4 +31,6 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
         redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/home");
     }
+
+
 }

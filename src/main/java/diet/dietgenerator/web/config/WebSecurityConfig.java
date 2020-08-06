@@ -48,7 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/")
                 .successHandler(authenticationSuccessHandler)
                 .and()
                 .logout()
@@ -57,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return userService;
     }
 

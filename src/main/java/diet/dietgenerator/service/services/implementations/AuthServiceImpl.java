@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginUserServiceModel login(RegisterUserServiceModel model) throws Exception {
+    public LoginUserServiceModel login(LoginUserServiceModel model) throws Exception {
 
         String username = model.getUsername();
         String hashedPassword = hashingService.hash(model.getPassword());
