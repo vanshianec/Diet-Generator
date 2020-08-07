@@ -19,14 +19,14 @@ public class LoggedInUserFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String username = authenticatedUserService.getUsername();
-        if (username.equals("anonymousUser")) {
+        String email = authenticatedUserService.getUsername();
+        if (email.equals("anonymousUser")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
-        session.setAttribute("username", username);
+        session.setAttribute("username", email);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -11,12 +11,12 @@
     <h1 class="text-center text-white">Login</h1>
     <hr class="hr-3"/>
     <form class="mx-auto width-20" action="/login" method="post">
+            <div class="alert" th:if="${logErrorMessage}" th:text="${logErrorMessage}"></div>
         <div class="form-group">
-            <div class="container" th:if="${message}" th:text="${message}"></div>
             <div class="label-holder text-white d-flex justify-content-center">
-                <label for="username" class="h3 mb-3">Username</label>
+                <label for="email" class="h3 mb-3">Email</label>
             </div>
-            <input type="text" class="form-control" id="username" name="username"/>
+            <input type="text" class="form-control" id="email" name="email"/>
         </div>
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">

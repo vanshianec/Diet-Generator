@@ -23,14 +23,12 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         this.authenticatedUserService = authenticatedUserService;
     }
 
+    /* Used each time a user logs in */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String username = authenticatedUserService.getUsername();
 
         //TODO all kind of information in the user profile will be loaded from here
-
         redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/home");
     }
-
-
 }

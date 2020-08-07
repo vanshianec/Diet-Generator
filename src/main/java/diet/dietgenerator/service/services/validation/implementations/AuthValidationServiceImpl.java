@@ -14,16 +14,12 @@ public class AuthValidationServiceImpl implements AuthValidationService {
         this.userRepository = userRepository;
     }
 
-    //TODO Validate password matching and email in the client side
-
     @Override
-    public boolean isValid(RegisterUserServiceModel user) {
-        return isUsernameFree(user.getUsername());
-
+    public boolean isValid(RegisterUserServiceModel model) {
+        return isUsernameFree(model.getEmail());
     }
 
-    private boolean isUsernameFree(String username){
-        return !userRepository.existsByUsername(username);
+    private boolean isUsernameFree(String email) {
+        return !userRepository.existsByEmail(email);
     }
-
 }
