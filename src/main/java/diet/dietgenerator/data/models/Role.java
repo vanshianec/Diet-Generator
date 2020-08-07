@@ -10,18 +10,23 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class Role extends BaseEntity implements GrantedAuthority {
+public class Role extends BaseEntity{
 
-    private String authority;
+    private String name;
 
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    public Role(String name){
+        this.name = name;
+        users = new HashSet<>();
+    }
+
 }

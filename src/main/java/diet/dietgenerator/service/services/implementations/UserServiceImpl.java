@@ -1,16 +1,16 @@
 package diet.dietgenerator.service.services.implementations;
 
+import diet.dietgenerator.data.models.Role;
 import diet.dietgenerator.data.models.User;
 import diet.dietgenerator.data.repositories.UserRepository;
 import diet.dietgenerator.service.models.auth.RegisterUserServiceModel;
 import diet.dietgenerator.service.services.UserService;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /* Used to retrieve user's authentication and authorization information */
 
@@ -33,11 +33,20 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("User not found.");
         }
 
-        Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                authorities
+                getAuthorities(user.getRoles())
         );
+    }
+
+    private List<SimpleGrantedAuthority> getAuthorities(Set<Role> roles){
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+
+        return authorities;
     }
 }

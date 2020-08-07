@@ -20,14 +20,11 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
-    private Set<Role> roles;
-
     /* should be loaded with EAGER to keep up with the session */
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> authorities;
+    private Set<Role> roles;
 
     public User() {
-        authorities = new HashSet<>();
+        roles = new HashSet<>();
     }
 }
