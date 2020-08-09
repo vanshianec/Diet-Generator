@@ -1,12 +1,10 @@
 package diet.dietgenerator.data.models;
 
 import diet.dietgenerator.data.models.base.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -19,6 +17,7 @@ import java.util.Set;
 @Setter
 public class Role extends BaseEntity{
 
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
@@ -29,4 +28,7 @@ public class Role extends BaseEntity{
         users = new HashSet<>();
     }
 
+    public Role(){
+        users = new HashSet<>();
+    }
 }

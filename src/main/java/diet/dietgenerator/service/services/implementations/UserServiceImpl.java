@@ -3,7 +3,6 @@ package diet.dietgenerator.service.services.implementations;
 import diet.dietgenerator.data.models.Role;
 import diet.dietgenerator.data.models.User;
 import diet.dietgenerator.data.repositories.UserRepository;
-import diet.dietgenerator.service.models.auth.RegisterUserServiceModel;
 import diet.dietgenerator.service.services.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

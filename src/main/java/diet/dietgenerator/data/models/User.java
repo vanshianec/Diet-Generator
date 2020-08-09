@@ -21,7 +21,7 @@ public class User extends BaseEntity {
     private String password;
 
     /* should be loaded with EAGER to keep up with the session */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public User() {

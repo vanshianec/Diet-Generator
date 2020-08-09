@@ -31,20 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/favicon.ico", "/js/*", "/css/*", "/images/*").permitAll()
-                .antMatchers("/", "/login", "/register").anonymous()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .successHandler(authenticationSuccessHandler)
-                .and()
-                .logout()
-                .permitAll();
+                .antMatchers( "/js/*", "/css/*", "/images/*").permitAll()
+                .antMatchers("/", "/login", "/register").permitAll()
+                .antMatchers("/home", "/users/profile").hasRole("USER")
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password").successHandler(authenticationSuccessHandler)
+                .and().logout().permitAll();
+//                .and().rememberMe((rememberMe) -> rememberMe
+//                        .rememberMeServices(rememberMeServices())
+//                );;
     }
 
     @Bean
@@ -62,6 +57,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
     }
+
+//    @Bean
+//    public SpringSessionRememberMeServices rememberMeServices() {
+//        SpringSessionRememberMeServices rememberMeServices =
+//                new SpringSessionRememberMeServices();
+//        // optionally customize
+//        rememberMeServices.setAlwaysRemember(true);
+//        return rememberMeServices;
+//    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
