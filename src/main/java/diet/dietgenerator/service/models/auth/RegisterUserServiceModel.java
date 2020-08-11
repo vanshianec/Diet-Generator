@@ -8,8 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegisterUserServiceModel {
-    private String email;
+    private String username;
     private String password;
     private String confirmPassword;
-
 }

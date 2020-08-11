@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginUserServiceModel {
-    private String email;
+    private String username;
     private String password;
 }

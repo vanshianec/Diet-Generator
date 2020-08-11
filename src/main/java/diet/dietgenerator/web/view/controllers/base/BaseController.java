@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class BaseController {
 
-    protected boolean isUserAnonymous(){
+    protected boolean isUserAnonymous() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return (auth instanceof AnonymousAuthenticationToken);
     }

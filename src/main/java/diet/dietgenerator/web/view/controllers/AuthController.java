@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
 public class AuthController extends BaseController {
     private final AuthService authService;
@@ -34,18 +35,26 @@ public class AuthController extends BaseController {
                             @RequestParam(value = "logout", required = false) String logout,
                             Model model) {
 
-        //TODO make logInMessage and logOutMessage
-        if (error != null && isUserAnonymous())
-            model.addAttribute("logErrorMessage", "Invalid username or password");
+        if (!isUserAnonymous()) {
+            return "redirect:/";
+        }
 
-        if (logout != null && isUserAnonymous())
-            model.addAttribute("logErrorMessage", "You have been logged out successfully");
+        if (error != null && isUserAnonymous()) {
+            model.addAttribute("loginError", "Invalid username or password");
+        }
+
+        if (logout != null && isUserAnonymous()) {
+            model.addAttribute("logoutMessage", "You have been logged out successfully");
+        }
 
         return "auth/login.html";
     }
 
     @GetMapping("/register")
     public ModelAndView getRegisterForm(ModelAndView modelAndView) {
+        if (!isUserAnonymous()) {
+            return new ModelAndView("redirect:/");
+        }
         modelAndView.addObject("model", new RegisterUserViewModel());
         modelAndView.setViewName("auth/register.html");
         return modelAndView;
@@ -56,13 +65,13 @@ public class AuthController extends BaseController {
         RegisterUserServiceModel serviceModel = mapper.map(model, RegisterUserServiceModel.class);
 
         if (!authValidationService.isValid(serviceModel)) {
-            modelAndView.addObject("errorMessage", "Email is taken");
+            modelAndView.addObject("errorMessage", "Username is taken");
             modelAndView.addObject("model", new RegisterUserViewModel());
             modelAndView.setViewName("auth/register.html");
         } else {
             authService.register(serviceModel);
-            securityService.autoLogin(model.getEmail(), model.getPassword());
-            modelAndView.setViewName("redirect:/home");
+            securityService.autoLogin(model.getUsername(), model.getPassword());
+            modelAndView.setViewName("redirect:/");
         }
 
         return modelAndView;

@@ -16,10 +16,10 @@ public class AuthValidationServiceImpl implements AuthValidationService {
 
     @Override
     public boolean isValid(RegisterUserServiceModel model) {
-        return isUsernameFree(model.getEmail());
+        return isUsernameFree(model.getUsername());
     }
 
-    private boolean isUsernameFree(String email) {
-        return !userRepository.existsByEmail(email);
+    private boolean isUsernameFree(String username) {
+        return !userRepository.existsByUsername(username);
     }
 }

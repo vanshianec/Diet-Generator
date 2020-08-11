@@ -15,7 +15,7 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String username;
 
     @Column(nullable = false)
     private String password;

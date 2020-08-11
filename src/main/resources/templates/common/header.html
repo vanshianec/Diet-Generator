@@ -1,13 +1,6 @@
 <header>
     <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
-
-        <th:block th:if="${session.username == null}">
-            <a class="navbar-brand text-white h4" href="/">Diet Generator</a>
-        </th:block>
-
-        <th:block th:unless="${session.username == null}">
-            <a class="navbar-brand text-white h4" href="/home">Diet Generator</a>
-        </th:block>
+        <a class="navbar-brand text-white h4" href="/">Diet Generator</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,15 +17,15 @@
                 </th:block>
 
                 <th:block th:unless="${session.username == null}">
-                        <li class="nav-item mr-2">
-                            <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
-                        </li>
-                        <li class="nav-item mr-2">
-                            <form th:action="@{/logout}" method="post">
-                                <button class="nav-link text-white active h5" type="submit">Logout</button>
-                            </form>
-                        </li>
-                    </th:block>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link text-white active h5" href="/users/profile">Profile</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="nav-link text-white active h5" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </nav>

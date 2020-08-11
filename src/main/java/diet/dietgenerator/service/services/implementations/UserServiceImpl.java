@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             /* Note: This exception will not be displayed on the client side */
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
+                user.getUsername(),
                 user.getPassword(),
                 getAuthorities(user.getRoles())
         );

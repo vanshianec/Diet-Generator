@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class CustomErrorController extends AbstractErrorController {
-    private static final String ERROR_PATH=  "/error";
+    private static final String ERROR_PATH = "/error";
 
     @Autowired
     public CustomErrorController(ErrorAttributes errorAttributes) {
@@ -35,7 +35,7 @@ public class CustomErrorController extends AbstractErrorController {
     @RequestMapping(ERROR_PATH)
     public ResponseEntity<?> handleErrors(HttpServletRequest request) {
         HttpStatus status = getStatus(request);
-        if (status.equals(HttpStatus.NOT_FOUND)){
+        if (status.equals(HttpStatus.NOT_FOUND)) {
             throw new NotFoundException();
         }
 
