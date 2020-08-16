@@ -8,10 +8,10 @@
         <version>2.3.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>diet</groupId>
-    <artifactId>diet-generator</artifactId>
+    <groupId>skeleton</groupId>
+    <artifactId>spring-security-skeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>diet-generator</name>
+    <name>spring</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
