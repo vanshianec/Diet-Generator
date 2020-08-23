@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:include="~{common/head}"/>
+<body>
+<th:block th:include="~{common/header}"/>
+<main>
+    <table class="table table-hover text-white">
+        <thead>
+        <tr>
+            <th scope="col">Food</th>
+            <th scope="col">Food Group</th>
+            <th scope="col">Calories</th>
+            <th scope="col">Carbohydrates</th>
+            <th scope="col">Fat</th>
+            <th scope="col">Protein</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${foods.empty}">
+            <td colspan="2"> No Foods Available</td>
+        </tr>
+        <tr th:each="food : ${foods}">
+            <td><p th:text="${food.name}"></p></td>
+            <td><p th:text="${food.foodGroup}"></p></td>
+            <td><p th:text="${food.calories}"></p></td>
+            <td><p th:text="${food.carbohydrates}"></p></td>
+            <td><p th:text="${food.fat}"></p></td>
+            <td><p th:text="${food.protein}"></p></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:include="~{common/footer}"/>
+</body>
+</html>
