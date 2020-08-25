@@ -5,6 +5,7 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{common/head}"/>
+<link rel="stylesheet" href="/css/page-loader.css">
 <body>
 <th:block th:include="~{common/header}"/>
 <main>
@@ -34,6 +35,12 @@
         </tbody>
     </table>
 </main>
-<th:block th:include="~{common/footer}"/>
+<th:block th:include="~{common/loader}" />
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous">
+</script>
+<script src="/js/foods-loader.js"></script>
 </body>
 </html>

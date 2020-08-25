@@ -4,6 +4,7 @@ import diet.dietgenerator.data.repositories.FoodRepository;
 import diet.dietgenerator.service.models.FoodServiceModel;
 import diet.dietgenerator.service.services.FoodService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,14 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public List<FoodServiceModel> getAll() {
         return foodRepository.findAll()
+                .stream()
+                .map(f -> modelMapper.map(f, FoodServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable) {
+        return foodRepository.findAllByFoodGroup(foodGroup, pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodServiceModel.class))
                 .collect(Collectors.toList());

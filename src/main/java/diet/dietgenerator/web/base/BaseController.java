@@ -1,12 +1,13 @@
 package diet.dietgenerator.web.base;
 
-import diet.dietgenerator.service.models.auth.LoginUserServiceModel;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.servlet.http.HttpSession;
+public abstract class BaseController {
 
-public class BaseController {
-
-    protected String getUsername(HttpSession session) {
-        return ((LoginUserServiceModel) session.getAttribute("user")).getUsername();
+    protected boolean isUserAnonymous() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return (auth instanceof AnonymousAuthenticationToken);
     }
 }
