@@ -31,9 +31,9 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout,
-                            Model model) {
+    public String getLoginForm(@RequestParam(value = "error", required = false) String error,
+                               @RequestParam(value = "logout", required = false) String logout,
+                               Model model) {
 
         if (!isUserAnonymous()) {
             return "redirect:/";

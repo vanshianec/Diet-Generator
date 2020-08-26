@@ -20,18 +20,7 @@
             <th scope="col">Protein</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:if="${foods.empty}">
-            <td colspan="2"> No Foods Available</td>
-        </tr>
-        <tr th:each="food : ${foods}">
-            <td><p th:text="${food.name}"></p></td>
-            <td><p th:text="${food.foodGroup}"></p></td>
-            <td><p th:text="${food.calories}"></p></td>
-            <td><p th:text="${food.carbohydrates}"></p></td>
-            <td><p th:text="${food.fat}"></p></td>
-            <td><p th:text="${food.protein}"></p></td>
-        </tr>
+        <tbody id="foods-columns">
         </tbody>
     </table>
 </main>

@@ -1,13 +1,15 @@
-package diet.dietgenerator.service.models;
+package diet.dietgenerator.web.api.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @Getter
 @Setter
-public class FoodServiceModel {
+@NoArgsConstructor
+@AllArgsConstructor
+public class FoodResponseModel {
 
     private String name;
     private String foodGroup;
