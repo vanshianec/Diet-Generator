@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +18,7 @@ public class FoodsApiController {
 
     private final FoodService foodService;
     private final ModelMapper modelMapper;
+    private static int count = 0;
 
     public FoodsApiController(FoodService foodService, ModelMapper modelMapper) {
         this.foodService = foodService;
@@ -26,13 +26,12 @@ public class FoodsApiController {
     }
 
     @GetMapping("/api/foods")
-    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(Model model) {
-        Pageable firstPageWithTwentyElements = PageRequest.of(0, 20);
+    public ResponseEntity<List<FoodResponseModel>> getFoodsPage() {
+        Pageable firstPageWithTwentyElements = PageRequest.of(count++, 20);
         List<FoodResponseModel> foods = foodService.getAllByFoodGroup("Fruits", firstPageWithTwentyElements)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodResponseModel.class))
                 .collect(Collectors.toList());
-        model.addAttribute("foods", foods);
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
 }

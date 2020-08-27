@@ -1,3 +1,5 @@
+let areFoodsLoaded = false;
+
 $(document).ready(function () {
     loadFoods();
 });
@@ -5,25 +7,47 @@ $(document).ready(function () {
 $(window).scroll(function () {
     /* if the bottom of the page is reached */
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-
+        loadFoods();
     }
 });
 
 const loadFoods = function () {
-    loader.show();
-    fetch(URLS.foods)
-        .then(response => response.json())
-        .then(foods => {
-            let result = '';
-            foods.forEach(food => {
-                const itemString = toString(food);
-                result += itemString;
-            });
-            $('#foods-columns').html(result);
-            loader.hide();
-        });
+    if (!areFoodsLoaded) {
+        loader.show();
+        fetch(URLS.foods)
+            .then(handleResponse)
+            .then(addFoodsToTemplate)
+            .catch(handleError);
+        loader.hide();
+    }
+};
 
-    //TODO catch and test no network case
+const handleResponse = function (response) {
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+};
+
+const handleError = function (error) {
+    //TODO do some error handling
+    console.error(error);
+};
+
+const addFoodsToTemplate = function (foods) {
+    if (foods.length === 0) {
+        areFoodsLoaded = true;
+        //TODO add end of page html
+    }
+
+    let result = '';
+    foods.forEach(food => {
+        const itemString = toString(food);
+        result += itemString;
+    });
+    $('#foods-columns').append(result);
 };
 
 const toString = function ({name, foodGroup, calories, fat, carbohydrates, protein}) {
