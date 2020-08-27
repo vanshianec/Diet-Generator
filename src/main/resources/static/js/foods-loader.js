@@ -1,6 +1,22 @@
 let areFoodsLoaded = false;
+let pageCount = 0;
 
-$(document).ready(function () {
+const loader = {
+    show: () => {
+        $('#page-loader').show();
+    },
+    hide: () => {
+        $('#page-loader').hide();
+    },
+};
+
+const URLS = {
+    foods: '/api/foods',
+};
+
+$(window).on('load', function () {
+    pageCount = 0;
+    areFoodsLoaded = false;
     loadFoods();
 });
 
@@ -14,11 +30,10 @@ $(window).scroll(function () {
 const loadFoods = function () {
     if (!areFoodsLoaded) {
         loader.show();
-        fetch(URLS.foods)
+        fetch(URLS.foods + '?page=' + pageCount)
             .then(handleResponse)
             .then(addFoodsToTemplate)
             .catch(handleError);
-        loader.hide();
     }
 };
 
@@ -29,11 +44,6 @@ const handleResponse = function (response) {
     }
 
     return response.json();
-};
-
-const handleError = function (error) {
-    //TODO do some error handling
-    console.error(error);
 };
 
 const addFoodsToTemplate = function (foods) {
@@ -48,6 +58,14 @@ const addFoodsToTemplate = function (foods) {
         result += itemString;
     });
     $('#foods-columns').append(result);
+    pageCount++;
+    loader.hide();
+};
+
+const handleError = function (error) {
+    //TODO do some error handling
+    console.error(error);
+    loader.hide();
 };
 
 const toString = function ({name, foodGroup, calories, fat, carbohydrates, protein}) {
@@ -59,17 +77,4 @@ const toString = function ({name, foodGroup, calories, fat, carbohydrates, prote
                    <td>${protein}</td>`;
 
     return `<tr>${columns}</tr>`
-};
-
-const loader = {
-    show: () => {
-        $('#page-loader').show();
-    },
-    hide: () => {
-        $('#page-loader').hide();
-    },
-};
-
-const URLS = {
-    foods: '/api/foods',
 };
