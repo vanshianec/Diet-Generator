@@ -5,31 +5,36 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{common/head}"/>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/page-loader.css">
+<link rel="stylesheet" href="/css/table-sort-indicator.css">
 <body>
 <th:block th:include="~{common/header}"/>
 <main>
-    <table class="table table-hover text-white">
-        <thead>
-        <tr>
-            <th scope="col">Food</th>
-            <th scope="col">Food Group</th>
-            <th scope="col">Calories</th>
-            <th scope="col">Carbohydrates</th>
-            <th scope="col">Fat</th>
-            <th scope="col">Protein</th>
-        </tr>
-        </thead>
-        <tbody id="foods-columns">
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table table-hover text-white">
+            <thead>
+            <tr>
+                <th>Food</th>
+                <th>Food Group</th>
+                <th class="sortable">Calories</th>
+                <th class="sortable">Carbohydrates</th>
+                <th class="sortable">Fat</th>
+                <th class="sortable">Protein</th>
+            </tr>
+            </thead>
+            <tbody id="foods-columns">
+            </tbody>
+        </table>
+    </div>
 </main>
-<th:block th:include="~{common/loader}" />
+<th:block th:include="~{common/loader}"/>
 <script
         src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous">
 </script>
-<script src="/js/foods-loader.js"></script>
+<script src="js/foods/foods-loader.js"></script>
+<script src="js/foods/foods-table-indicator.js"></script>
 </body>
 </html>
