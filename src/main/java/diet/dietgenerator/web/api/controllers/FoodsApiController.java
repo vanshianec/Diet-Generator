@@ -3,18 +3,19 @@ package diet.dietgenerator.web.api.controllers;
 import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.web.api.models.FoodResponseModel;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/foods")
 public class FoodsApiController {
 
     private final FoodService foodService;
@@ -25,11 +26,9 @@ public class FoodsApiController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/api/foods")
-    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@RequestParam("page") int page) {
-        Pageable firstPageWithTwentyElements = PageRequest.of(page, 20);
-        System.out.println(page);
-        List<FoodResponseModel> foods = foodService.getAllByFoodGroup("Fruits", firstPageWithTwentyElements)
+    @GetMapping
+    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+        List<FoodResponseModel> foods = foodService.getAll(pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodResponseModel.class))
                 .collect(Collectors.toList());

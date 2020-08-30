@@ -22,16 +22,8 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public List<FoodServiceModel> getAll() {
-        return foodRepository.findAll()
-                .stream()
-                .map(f -> modelMapper.map(f, FoodServiceModel.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable) {
-        return foodRepository.findAllByFoodGroup(foodGroup, pageable)
+    public List<FoodServiceModel> getAll(Pageable pageable) {
+        return foodRepository.findAll(pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodServiceModel.class))
                 .collect(Collectors.toList());

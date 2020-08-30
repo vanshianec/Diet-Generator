@@ -1,4 +1,6 @@
-let areFoodsLoaded = false;
+let currentSortType = 'none';
+let currentSortParam = '';
+let areAllFoodsLoaded = false;
 let pageCount = 0;
 
 const loader = {
@@ -15,22 +17,35 @@ const URLS = {
 };
 
 $(window).on('load', function () {
-    pageCount = 0;
-    areFoodsLoaded = false;
-    loadFoods();
+    loadFoods('none');
 });
 
 $(window).scroll(function () {
     /* if the bottom of the page is reached */
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-        loadFoods();
+        loadFoods(currentSortType, currentSortParam);
     }
 });
 
-const loadFoods = function () {
-    if (!areFoodsLoaded) {
+const loadFoods = function (sortType, sortParam) {
+
+    if (currentSortType !== sortType) {
+        pageCount = 0;
+        areAllFoodsLoaded = false;
+        currentSortType = sortType;
+        currentSortParam = sortParam;
+        $('#foods-columns').html('');
+    }
+
+    let url = URLS.foods + '?page=' + pageCount;
+
+    if (sortType !== 'none') {
+        url += '&sort=' + sortParam + ',' + sortType;
+    }
+
+    if (!areAllFoodsLoaded) {
         loader.show();
-        fetch(URLS.foods + '?page=' + pageCount)
+        fetch(url)
             .then(handleResponse)
             .then(addFoodsToTemplate)
             .catch(handleError);
@@ -48,7 +63,7 @@ const handleResponse = function (response) {
 
 const addFoodsToTemplate = function (foods) {
     if (foods.length === 0) {
-        areFoodsLoaded = true;
+        areAllFoodsLoaded = true;
         //TODO add end of page html
     }
 
@@ -72,9 +87,44 @@ const toString = function ({name, foodGroup, calories, fat, carbohydrates, prote
     let columns = `<td>${name}</td>
                    <td>${foodGroup}</td>
                    <td>${calories}</td>
-                   <td>${fat}</td>
                    <td>${carbohydrates}</td>
+                   <td>${fat}</td>
                    <td>${protein}</td>`;
 
     return `<tr>${columns}</tr>`
+};
+
+//TODO split code into different files
+
+let $sortable = $('.sortable');
+
+$sortable.on('click', function () {
+
+    let $this = $(this);
+    let asc = $this.hasClass('asc');
+    let desc = $this.hasClass('desc');
+    $sortable.removeClass('asc').removeClass('desc');
+    if (!asc && !desc) {
+        $this.addClass('asc');
+    } else if (asc) {
+        $this.addClass('desc');
+    }
+
+    asc = $this.hasClass('asc');
+    desc = $this.hasClass('desc');
+    let sortType = 'none';
+
+    if (asc) {
+        sortType = 'asc';
+    } else if (desc) {
+        sortType = 'desc';
+    }
+
+    loadFoods(sortType, toCamelCase($this.text()));
+});
+
+const toCamelCase = function (str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+|-/g, '');
 };
