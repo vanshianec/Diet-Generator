@@ -45,7 +45,7 @@ public class Food extends BaseEntity {
 
     /* measured in mg */
     @Column
-    private Integer cholesterol;
+    private Float cholesterol;
 
     /* measured in grams */
     @Column(name = "saturated_fats")

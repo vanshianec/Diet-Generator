@@ -123,6 +123,8 @@ $sortable.on('click', function () {
     loadFoods(sortType, toCamelCase($this.text()));
 });
 
+//TODO remove this and use values in html instead
+
 const toCamelCase = function (str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
         return index === 0 ? word.toLowerCase() : word.toUpperCase();

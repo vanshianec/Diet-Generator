@@ -12,6 +12,74 @@
 <th:block th:include="~{common/header}"/>
 <main>
     <div class="container">
+        <div>
+            <label class="text-white" for="choose-food-group">Choose a food group:  </label>
+            <select id="choose-food-group">
+                <optgroup label="Food Groups">
+                    <option>Baked Foods</option>
+                    <option>Beans and Lentils</option>
+                    <option>Beverages</option>
+                    <option>Breakfast Cereals</option>
+                    <option>Dairy and Egg Products</option>
+                    <option>Fast Foods</option>
+                    <option>Fats and Oils</option>
+                    <option>Fish</option>
+                    <option>Fruits</option>
+                    <option>Grains and Pasta</option>
+                    <option>Meats</option>
+                    <option>Nuts and Seeds</option>
+                    <option>Restaurant Foods</option>
+                    <option>Snacks</option>
+                    <option>Soups and Sauces</option>
+                    <option>Spices and Herbs</option>
+                    <option>Sweets</option>
+                    <option>Vegetables</option>
+                </optgroup>
+            </select>
+            <label class="text-white" for="additional-nutrient">Select additional nutrient:  </label>
+                <select id="additional-nutrient">
+                    <optgroup label="General">
+                        <option value="fiber">Fiber</option>
+                        <option value="sugars">Sugars</option>
+                        <option value="added_sugar">Added Sugar</option>
+                        <option value="sodium">Sodium</option>
+                        <option value="cholesterol">Cholesterol</option>
+                    </optgroup>
+                    <optgroup label="Fat">
+                        <option value="saturated_fats">Saturated</option>
+                        <option value="trans_fats">Trans-Fats</option>
+                        <option value="monounsaturated_fats">Monounsaturated</option>
+                        <option value="polyunsaturated_fats">Polyunsaturated</option>
+                        <option value="omega3">Omega-3</option>
+                        <option value="omega6">Omega-6</option>
+                    </optgroup>
+                    <optgroup label="Vitamins">
+                        <option value="vitamin_b1">B1 (Thiamine)</option>
+                        <option value="vitamin_b2">B2 (Riboflavin)</option>
+                        <option value="vitamin_b3">B3 (Niacin)</option>
+                        <option value="vitamin_b5">B5 (Pantothenic Acid)</option>
+                        <option value="vitamin_b6">B6 (Pyridoxine)</option>
+                        <option value="vitamin_b9">B9 (Folate)</option>
+                        <option value="vitamin_b12">B12 (Cobalamin)</option>
+                        <option value="vitamin_a">Vitamin A</option>
+                        <option value="vitamin_c">Vitamin C</option>
+                        <option value="vitamin_d">Vitamin D</option>
+                        <option value="vitamin_e">Vitamin E</option>
+                        <option value="vitamin_k">Vitamin K</option>
+                    </optgroup>
+                    <optgroup label="Minerals">
+                        <option value="calcium">Calcium</option>
+                        <option value="copper">Copper</option>
+                        <option value="iron">Iron</option>
+                        <option value="magnesium">Magnesium</option>
+                        <option value="manganese">Manganese</option>
+                        <option value="phosphorus">Phosphorus</option>
+                        <option value="potassium">Potassium</option>
+                        <option value="selenium">Selenium</option>
+                        <option value="zinc">Zinc</option>
+                    </optgroup>
+                </select>
+        </div>
         <table class="table table-hover text-white">
             <thead>
             <tr>
@@ -21,6 +89,7 @@
                 <th class="sortable">Carbohydrates</th>
                 <th class="sortable">Fat</th>
                 <th class="sortable">Protein</th>
+                <th class="sortable">Fiber</th>
             </tr>
             </thead>
             <tbody id="foods-columns">
