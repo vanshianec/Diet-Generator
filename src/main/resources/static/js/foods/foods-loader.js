@@ -1,4 +1,5 @@
 let currentSortType = 'none';
+let currentFoodGroup = 'none';
 let currentSortParam = '';
 let areAllFoodsLoaded = false;
 let pageCount = 0;
@@ -17,27 +18,28 @@ const URLS = {
 };
 
 $(window).on('load', function () {
-    loadFoods('none');
+    loadFoods('none', 'none');
 });
 
 $(window).scroll(function () {
     /* if the bottom of the page is reached */
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-        loadFoods(currentSortType, currentSortParam);
+        loadFoods(currentSortType, currentFoodGroup, currentSortParam);
     }
 });
 
-const loadFoods = function (sortType, sortParam) {
+const loadFoods = function (sortType, foodGroup, sortParam) {
 
     if (currentSortType !== sortType) {
         pageCount = 0;
         areAllFoodsLoaded = false;
         currentSortType = sortType;
         currentSortParam = sortParam;
+        currentFoodGroup = foodGroup;
         $('#foods-columns').html('');
     }
 
-    let url = URLS.foods + '?page=' + pageCount;
+    let url = URLS.foods + '?page=' + pageCount + '&foodGroup=' + foodGroup;
 
     if (sortType !== 'none') {
         url += '&sort=' + sortParam + ',' + sortType;
@@ -113,6 +115,7 @@ $sortable.on('click', function () {
     asc = $this.hasClass('asc');
     desc = $this.hasClass('desc');
     let sortType = 'none';
+    let sortParam = toCamelCase($this.text());
 
     if (asc) {
         sortType = 'asc';
@@ -120,13 +123,16 @@ $sortable.on('click', function () {
         sortType = 'desc';
     }
 
-    loadFoods(sortType, toCamelCase($this.text()));
+    loadFoods(sortType, currentFoodGroup, sortParam);
 });
-
-//TODO remove this and use values in html instead
 
 const toCamelCase = function (str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
         return index === 0 ? word.toLowerCase() : word.toUpperCase();
     }).replace(/\s+|-/g, '');
 };
+
+$('#choose-food-group').on('change', function () {
+    let foodGroup = $(this).val();
+    loadFoods(currentSortType, foodGroup, currentSortParam);
+});

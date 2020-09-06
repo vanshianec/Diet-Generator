@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Long> {
     Page<Food> findAll(Pageable pageable);
+
+    Page<Food> findAllByFoodGroup(String foodGroup, Pageable pageable);
 }

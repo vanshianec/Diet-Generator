@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FoodService {
     List<FoodServiceModel> getAll( Pageable pageable);
+    List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable);
 }

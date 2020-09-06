@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,8 +28,9 @@ public class FoodsApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@PageableDefault(page = 0, size = 20) Pageable pageable) {
-        List<FoodResponseModel> foods = foodService.getAll(pageable)
+    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@RequestParam(value = "foodGroup", required = false) String foodGroup, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+
+        List<FoodResponseModel> foods = foodService.getAllByFoodGroup("Fruits", pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodResponseModel.class))
                 .collect(Collectors.toList());
