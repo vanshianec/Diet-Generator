@@ -30,7 +30,7 @@ $(window).scroll(function () {
 
 const loadFoods = function (sortType, foodGroup, sortParam) {
 
-    if (currentSortType !== sortType) {
+    if (currentSortType !== sortType || currentFoodGroup !== foodGroup) {
         pageCount = 0;
         areAllFoodsLoaded = false;
         currentSortType = sortType;
@@ -39,7 +39,11 @@ const loadFoods = function (sortType, foodGroup, sortParam) {
         $('#foods-columns').html('');
     }
 
-    let url = URLS.foods + '?page=' + pageCount + '&foodGroup=' + foodGroup;
+    let url = URLS.foods + '?page=' + pageCount;
+
+    if (foodGroup !== 'none') {
+        url += '&foodGroup=' + foodGroup;
+    }
 
     if (sortType !== 'none') {
         url += '&sort=' + sortParam + ',' + sortType;
@@ -85,13 +89,14 @@ const handleError = function (error) {
     loader.hide();
 };
 
-const toString = function ({name, foodGroup, calories, fat, carbohydrates, protein}) {
+const toString = function ({name, calories, fat, carbohydrates, protein, fiber}) {
+
     let columns = `<td>${name}</td>
-                   <td>${foodGroup}</td>
                    <td>${calories}</td>
                    <td>${carbohydrates}</td>
                    <td>${fat}</td>
-                   <td>${protein}</td>`;
+                   <td>${protein}</td>
+                   <td>${fiber}</td>`;
 
     return `<tr>${columns}</tr>`
 };

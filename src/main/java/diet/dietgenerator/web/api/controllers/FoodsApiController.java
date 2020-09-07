@@ -1,5 +1,6 @@
 package diet.dietgenerator.web.api.controllers;
 
+import diet.dietgenerator.service.models.FoodServiceModel;
 import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.web.api.models.FoodResponseModel;
 import org.modelmapper.ModelMapper;
@@ -28,10 +29,13 @@ public class FoodsApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@RequestParam(value = "foodGroup", required = false) String foodGroup, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@RequestParam(value = "foodGroup", required = false) String foodGroup,
+                                                                @RequestParam(value = "additionalNutrient", defaultValue = "fiber") String additionalNutrient,
+                                                                @PageableDefault(page = 0, size = 20) Pageable pageable) {
 
-        List<FoodResponseModel> foods = foodService.getAllByFoodGroup("Fruits", pageable)
-                .stream()
+        List<FoodServiceModel> serviceModels = foodGroup == null ? foodService.getAll(pageable) : foodService.getAllByFoodGroup(foodGroup, pageable);
+
+        List<FoodResponseModel> foods = serviceModels.stream()
                 .map(f -> modelMapper.map(f, FoodResponseModel.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(foods, HttpStatus.OK);

@@ -29,7 +29,7 @@ public class FoodServiceImpl implements FoodService {
                 .collect(Collectors.toList());
     }
 
-    public List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable){
+    public List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable) {
         return foodRepository.findAllByFoodGroup(foodGroup, pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, FoodServiceModel.class))
