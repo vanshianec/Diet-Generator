@@ -158,10 +158,10 @@ $('#choose-additional-nutrient').on('change', function () {
     let sortParam = currentSortParam;
 
     if (additionalNutrientField.hasClass('asc') || additionalNutrientField.hasClass('desc')) {
-        console.log(additionalNutrientValue);
         sortParam = additionalNutrientValue;
     }
 
     loadFoods(currentSortType, currentFoodGroup, additionalNutrientValue, sortParam);
+
 });
 
