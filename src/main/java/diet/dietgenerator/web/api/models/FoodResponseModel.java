@@ -12,9 +12,11 @@ import lombok.Setter;
 public class FoodResponseModel {
 
     private String name;
+    private String foodGroup;
     private Integer calories;
     private Float fat;
     private Float carbohydrates;
     private Float protein;
-    private Float fiber;
+    private Float sugars;
+    private Float additionalNutrient;
 }

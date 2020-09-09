@@ -37,36 +37,36 @@
                     <option>Vegetables</option>
                 </optgroup>
             </select>
-            <label class="text-white" for="additional-nutrient">Select additional nutrient:  </label>
-                <select id="additional-nutrient">
+            <label class="text-white" for="choose-additional-nutrient">Select additional nutrient:  </label>
+                <select id="choose-additional-nutrient">
                     <optgroup label="General">
                         <option value="fiber">Fiber</option>
                         <option value="sugars">Sugars</option>
-                        <option value="added_sugar">Added Sugar</option>
+                        <option value="addedSugar">Added Sugar</option>
                         <option value="sodium">Sodium</option>
                         <option value="cholesterol">Cholesterol</option>
                     </optgroup>
                     <optgroup label="Fat">
-                        <option value="saturated_fats">Saturated</option>
-                        <option value="trans_fats">Trans-Fats</option>
-                        <option value="monounsaturated_fats">Monounsaturated</option>
-                        <option value="polyunsaturated_fats">Polyunsaturated</option>
+                        <option value="saturatedFats">Saturated</option>
+                        <option value="transFats">Trans-Fats</option>
+                        <option value="monounsaturatedFats">Monounsaturated</option>
+                        <option value="polyunsaturatedFats">Polyunsaturated</option>
                         <option value="omega3">Omega-3</option>
                         <option value="omega6">Omega-6</option>
                     </optgroup>
                     <optgroup label="Vitamins">
-                        <option value="vitamin_b1">B1 (Thiamine)</option>
-                        <option value="vitamin_b2">B2 (Riboflavin)</option>
-                        <option value="vitamin_b3">B3 (Niacin)</option>
-                        <option value="vitamin_b5">B5 (Pantothenic Acid)</option>
-                        <option value="vitamin_b6">B6 (Pyridoxine)</option>
-                        <option value="vitamin_b9">B9 (Folate)</option>
-                        <option value="vitamin_b12">B12 (Cobalamin)</option>
-                        <option value="vitamin_a">Vitamin A</option>
-                        <option value="vitamin_c">Vitamin C</option>
-                        <option value="vitamin_d">Vitamin D</option>
-                        <option value="vitamin_e">Vitamin E</option>
-                        <option value="vitamin_k">Vitamin K</option>
+                        <option value="vitaminB1">B1 (Thiamine)</option>
+                        <option value="vitaminB2">B2 (Riboflavin)</option>
+                        <option value="vitaminB3">B3 (Niacin)</option>
+                        <option value="vitaminB5">B5 (Pantothenic Acid)</option>
+                        <option value="vitaminB6">B6 (Pyridoxine)</option>
+                        <option value="vitaminB9">B9 (Folate)</option>
+                        <option value="vitaminB12">B12 (Cobalamin)</option>
+                        <option value="vitaminA">Vitamin A</option>
+                        <option value="vitaminC">Vitamin C</option>
+                        <option value="vitaminD">Vitamin D</option>
+                        <option value="vitaminE">Vitamin E</option>
+                        <option value="vitaminK">Vitamin K</option>
                     </optgroup>
                     <optgroup label="Minerals">
                         <option value="calcium">Calcium</option>
@@ -89,7 +89,7 @@
                 <th class="sortable">Carbohydrates</th>
                 <th class="sortable">Fat</th>
                 <th class="sortable">Protein</th>
-                <th class="sortable">Fiber</th>
+                <th id="additional-nutrient-column" class="sortable additional-nutrient">Fiber</th>
             </tr>
             </thead>
             <tbody id="foods-columns">

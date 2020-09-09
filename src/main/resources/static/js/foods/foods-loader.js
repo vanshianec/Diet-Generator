@@ -1,5 +1,6 @@
 let currentSortType = 'none';
 let currentFoodGroup = 'none';
+let currentAdditionalNutrient = 'fiber';
 let currentSortParam = '';
 let areAllFoodsLoaded = false;
 let pageCount = 0;
@@ -18,28 +19,29 @@ const URLS = {
 };
 
 $(window).on('load', function () {
-    loadFoods('none', 'none');
+    loadFoods(currentSortType, currentFoodGroup, currentAdditionalNutrient);
 });
 
 $(window).scroll(function () {
     /* if the bottom of the page is reached */
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-        loadFoods(currentSortType, currentFoodGroup, currentSortParam);
+        loadFoods(currentSortType, currentFoodGroup, currentAdditionalNutrient, currentSortParam,);
     }
 });
 
-const loadFoods = function (sortType, foodGroup, sortParam) {
+const loadFoods = function (sortType, foodGroup, additionalNutrient, sortParam) {
 
-    if (currentSortType !== sortType || currentFoodGroup !== foodGroup) {
+    if (currentSortType !== sortType || currentFoodGroup !== foodGroup || currentAdditionalNutrient !== additionalNutrient) {
         pageCount = 0;
         areAllFoodsLoaded = false;
         currentSortType = sortType;
         currentSortParam = sortParam;
         currentFoodGroup = foodGroup;
+        currentAdditionalNutrient = additionalNutrient;
         $('#foods-columns').html('');
     }
 
-    let url = URLS.foods + '?page=' + pageCount;
+    let url = URLS.foods + '?page=' + pageCount + '&additionalNutrient=' + additionalNutrient;
 
     if (foodGroup !== 'none') {
         url += '&foodGroup=' + foodGroup;
@@ -85,20 +87,19 @@ const addFoodsToTemplate = function (foods) {
 
 const handleError = function (error) {
     //TODO do some error handling
-    console.error(error);
     loader.hide();
 };
 
-const toString = function ({name, calories, fat, carbohydrates, protein, fiber}) {
+const toString = function ({name, calories, fat, carbohydrates, protein, additionalNutrient}) {
 
     let columns = `<td>${name}</td>
                    <td>${calories}</td>
                    <td>${carbohydrates}</td>
                    <td>${fat}</td>
                    <td>${protein}</td>
-                   <td>${fiber}</td>`;
+                   <td>${additionalNutrient}</td>`;
 
-    return `<tr>${columns}</tr>`
+    return `<tr>${columns}</tr>`;
 };
 
 //TODO split code into different files
@@ -120,7 +121,13 @@ $sortable.on('click', function () {
     asc = $this.hasClass('asc');
     desc = $this.hasClass('desc');
     let sortType = 'none';
-    let sortParam = toCamelCase($this.text());
+    let sortParam;
+
+    if ($this.hasClass('additional-nutrient')) {
+        sortParam = $('#choose-additional-nutrient option:selected').val();
+    } else {
+        sortParam = toCamelCase($this.text());
+    }
 
     if (asc) {
         sortType = 'asc';
@@ -128,7 +135,7 @@ $sortable.on('click', function () {
         sortType = 'desc';
     }
 
-    loadFoods(sortType, currentFoodGroup, sortParam);
+    loadFoods(sortType, currentFoodGroup, currentAdditionalNutrient, sortParam);
 });
 
 const toCamelCase = function (str) {
@@ -139,5 +146,22 @@ const toCamelCase = function (str) {
 
 $('#choose-food-group').on('change', function () {
     let foodGroup = $(this).val();
-    loadFoods(currentSortType, foodGroup, currentSortParam);
+    loadFoods(currentSortType, foodGroup, currentAdditionalNutrient, currentSortParam);
 });
+
+$('#choose-additional-nutrient').on('change', function () {
+    let additionalNutrientValue = $(this).val();
+    let selectedNutrientDisplayText = $('#choose-additional-nutrient option:selected').text();
+    let additionalNutrientField = $('#additional-nutrient-column');
+    additionalNutrientField.text(selectedNutrientDisplayText);
+
+    let sortParam = currentSortParam;
+
+    if (additionalNutrientField.hasClass('asc') || additionalNutrientField.hasClass('desc')) {
+        console.log(additionalNutrientValue);
+        sortParam = additionalNutrientValue;
+    }
+
+    loadFoods(currentSortType, currentFoodGroup, additionalNutrientValue, sortParam);
+});
+

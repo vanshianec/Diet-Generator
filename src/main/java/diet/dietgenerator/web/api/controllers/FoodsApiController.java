@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,33 @@ public class FoodsApiController {
         List<FoodServiceModel> serviceModels = foodGroup == null ? foodService.getAll(pageable) : foodService.getAllByFoodGroup(foodGroup, pageable);
 
         List<FoodResponseModel> foods = serviceModels.stream()
-                .map(f -> modelMapper.map(f, FoodResponseModel.class))
+                .map(f -> {
+                    FoodResponseModel model = modelMapper.map(f, FoodResponseModel.class);
+                    model.setAdditionalNutrient(getAdditionalNutrientValue(f, additionalNutrient));
+                    return model;
+                })
                 .collect(Collectors.toList());
+
         return new ResponseEntity<>(foods, HttpStatus.OK);
+    }
+
+    private Float getAdditionalNutrientValue(FoodServiceModel f, String additionalNutrient) {
+        Field field = null;
+        try {
+            field = f.getClass().getDeclaredField(additionalNutrient);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        field.setAccessible(true);
+
+        try {
+            return (Float) field.get(f);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

@@ -47,4 +47,5 @@ public class FoodServiceModel {
     private Float vitaminK;
     private Float monounsaturatedFats;
     private Float polyunsaturatedFats;
+
 }
