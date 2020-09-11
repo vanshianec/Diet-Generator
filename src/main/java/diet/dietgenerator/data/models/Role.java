@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "roles")
 @Getter
 @Setter
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
