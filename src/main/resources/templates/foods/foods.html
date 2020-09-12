@@ -12,73 +12,79 @@
 <main>
     <div class="container">
         <div>
-            <label class="text-white" for="choose-food-group">Choose a food group:  </label>
+            <label class="text-white" for="choose-food-category">Category : </label>
+            <select id="choose-food-category">
+                <th:block th:unless="${session.username == null}">
+                    <option>My Foods</option>
+                </th:block>
+                <option>Basic Foods</option>
+                <option>Custom Foods</option>
+            </select>
+            <label class="text-white" for="choose-food-group">Food Group : </label>
             <select id="choose-food-group">
-                <optgroup label="Food Groups">
-                    <option value="none">All Foods</option>
-                    <option>Baked Foods</option>
-                    <option>Beans and Lentils</option>
-                    <option>Beverages</option>
-                    <option>Breakfast Cereals</option>
-                    <option>Dairy and Egg Products</option>
-                    <option>Fast Foods</option>
-                    <option>Fats and Oils</option>
-                    <option>Fish</option>
-                    <option>Fruits</option>
-                    <option>Grains and Pasta</option>
-                    <option>Meats</option>
-                    <option>Nuts and Seeds</option>
-                    <option>Restaurant Foods</option>
-                    <option>Snacks</option>
-                    <option>Soups and Sauces</option>
-                    <option>Spices and Herbs</option>
-                    <option>Sweets</option>
-                    <option>Vegetables</option>
+                <option value="none">All Foods</option>
+                <option>Baked Foods</option>
+                <option>Beans and Lentils</option>
+                <option>Beverages</option>
+                <option>Breakfast Cereals</option>
+                <option>Dairy and Egg Products</option>
+                <option>Fast Foods</option>
+                <option>Fats and Oils</option>
+                <option>Fish</option>
+                <option>Fruits</option>
+                <option>Grains and Pasta</option>
+                <option>Meats</option>
+                <option>Nuts and Seeds</option>
+                <option>Restaurant Foods</option>
+                <option>Snacks</option>
+                <option>Soups and Sauces</option>
+                <option>Spices and Herbs</option>
+                <option>Sweets</option>
+                <option>Vegetables</option>
+            </select>
+            <label class="text-white" for="choose-additional-nutrient">Additional Field : </label>
+            <select id="choose-additional-nutrient">
+                <optgroup label="General">
+                    <option value="fiber">Fiber</option>
+                    <option value="sugars">Sugars</option>
+                    <option value="addedSugar">Added Sugar</option>
+                    <option value="sodium">Sodium</option>
+                    <option value="cholesterol">Cholesterol</option>
+                </optgroup>
+                <optgroup label="Fat">
+                    <option value="saturatedFats">Saturated</option>
+                    <option value="transFats">Trans-Fats</option>
+                    <option value="monounsaturatedFats">Monounsaturated</option>
+                    <option value="polyunsaturatedFats">Polyunsaturated</option>
+                    <option value="omega3">Omega-3</option>
+                    <option value="omega6">Omega-6</option>
+                </optgroup>
+                <optgroup label="Vitamins">
+                    <option value="vitaminB1">B1 (Thiamine)</option>
+                    <option value="vitaminB2">B2 (Riboflavin)</option>
+                    <option value="vitaminB3">B3 (Niacin)</option>
+                    <option value="vitaminB5">B5 (Pantothenic Acid)</option>
+                    <option value="vitaminB6">B6 (Pyridoxine)</option>
+                    <option value="vitaminB9">B9 (Folate)</option>
+                    <option value="vitaminB12">B12 (Cobalamin)</option>
+                    <option value="vitaminA">Vitamin A</option>
+                    <option value="vitaminC">Vitamin C</option>
+                    <option value="vitaminD">Vitamin D</option>
+                    <option value="vitaminE">Vitamin E</option>
+                    <option value="vitaminK">Vitamin K</option>
+                </optgroup>
+                <optgroup label="Minerals">
+                    <option value="calcium">Calcium</option>
+                    <option value="copper">Copper</option>
+                    <option value="iron">Iron</option>
+                    <option value="magnesium">Magnesium</option>
+                    <option value="manganese">Manganese</option>
+                    <option value="phosphorus">Phosphorus</option>
+                    <option value="potassium">Potassium</option>
+                    <option value="selenium">Selenium</option>
+                    <option value="zinc">Zinc</option>
                 </optgroup>
             </select>
-            <label class="text-white" for="choose-additional-nutrient">Select additional nutrient:  </label>
-                <select id="choose-additional-nutrient">
-                    <optgroup label="General">
-                        <option value="fiber">Fiber</option>
-                        <option value="sugars">Sugars</option>
-                        <option value="addedSugar">Added Sugar</option>
-                        <option value="sodium">Sodium</option>
-                        <option value="cholesterol">Cholesterol</option>
-                    </optgroup>
-                    <optgroup label="Fat">
-                        <option value="saturatedFats">Saturated</option>
-                        <option value="transFats">Trans-Fats</option>
-                        <option value="monounsaturatedFats">Monounsaturated</option>
-                        <option value="polyunsaturatedFats">Polyunsaturated</option>
-                        <option value="omega3">Omega-3</option>
-                        <option value="omega6">Omega-6</option>
-                    </optgroup>
-                    <optgroup label="Vitamins">
-                        <option value="vitaminB1">B1 (Thiamine)</option>
-                        <option value="vitaminB2">B2 (Riboflavin)</option>
-                        <option value="vitaminB3">B3 (Niacin)</option>
-                        <option value="vitaminB5">B5 (Pantothenic Acid)</option>
-                        <option value="vitaminB6">B6 (Pyridoxine)</option>
-                        <option value="vitaminB9">B9 (Folate)</option>
-                        <option value="vitaminB12">B12 (Cobalamin)</option>
-                        <option value="vitaminA">Vitamin A</option>
-                        <option value="vitaminC">Vitamin C</option>
-                        <option value="vitaminD">Vitamin D</option>
-                        <option value="vitaminE">Vitamin E</option>
-                        <option value="vitaminK">Vitamin K</option>
-                    </optgroup>
-                    <optgroup label="Minerals">
-                        <option value="calcium">Calcium</option>
-                        <option value="copper">Copper</option>
-                        <option value="iron">Iron</option>
-                        <option value="magnesium">Magnesium</option>
-                        <option value="manganese">Manganese</option>
-                        <option value="phosphorus">Phosphorus</option>
-                        <option value="potassium">Potassium</option>
-                        <option value="selenium">Selenium</option>
-                        <option value="zinc">Zinc</option>
-                    </optgroup>
-                </select>
         </div>
         <table class="table text-white">
             <thead>

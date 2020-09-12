@@ -1,7 +1,7 @@
-let currentSortType = 'none';
-let currentFoodGroup = 'none';
-let currentAdditionalNutrient = 'fiber';
-let currentSortParam = '';
+let sortType = 'none';
+let foodGroup = 'none';
+let additionalNutrient = 'fiber';
+let sortParam = '';
 let areAllFoodsLoaded = false;
 let pageCount = 0;
 
@@ -18,27 +18,10 @@ const URLS = {
     foods: '/api/foods',
 };
 
-$(window).on('load', function () {
-    loadFoods(currentSortType, currentFoodGroup, currentAdditionalNutrient);
-});
+const loadFoods = function (cancelReset) {
 
-$(window).scroll(function () {
-    /* if the bottom of the page is reached */
-    if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-        loadFoods(currentSortType, currentFoodGroup, currentAdditionalNutrient, currentSortParam,);
-    }
-});
-
-const loadFoods = function (sortType, foodGroup, additionalNutrient, sortParam) {
-
-    if (currentSortType !== sortType || currentFoodGroup !== foodGroup || currentAdditionalNutrient !== additionalNutrient) {
-        pageCount = 0;
-        areAllFoodsLoaded = false;
-        currentSortType = sortType;
-        currentSortParam = sortParam;
-        currentFoodGroup = foodGroup;
-        currentAdditionalNutrient = additionalNutrient;
-        $('#foods-columns').html('');
+    if (!cancelReset) {
+        resetFoodsData();
     }
 
     let url = URLS.foods + '?page=' + pageCount + '&additionalNutrient=' + additionalNutrient;
@@ -58,6 +41,12 @@ const loadFoods = function (sortType, foodGroup, additionalNutrient, sortParam) 
             .then(addFoodsToTemplate)
             .catch(handleError);
     }
+};
+
+const resetFoodsData = function () {
+    pageCount = 0;
+    areAllFoodsLoaded = false;
+    $('#foods-columns').html('');
 };
 
 const handleResponse = function (response) {
@@ -85,11 +74,6 @@ const addFoodsToTemplate = function (foods) {
     loader.hide();
 };
 
-const handleError = function (error) {
-    //TODO do some error handling
-    loader.hide();
-};
-
 const toString = function ({name, calories, fat, carbohydrates, protein, additionalNutrient}) {
 
     let columns = `<td>${name}</td>
@@ -102,7 +86,21 @@ const toString = function ({name, calories, fat, carbohydrates, protein, additio
     return `<tr>${columns}</tr>`;
 };
 
-//TODO split code into different files
+const handleError = function (error) {
+    //TODO do some error handling
+    loader.hide();
+};
+
+$(window).on('load', function () {
+    loadFoods(true);
+});
+
+$(window).scroll(function () {
+    /* if the bottom of the page is reached */
+    if ($(window).scrollTop() === $(document).height() - $(window).height()) {
+        loadFoods(true);
+    }
+});
 
 let $sortable = $('.sortable');
 
@@ -120,8 +118,6 @@ $sortable.on('click', function () {
 
     asc = $this.hasClass('asc');
     desc = $this.hasClass('desc');
-    let sortType = 'none';
-    let sortParam;
 
     if ($this.hasClass('additional-nutrient')) {
         sortParam = $('#choose-additional-nutrient option:selected').val();
@@ -133,9 +129,11 @@ $sortable.on('click', function () {
         sortType = 'asc';
     } else if (desc) {
         sortType = 'desc';
+    } else {
+        sortType = 'none';
     }
 
-    loadFoods(sortType, currentFoodGroup, currentAdditionalNutrient, sortParam);
+    loadFoods();
 });
 
 const toCamelCase = function (str) {
@@ -145,23 +143,21 @@ const toCamelCase = function (str) {
 };
 
 $('#choose-food-group').on('change', function () {
-    let foodGroup = $(this).val();
-    loadFoods(currentSortType, foodGroup, currentAdditionalNutrient, currentSortParam);
+    foodGroup = $(this).val();
+    loadFoods();
 });
 
 $('#choose-additional-nutrient').on('change', function () {
-    let additionalNutrientValue = $(this).val();
+    additionalNutrient = $(this).val();
     let selectedNutrientDisplayText = $('#choose-additional-nutrient option:selected').text();
     let additionalNutrientField = $('#additional-nutrient-column');
     additionalNutrientField.text(selectedNutrientDisplayText);
 
-    let sortParam = currentSortParam;
-
     if (additionalNutrientField.hasClass('asc') || additionalNutrientField.hasClass('desc')) {
-        sortParam = additionalNutrientValue;
+        /* use additional nutrient as view for the table and for parameter to sort by if sorting is required */
+        sortParam = additionalNutrient;
     }
 
-    loadFoods(currentSortType, currentFoodGroup, additionalNutrientValue, sortParam);
-
+    loadFoods();
 });
 

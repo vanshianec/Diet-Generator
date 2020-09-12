@@ -24,6 +24,9 @@ public class User extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<CustomFood> customFoods;
+
     public User() {
         roles = new HashSet<>();
     }

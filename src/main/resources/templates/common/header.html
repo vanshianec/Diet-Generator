@@ -12,10 +12,6 @@
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/foods/all">Browse foods</a>
-                    <a class="dropdown-item" href="#">My foods</a>
-                    <th:block th:unless="${session.username == null}">
-                        <a class="dropdown-item" href="/foods/create">Create a food</a>
-                    </th:block>
                 </div>
             </li>
         </ul>
