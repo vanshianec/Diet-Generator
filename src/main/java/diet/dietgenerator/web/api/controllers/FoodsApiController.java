@@ -1,11 +1,16 @@
 package diet.dietgenerator.web.api.controllers;
 
-import diet.dietgenerator.service.models.FoodServiceModel;
+import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
+import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
+import diet.dietgenerator.service.models.food.base.BaseFoodServiceModel;
 import diet.dietgenerator.service.services.FoodService;
-import diet.dietgenerator.web.api.models.FoodResponseModel;
+import diet.dietgenerator.web.api.models.BasicFoodResponseModel;
+import diet.dietgenerator.web.api.models.CustomFoodResponseModel;
+import diet.dietgenerator.web.api.models.base.BaseFoodResponseModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,40 +34,58 @@ public class FoodsApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FoodResponseModel>> getFoodsPage(@RequestParam(value = "foodGroup", required = false) String foodGroup,
-                                                                @RequestParam(value = "additionalNutrient", defaultValue = "fiber") String additionalNutrient,
-                                                                @PageableDefault(page = 0, size = 20) Pageable pageable) {
+    public <T extends BaseFoodResponseModel> ResponseEntity<List<T>> getFoodsPage(@RequestParam(value = "foodCategory", required = false) String foodCategory,
+                                                                                  @RequestParam(value = "foodGroup", required = false) String foodGroup,
+                                                                                  @RequestParam(value = "additionalNutrient", defaultValue = "fiber") String additionalNutrient,
+                                                                                  @PageableDefault(page = 0, size = 20) Pageable pageable) {
 
-        List<FoodServiceModel> serviceModels = foodGroup == null ? foodService.getAll(pageable) : foodService.getAllByFoodGroup(foodGroup, pageable);
+        List<T> foods;
 
-        List<FoodResponseModel> foods = serviceModels.stream()
-                .map(f -> {
-                    FoodResponseModel model = modelMapper.map(f, FoodResponseModel.class);
-                    model.setAdditionalNutrient(getAdditionalNutrientValue(f, additionalNutrient));
-                    return model;
-                })
-                .collect(Collectors.toList());
+        if (foodCategory.equals("basic")) {
+            foods = getBasicFoods(foodGroup, pageable, additionalNutrient);
+        } else if (foodCategory.equals("custom")) {
+
+        }
 
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
 
-    private Float getAdditionalNutrientValue(FoodServiceModel f, String additionalNutrient) {
-        Field field = null;
-        try {
-            field = f.getClass().getDeclaredField(additionalNutrient);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
+    private <T extends BaseFoodResponseModel> List<T> getBasicFoods(String foodGroup, Pageable pageable, String additionalNutrient) {
+
+        List<BasicFoodServiceModel> serviceModels;
+
+        if (foodGroup == null) {
+            serviceModels = foodService.getAllBasicFoods(pageable);
+        } else {
+            serviceModels = foodService.getAllBasicFoodsByFoodGroup(foodGroup, pageable);
         }
 
-        field.setAccessible(true);
+        return serviceModels.stream()
+                .map(f -> {
+                    BasicFoodResponseModel model = modelMapper.map(f, BasicFoodResponseModel.class);
+                    model.setAdditionalNutrient((Float) ReflectionTestUtils.getField(f, additionalNutrient));
+                    return model;
+                })
+                .collect(Collectors.toList());
+    }
 
-        try {
-            return (Float) field.get(f);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+    private List<CustomFoodResponseModel> getCustomFoods(String foodGroup, Pageable pageable, String additionalNutrient) {
+
+        List<CustomFoodServiceModel> serviceModels;
+
+        if (foodGroup == null) {
+            serviceModels =  foodService.getAllCustomFoods(pageable);
+        }
+        else{
+            serviceModels= foodService.getAllCustomFoodByFoodGroup(foodGroup, pageable);
         }
 
-        return null;
+        return serviceModels.stream()
+                .map(f -> {
+                    CustomFoodResponseModel model = modelMapper.map(f, CustomFoodResponseModel.class);
+                    model.setAdditionalNutrient((Float) ReflectionTestUtils.getField(f, additionalNutrient));
+                    return model;
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package diet.dietgenerator.web.api.models;
 
+import diet.dietgenerator.web.api.models.base.BaseFoodResponseModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomFoodResponseModel extends FoodResponseModel {
+public class CustomFoodResponseModel extends BaseFoodResponseModel {
 
     private String purchasePlace;
     private Integer productWeight;

@@ -1,38 +1,42 @@
 package diet.dietgenerator.service.services.implementations;
 
-import diet.dietgenerator.data.repositories.FoodRepository;
-import diet.dietgenerator.service.models.FoodServiceModel;
+import diet.dietgenerator.data.repositories.BasicFoodRepository;
+import diet.dietgenerator.data.repositories.CustomFoodRepository;
+import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
+import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
 import diet.dietgenerator.service.services.FoodService;
+import diet.dietgenerator.service.services.base.BaseFoodServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class FoodServiceImpl implements FoodService {
+public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService {
 
-    private final FoodRepository foodRepository;
-    private final ModelMapper modelMapper;
+    private final BasicFoodRepository basicFoodRepository;
+    private final CustomFoodRepository customFoodRepository;
 
-    public FoodServiceImpl(FoodRepository foodRepository, ModelMapper modelMapper) {
-        this.foodRepository = foodRepository;
-        this.modelMapper = modelMapper;
+    protected FoodServiceImpl(ModelMapper modelMapper, BasicFoodRepository basicFoodRepository, CustomFoodRepository customFoodRepository) {
+        super(modelMapper);
+        this.basicFoodRepository = basicFoodRepository;
+        this.customFoodRepository = customFoodRepository;
     }
 
-    @Override
-    public List<FoodServiceModel> getAll(Pageable pageable) {
-        return foodRepository.findAll(pageable)
-                .stream()
-                .map(f -> modelMapper.map(f, FoodServiceModel.class))
-                .collect(Collectors.toList());
+    public List<BasicFoodServiceModel> getAllBasicFoods(Pageable pageable) {
+        return super.getAll(pageable, basicFoodRepository, BasicFoodServiceModel.class);
     }
 
-    public List<FoodServiceModel> getAllByFoodGroup(String foodGroup, Pageable pageable) {
-        return foodRepository.findAllByFoodGroup(foodGroup, pageable)
-                .stream()
-                .map(f -> modelMapper.map(f, FoodServiceModel.class))
-                .collect(Collectors.toList());
+    public List<CustomFoodServiceModel> getAllCustomFoods(Pageable pageable) {
+        return super.getAll(pageable, customFoodRepository, CustomFoodServiceModel.class);
+    }
+
+    public List<BasicFoodServiceModel> getAllBasicFoodsByFoodGroup(String foodGroup, Pageable pageable) {
+        return super.getAllByFoodGroup(foodGroup, pageable, basicFoodRepository, BasicFoodServiceModel.class);
+    }
+
+    public List<CustomFoodServiceModel> getAllCustomFoodByFoodGroup(String foodGroup, Pageable pageable) {
+        return super.getAllByFoodGroup(foodGroup, pageable, customFoodRepository, CustomFoodServiceModel.class);
     }
 }

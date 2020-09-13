@@ -1,6 +1,11 @@
+let $chooseFoodCategory = $('#choose-food-category');
+let $chooseFoodGroup = $('#choose-food-group');
+let $chooseAdditionalNutrient = $('#choose-additional-nutrient');
+
 let sortType = 'none';
-let foodGroup = 'none';
-let additionalNutrient = 'fiber';
+let foodCategory = $chooseFoodCategory.val();
+let foodGroup = $chooseFoodGroup.val();
+let additionalNutrient = $chooseAdditionalNutrient.val();
 let sortParam = '';
 let areAllFoodsLoaded = false;
 let pageCount = 0;
@@ -24,7 +29,9 @@ const loadFoods = function (cancelReset) {
         resetFoodsData();
     }
 
-    let url = URLS.foods + '?page=' + pageCount + '&additionalNutrient=' + additionalNutrient;
+    let url = URLS.foods + '?page=' + pageCount
+        + '&foodCategory=' + foodCategory
+        + '&additionalNutrient=' + additionalNutrient;
 
     if (foodGroup !== 'none') {
         url += '&foodGroup=' + foodGroup;
@@ -142,12 +149,17 @@ const toCamelCase = function (str) {
     }).replace(/\s+|-/g, '');
 };
 
-$('#choose-food-group').on('change', function () {
+$chooseFoodGroup.on('change', function () {
     foodGroup = $(this).val();
     loadFoods();
 });
 
-$('#choose-additional-nutrient').on('change', function () {
+$chooseFoodCategory.on('change', function () {
+    foodGroup = $(this).val();
+    loadFoods();
+});
+
+$chooseAdditionalNutrient.on('change', function () {
     additionalNutrient = $(this).val();
     let selectedNutrientDisplayText = $('#choose-additional-nutrient option:selected').text();
     let additionalNutrientField = $('#additional-nutrient-column');

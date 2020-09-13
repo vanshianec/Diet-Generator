@@ -15,10 +15,10 @@
             <label class="text-white" for="choose-food-category">Category : </label>
             <select id="choose-food-category">
                 <th:block th:unless="${session.username == null}">
-                    <option>My Foods</option>
+                    <option value="TODO_ADD_USER_ID_FOR_FOODS">My Foods</option>
                 </th:block>
-                <option>Basic Foods</option>
-                <option>Custom Foods</option>
+                <option value="basic">Basic Foods</option>
+                <option value="custom">Custom Foods</option>
             </select>
             <label class="text-white" for="choose-food-group">Food Group : </label>
             <select id="choose-food-group">
