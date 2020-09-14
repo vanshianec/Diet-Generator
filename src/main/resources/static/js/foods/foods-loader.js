@@ -155,7 +155,7 @@ $chooseFoodGroup.on('change', function () {
 });
 
 $chooseFoodCategory.on('change', function () {
-    foodGroup = $(this).val();
+    foodCategory = $(this).val();
     loadFoods();
 });
 

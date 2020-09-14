@@ -25,7 +25,11 @@ public abstract class BaseFoodServiceImpl implements BaseFoodService {
                 .collect(Collectors.toList());
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood>  List<T> getAllByFoodGroup(String foodGroup, Pageable pageable,  BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllByFoodGroup(String foodGroup, Pageable pageable, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+        if (foodGroup == null) {
+            return getAll(pageable, repository, typeParameterClass);
+        }
+
         return repository.findAllByFoodGroup(foodGroup, pageable)
                 .stream()
                 .map(f -> modelMapper.map(f, typeParameterClass))

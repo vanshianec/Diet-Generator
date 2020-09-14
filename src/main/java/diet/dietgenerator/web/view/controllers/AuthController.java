@@ -4,7 +4,7 @@ import diet.dietgenerator.service.models.auth.RegisterUserServiceModel;
 import diet.dietgenerator.service.services.AuthService;
 import diet.dietgenerator.service.services.SecurityService;
 import diet.dietgenerator.service.services.validation.AuthValidationService;
-import diet.dietgenerator.web.base.BaseController;
+import diet.dietgenerator.web.view.controllers.base.BaseController;
 import diet.dietgenerator.web.view.models.RegisterUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;

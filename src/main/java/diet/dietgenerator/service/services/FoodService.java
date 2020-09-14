@@ -14,5 +14,5 @@ public interface FoodService {
 
     List<BasicFoodServiceModel> getAllBasicFoodsByFoodGroup(String foodGroup, Pageable pageable);
 
-    List<CustomFoodServiceModel> getAllCustomFoodByFoodGroup(String foodGroup, Pageable pageable);
+    List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable);
 }

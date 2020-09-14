@@ -36,7 +36,7 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
         return super.getAllByFoodGroup(foodGroup, pageable, basicFoodRepository, BasicFoodServiceModel.class);
     }
 
-    public List<CustomFoodServiceModel> getAllCustomFoodByFoodGroup(String foodGroup, Pageable pageable) {
+    public List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable) {
         return super.getAllByFoodGroup(foodGroup, pageable, customFoodRepository, CustomFoodServiceModel.class);
     }
 }
