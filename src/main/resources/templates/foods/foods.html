@@ -12,6 +12,32 @@
 <main>
     <div class="container">
         <div>
+            <th:block th:unless="${session.username == null}">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                        data-target="#modalCreateFoodForm">
+                    Create a Custom Food
+                </button>
+                <div id="modalCreateFoodForm" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Enter the details for your food item</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="custom_entry_form">
+                                    <h1>The form will be here</h1>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="custom_form_validation"></div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" id="save_custom_food" class="btn btn-primary">Save food</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
             <label class="text-white" for="choose-food-category">Category : </label>
             <select id="choose-food-category">
                 <th:block th:unless="${session.username == null}">
