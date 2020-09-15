@@ -14,4 +14,5 @@ public class CustomFoodServiceModel extends BaseFoodServiceModel {
     private String purchasePlace;
     private Integer productWeight;
     private Double price;
+    private Boolean verified;
 }

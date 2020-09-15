@@ -17,22 +17,392 @@
                         data-target="#modalCreateFoodForm">
                     Create a Custom Food
                 </button>
-                <div id="modalCreateFoodForm" class="modal fade">
-                    <div class="modal-dialog">
+                <div id="modalCreateFoodForm" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Enter the details for your food item</h4>
+                                <h5 class="col-sm-11 modal-title text-center">Create a Custom Food</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <div class="custom_entry_form">
-                                    <h1>The form will be here</h1>
+                                <div class="form-group">
+                                    <form id="create-food-form" class="form-horizontal" th:action="@{/foods/create}"
+                                          th:object="${model}"
+                                          method="post">
+                                        <fieldset>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-5 d-flex justify-content-center"
+                                                           for="food-name">Food
+                                                        Name:</label>
+                                                    <input id="food-name" name="name" class="form-control col-sm-7"
+                                                           maxlength="100"
+                                                           type="text">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-5 d-flex justify-content-center"
+                                                           for="food-purchase-place">Bought From:</label>
+                                                    <input id="food-purchase-place" name="purchasePlace"
+                                                           class="form-control col-sm-7"
+                                                           maxlength="100" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-5 d-flex justify-content-center"
+                                                           for="food-weight">Product Weight:</label>
+                                                    <input id="food-weight" name="productWeight"
+                                                           class="form-control col-sm-7 "
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-5 d-flex justify-content-center"
+                                                           for="food-price">Price:</label>
+                                                    <input id="food-price" name="price" class="form-control col-sm-7"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row d-flex justify-content-center">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-4"
+                                                           for="choose-food-group-modal">Food
+                                                        Group: </label>
+                                                    <select id="choose-food-group-modal" name="foodGroup"
+                                                            class="form-control col-sm-8">
+                                                        <option>Baked Foods</option>
+                                                        <option>Beans and Lentils</option>
+                                                        <option>Beverages</option>
+                                                        <option>Breakfast Cereals</option>
+                                                        <option>Dairy and Egg Products</option>
+                                                        <option>Fast Foods</option>
+                                                        <option>Fats and Oils</option>
+                                                        <option>Fish</option>
+                                                        <option>Fruits</option>
+                                                        <option>Grains and Pasta</option>
+                                                        <option>Meats</option>
+                                                        <option>Nuts and Seeds</option>
+                                                        <option>Restaurant Foods</option>
+                                                        <option>Snacks</option>
+                                                        <option>Soups and Sauces</option>
+                                                        <option>Spices and Herbs</option>
+                                                        <option>Sweets</option>
+                                                        <option>Vegetables</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row d-flex justify-content-center m-sm-5">
+                                                <h3>Nutrition per 100 grams</h3>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm d-flex justify-content-center">
+                                                    <label class="col-form-label col-sm-6"
+                                                           for="food-calories">Calories:</label>
+                                                    <input id="food-calories" name="calories"
+                                                           class="form-control col-sm-5"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm d-flex justify-content-center">
+                                                    <label class="col-form-label col-sm-6"
+                                                           for="food-carbohydrates">Carbs:</label>
+                                                    <input id="food-carbohydrates" name="carbohydrates"
+                                                           class="form-control col-sm-5"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm d-flex justify-content-center">
+                                                    <label class="col-form-label col-sm-6"
+                                                           for="food-fat">Fat:</label>
+                                                    <input id="food-fat" name="fat" class="form-control col-sm-5"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm d-flex justify-content-center">
+                                                    <label class="col-form-label col-sm-6"
+                                                           for="food-protein">Protein:</label>
+                                                    <input id="food-protein" name="protein"
+                                                           class="form-control col-sm-5"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 d-flex justify-content-center">
+                                                    <h4>General</h4>
+                                                </div>
+                                                <div class="col-sm-6 d-flex justify-content-center">
+                                                    <h4>Fat</h4>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fiber">Fiber:</label>
+                                                    <input id="food-fiber" name="fiber" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-saturated">Saturated:</label>
+                                                    <input id="food-fat-saturated" name="saturatedFats"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-sugars">Sugar:</label>
+                                                    <input id="food-sugars" name="sugars" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-trans">Trans-Fats:</label>
+                                                    <input id="food-fat-trans" name="transFats"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-added-sugar">Added Sugar:</label>
+                                                    <input id="food-added-sugar" name="addedSugar"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-monounsaturated">Monounsaturated:</label>
+                                                    <input id="food-fat-monounsaturated" name="monounsaturatedFats"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-sodium">Sodium:</label>
+                                                    <input id="food-sodium" name="sodium" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-polyunsaturated">Polyunsaturated:</label>
+                                                    <input id="food-fat-polyunsaturated" name="polyunsaturatedFats"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-cholesterol">Cholesterol:</label>
+                                                    <input id="food-cholesterol" name="cholesterol"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-omega3">Omega-3:</label>
+                                                    <input id="food-fat-omega3" name="omega3"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-fat-omega6">Omega-6:</label>
+                                                    <input id="food-fat-omega6" name="omega6"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 d-flex justify-content-center">
+                                                    <h4>Vitamins</h4>
+                                                </div>
+                                                <div class="col-sm-6 d-flex justify-content-center">
+                                                    <h4>Minerals</h4>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b1">B1 (Thiamine):</label>
+                                                    <input id="food-vitamin-b1" name="vitaminB1"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-calcium">Calcium:</label>
+                                                    <input id="food-calcium" name="calcium"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b2">B2 (Riboflavin):</label>
+                                                    <input id="food-vitamin-b2" name="vitaminB2"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-copper">Copper:</label>
+                                                    <input id="food-copper" name="copper" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b3">B3 (Niacin):</label>
+                                                    <input id="food-vitamin-b3" name="vitaminB3"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-iron">Iron:</label>
+                                                    <input id="food-iron" name="iron" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b5">B5 (Pantothenic Acid):</label>
+                                                    <input id="food-vitamin-b5" name="vitaminB5"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-magnesium">Magnesium:</label>
+                                                    <input id="food-magnesium" name="magnesium"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b6">B6 (Pyridoxine):</label>
+                                                    <input id="food-vitamin-b6" name="vitaminB6"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-manganese">Manganese:</label>
+                                                    <input id="food-manganese" name="manganese"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b9">B9 (Folate):</label>
+                                                    <input id="food-vitamin-b9" name="vitaminB9"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-phosphorus">Phosphorus:</label>
+                                                    <input id="food-phosphorus" name="phosphorus"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-b12">B12 (Cobalamin):</label>
+                                                    <input id="food-vitamin-b12" name="vitaminB12"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-potassium">Potassium:</label>
+                                                    <input id="food-potassium" name="potassium"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-a">Vitamin A:</label>
+                                                    <input id="food-vitamin-a" name="vitaminA"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-selenium">Selenium:</label>
+                                                    <input id="food-selenium" name="selenium"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-c">Vitamin C:</label>
+                                                    <input id="food-vitamin-c" name="vitaminC"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-zinc">Zinc:</label>
+                                                    <input id="food-zinc" name="zinc" class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-d">Vitamin D:</label>
+                                                    <input id="food-vitamin-d" name="vitaminD"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-e">Vitamin E:</label>
+                                                    <input id="food-vitamin-e" name="vitaminE"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row col-sm-6">
+                                                    <label class="col-form-label col-sm-7 d-flex justify-content-center"
+                                                           for="food-vitamin-k">Vitamin K:</label>
+                                                    <input id="food-vitamin-k" name="vitaminK"
+                                                           class="form-control col-sm-3"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <div class="custom_form_validation"></div>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" id="save_custom_food" class="btn btn-primary">Save food</button>
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <button id="save-custom-food" class="btn btn-primary" type="submit"
+                                        form="create-food-form">Save food
+                                </button>
                             </div>
                         </div>
                     </div>

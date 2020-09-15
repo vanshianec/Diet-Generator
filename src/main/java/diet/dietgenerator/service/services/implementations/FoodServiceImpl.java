@@ -1,5 +1,6 @@
 package diet.dietgenerator.service.services.implementations;
 
+import diet.dietgenerator.data.models.CustomFood;
 import diet.dietgenerator.data.repositories.BasicFoodRepository;
 import diet.dietgenerator.data.repositories.CustomFoodRepository;
 import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
@@ -17,11 +18,13 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
 
     private final BasicFoodRepository basicFoodRepository;
     private final CustomFoodRepository customFoodRepository;
+    private final ModelMapper modelMapper;
 
-    protected FoodServiceImpl(ModelMapper modelMapper, BasicFoodRepository basicFoodRepository, CustomFoodRepository customFoodRepository) {
+    protected FoodServiceImpl(ModelMapper modelMapper, BasicFoodRepository basicFoodRepository, CustomFoodRepository customFoodRepository, ModelMapper modelMapper1) {
         super(modelMapper);
         this.basicFoodRepository = basicFoodRepository;
         this.customFoodRepository = customFoodRepository;
+        this.modelMapper = modelMapper1;
     }
 
     public List<BasicFoodServiceModel> getAllBasicFoods(Pageable pageable) {
@@ -38,5 +41,10 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
 
     public List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable) {
         return super.getAllByFoodGroup(foodGroup, pageable, customFoodRepository, CustomFoodServiceModel.class);
+    }
+
+    @Override
+    public void createCustomFood(CustomFoodServiceModel serviceModel) {
+        customFoodRepository.save(modelMapper.map(serviceModel, CustomFood.class));
     }
 }
