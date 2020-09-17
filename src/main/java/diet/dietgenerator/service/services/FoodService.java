@@ -17,4 +17,6 @@ public interface FoodService {
     List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable);
 
     void createCustomFood(CustomFoodServiceModel serviceModel);
+
+    List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name);
 }

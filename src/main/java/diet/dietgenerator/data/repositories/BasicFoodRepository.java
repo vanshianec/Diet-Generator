@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface BasicFoodRepository extends BaseFoodRepository<BasicFood> {
 
-    List<BasicFood> findByNameContainingIgnoreCase(String name);
+    List<BasicFood> findAllByNameContainingIgnoreCase(String name);
 }

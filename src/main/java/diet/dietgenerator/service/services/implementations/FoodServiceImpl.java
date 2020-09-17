@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService {
@@ -27,18 +28,22 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
         this.modelMapper = modelMapper1;
     }
 
+    @Override
     public List<BasicFoodServiceModel> getAllBasicFoods(Pageable pageable) {
         return super.getAll(pageable, basicFoodRepository, BasicFoodServiceModel.class);
     }
 
+    @Override
     public List<CustomFoodServiceModel> getAllCustomFoods(Pageable pageable) {
         return super.getAll(pageable, customFoodRepository, CustomFoodServiceModel.class);
     }
 
+    @Override
     public List<BasicFoodServiceModel> getAllBasicFoodsByFoodGroup(String foodGroup, Pageable pageable) {
         return super.getAllByFoodGroup(foodGroup, pageable, basicFoodRepository, BasicFoodServiceModel.class);
     }
 
+    @Override
     public List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable) {
         return super.getAllByFoodGroup(foodGroup, pageable, customFoodRepository, CustomFoodServiceModel.class);
     }
@@ -46,5 +51,13 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
     @Override
     public void createCustomFood(CustomFoodServiceModel serviceModel) {
         customFoodRepository.save(modelMapper.map(serviceModel, CustomFood.class));
+    }
+
+    @Override
+    public List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name) {
+        return basicFoodRepository.findAllByNameContainingIgnoreCase(name)
+                .stream()
+                .map(f -> modelMapper.map(f, BasicFoodServiceModel.class))
+                .collect(Collectors.toList());
     }
 }
