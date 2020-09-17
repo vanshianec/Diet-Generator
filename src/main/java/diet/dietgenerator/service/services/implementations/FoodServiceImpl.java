@@ -60,4 +60,9 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
                 .map(f -> modelMapper.map(f, BasicFoodServiceModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public BasicFoodServiceModel getBasicFoodByName(String foodName) {
+        return modelMapper.map(basicFoodRepository.findByName(foodName), BasicFoodServiceModel.class);
+    }
 }

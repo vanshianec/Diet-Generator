@@ -23,3 +23,11 @@ footer {
     height: 250px;
     overflow-y: auto;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #b9b9b6;
+}

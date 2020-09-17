@@ -19,4 +19,6 @@ public interface FoodService {
     void createCustomFood(CustomFoodServiceModel serviceModel);
 
     List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name);
+
+    BasicFoodServiceModel getBasicFoodByName(String foodName);
 }
