@@ -50,82 +50,231 @@
             </tr>
             </tbody>
         </table>
-        <div id="percentage-bars" class="container row">
-            <div class="col-sm nutrients-progress-bars">
+        <div class="container row">
+            <div class="col-sm-6 nutrients-progress-bars">
                 <span>Calories</span>
-                <div class="progress position-relative mt-sm-2">
+                <div class="progress position-relative mb-sm-2">
                     <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
                          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">500 kcal / 2000 kcal
                         (25%)</small></div>
                 </div>
                 <span>Protein</span>
-                <div class="progress position-relative  mt-sm-2">
+                <div class="progress position-relative  mb-sm-2">
                     <div class="progress-bar bg-success text-dark" role="progressbar" style="width: 75%;"
                          aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">75 g / 100 g (75%)</small>
                     </div>
                 </div>
                 <span>Carbs</span>
-                <div class="progress position-relative  mt-sm-2">
+                <div class="progress position-relative  mb-sm-2">
                     <div class="progress-bar bg-info text-dark" role="progressbar" style="width: 100%;"
                          aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">100 g / 100 g (100%)</small>
                     </div>
                 </div>
                 <span>Fat</span>
-                <div id="progress-bar-fat" class="progress position-relative  mt-sm-2">
+                <div class="progress position-relative  mb-sm-2">
                     <div class="progress-bar bg-danger text-dark" role="progressbar" style="width: 45%;"
                          aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">44.6 g / 100 g (45%)</small>
                     </div>
                 </div>
             </div>
-            <div class="col-sm">
-                <div id="calories-breakdown-chart"></div>
+            <div class="col-sm-3">
+                <canvas id="myChart"></canvas>
             </div>
-            <div class="col-sm">
-                <div id="price-breakdown-chart"></div>
+            <div class="col-sm-3">
+                <canvas id="myChart2"></canvas>
             </div>
         </div>
+
+        <div class="container row">
+            <div class="col-sm">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="4"><h5 class="text-center">Vitamins</h5></th>
+                    </tr>
+                    </thead>
+                    <colgroup>
+                        <col style="width: 50%">
+                        <col style="width: 15%">
+                        <col style="width: 5%">
+                        <col style="width: 30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Fiber</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </main>
 
 <th:block th:include="~{common/footer}"/>
 </body>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load("current", {packages: ["corechart"]});
-    google.charts.setOnLoadCallback(drawCaloriesChart);
-    google.charts.setOnLoadCallback(drawPriceChart);
+<script>
+    let ctx = $('#myChart');
+    let ctx2 = $('#myChart2');
 
-    var options = {};
+    let data = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
 
-    function drawCaloriesChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Macronutrients', 'Calories'],
-            ['Protein', 1000],
-            ['Carbs', 2200],
-            ['Fat', 900]
-        ]);
+    let options = {
+        legend: {
+            display: false
+        },
+        animation: {
+            duration: 0
+        }
+    };
 
-        var chart = new google.visualization.PieChart(document.getElementById('calories-breakdown-chart'));
-        chart.draw(data, options);
-    }
+    let myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: options
+    });
 
-    function drawPriceChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Food', 'Price'],
-            ['Bread', 1.20],
-            ['Banana', 2.49],
-            ['Cucumber', 2],
-            ['Tomato', 2.11],
-            ['Skyr', 3.00],
-            ['Chicken Breast', 10.50]
-        ]);
-
-        var chart = new google.visualization.PieChart(document.getElementById('price-breakdown-chart'));
-        chart.draw(data, options);
-    }
-
+    let myChart2 = new Chart(ctx2, {
+        type: 'doughnut',
+        data: data,
+        options: options
+    })
 </script>
 </html>
