@@ -2,7 +2,7 @@
     width: 20%;
 }
 
-body {
+body:not('#index-body') {
     background-image: url('../images/background.jpg');
     background-position: center;
     background-attachment: fixed;
@@ -30,4 +30,13 @@ footer {
 
 .selected {
     background-color: #b9b9b6;
+}
+
+.progress {
+    height: 25px;
+}
+
+.progress-bar small {
+    font-size: 12px;
+    font-weight: bold;
 }
