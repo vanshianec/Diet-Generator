@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService {
@@ -21,11 +20,11 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
     private final CustomFoodRepository customFoodRepository;
     private final ModelMapper modelMapper;
 
-    protected FoodServiceImpl(ModelMapper modelMapper, BasicFoodRepository basicFoodRepository, CustomFoodRepository customFoodRepository, ModelMapper modelMapper1) {
+    protected FoodServiceImpl(ModelMapper modelMapper, BasicFoodRepository basicFoodRepository, CustomFoodRepository customFoodRepository) {
         super(modelMapper);
         this.basicFoodRepository = basicFoodRepository;
         this.customFoodRepository = customFoodRepository;
-        this.modelMapper = modelMapper1;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -55,14 +54,22 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
 
     @Override
     public List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name) {
-        return basicFoodRepository.findAllByNameContainingIgnoreCase(name)
-                .stream()
-                .map(f -> modelMapper.map(f, BasicFoodServiceModel.class))
-                .collect(Collectors.toList());
+        return super.getAllFoodsByMatchingName(name, basicFoodRepository, BasicFoodServiceModel.class);
+    }
+
+    @Override
+    public List<CustomFoodServiceModel> getAllCustomFoodsByMatchingName(String name) {
+        return super.getAllFoodsByMatchingName(name, customFoodRepository, CustomFoodServiceModel.class);
     }
 
     @Override
     public BasicFoodServiceModel getBasicFoodByName(String foodName) {
-        return modelMapper.map(basicFoodRepository.findByName(foodName), BasicFoodServiceModel.class);
+        return super.getFoodByName(foodName, basicFoodRepository, BasicFoodServiceModel.class);
     }
+
+    @Override
+    public CustomFoodServiceModel getCustomFoodByName(String foodName) {
+        return super.getFoodByName(foodName, customFoodRepository, CustomFoodServiceModel.class);
+    }
+
 }

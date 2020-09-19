@@ -20,5 +20,9 @@ public interface FoodService {
 
     List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name);
 
+    List<CustomFoodServiceModel> getAllCustomFoodsByMatchingName(String searchWord);
+
     BasicFoodServiceModel getBasicFoodByName(String foodName);
+
+    CustomFoodServiceModel getCustomFoodByName(String foodName);
 }

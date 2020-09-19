@@ -14,13 +14,17 @@ textarea {
 }
 
 footer {
-    position: fixed;
     bottom: 0;
     width: 100%;
 }
 
 .table-wrap {
     height: 250px;
+    overflow-y: auto;
+}
+
+.add-food-to-diary-table {
+    height: 500px;
     overflow-y: auto;
 }
 
@@ -41,29 +45,54 @@ footer {
     font-weight: bold;
 }
 
-.nutrients-progress-bars span{
+.progress-bar-custom-yellow {
+    background-color: rgba(255, 193, 7, 0.9);
+}
+
+.progress-bar-custom-green {
+    background-color: rgba(40, 167, 69, 0.9);
+}
+
+.progress-bar-custom-red {
+    background-color: rgba(220, 53, 69, 0.9);
+}
+
+.progress-bar-custom-blue {
+    background-color: rgba(0, 123, 255, 0.9);
+}
+
+.nutrients-progress-bars span {
     display: block;
     float: left;
     margin-right: 10px;
     width: 70px;
 }
 
+
 .relative {
     position: relative;
 }
 
 .absolute-center {
-    position:absolute;
-    top: 50%;
+    position: absolute;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.text-center{
-    text-align: center;
+#add-food-to-diary-modal-nutrients i {
+    margin-top: 5px;
+    margin-right: 10px;
 }
 
-p {
-    font-size: 1.5rem;
+#add-food-to-diary-modal-nutrients strong{
+    margin-right: 7px;
 }
 
+#add-food-to-diary-modal-nutrients p{
+    margin-right: 2px;
+}
+
+#food-general-data-table {
+    display: none;
+}

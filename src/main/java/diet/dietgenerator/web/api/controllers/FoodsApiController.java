@@ -2,7 +2,8 @@ package diet.dietgenerator.web.api.controllers;
 
 import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.web.api.models.BasicFoodNutrientsViewResponseModel;
-import diet.dietgenerator.web.api.models.BasicFoodSearchViewResponseModel;
+import diet.dietgenerator.web.api.models.CustomFoodGeneralViewResponseModel;
+import diet.dietgenerator.web.api.models.FoodSearchViewResponseModel;
 import diet.dietgenerator.web.api.models.FoodTableViewResponseModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -61,12 +62,22 @@ public class FoodsApiController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BasicFoodSearchViewResponseModel>> getFoodsBySearchWord(@RequestParam(value = "searchWord") String searchWord) {
+    public ResponseEntity<List<FoodSearchViewResponseModel>> getFoodsBySearchWord(@RequestParam(value = "foodType") String foodType,
+                                                                                  @RequestParam(value = "searchWord") String searchWord) {
 
-        List<BasicFoodSearchViewResponseModel> foods = foodService.getAllBasicFoodsByMatchingName(searchWord)
-                .stream()
-                .map(f -> modelMapper.map(f, BasicFoodSearchViewResponseModel.class))
-                .collect(Collectors.toList());
+        List<FoodSearchViewResponseModel> foods = null;
+
+        if (foodType.equals("basic")) {
+            foods = foodService.getAllBasicFoodsByMatchingName(searchWord)
+                    .stream()
+                    .map(f -> modelMapper.map(f, FoodSearchViewResponseModel.class))
+                    .collect(Collectors.toList());
+        } else if (foodType.equals("custom")) {
+            foods = foodService.getAllCustomFoodsByMatchingName(searchWord)
+                    .stream()
+                    .map(f -> modelMapper.map(f, FoodSearchViewResponseModel.class))
+                    .collect(Collectors.toList());
+        }
 
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
@@ -75,5 +86,21 @@ public class FoodsApiController {
     public ResponseEntity<BasicFoodNutrientsViewResponseModel> getFoodNutrients(@RequestParam(value = "foodName") String foodName) {
         BasicFoodNutrientsViewResponseModel food = modelMapper.map(foodService.getBasicFoodByName(foodName), BasicFoodNutrientsViewResponseModel.class);
         return new ResponseEntity<>(food, HttpStatus.OK);
+    }
+
+    @GetMapping("/general-data")
+    public ResponseEntity<CustomFoodGeneralViewResponseModel> getCustomFoodGeneralData(@RequestParam(value = "foodName") String foodName) {
+        CustomFoodGeneralViewResponseModel food = modelMapper.map(foodService.getCustomFoodByName(foodName), CustomFoodGeneralViewResponseModel.class);
+        return new ResponseEntity<>(food, HttpStatus.OK);
+    }
+
+    @GetMapping("/custom/all")
+    public ResponseEntity<List<FoodSearchViewResponseModel>> getAllCustomFoods() {
+        List<FoodSearchViewResponseModel> foods = foodService.getAllCustomFoods(Pageable.unpaged())
+                .stream()
+                .map(f -> modelMapper.map(f, FoodSearchViewResponseModel.class))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(foods, HttpStatus.OK);
     }
 }

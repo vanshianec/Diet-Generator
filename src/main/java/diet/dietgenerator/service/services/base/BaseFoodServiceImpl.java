@@ -35,4 +35,16 @@ public abstract class BaseFoodServiceImpl implements BaseFoodService {
                 .map(f -> modelMapper.map(f, typeParameterClass))
                 .collect(Collectors.toList());
     }
+
+    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllFoodsByMatchingName(String name,  BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+        return repository.findAllByNameContainingIgnoreCase(name)
+                .stream()
+                .map(f -> modelMapper.map(f, typeParameterClass))
+                .collect(Collectors.toList());
+    }
+
+    public <T extends BaseFoodServiceModel, K extends BaseFood> T getFoodByName(String foodName, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+        return modelMapper.map(repository.findByName(foodName), typeParameterClass);
+    }
+
 }

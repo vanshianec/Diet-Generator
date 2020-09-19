@@ -5,6 +5,7 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{common/head}"/>
+<link rel="stylesheet" href="/css/loaders/search-loader.css">
 <body id="index-body">
 <th:block th:include="~{common/header}"/>
 <main>
@@ -14,6 +15,98 @@
         </div>
     </th:block>
     <div class="container bg-light">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                data-target="#modalAddFoodToDiary">Add Food
+        </button>
+        <div id="modalAddFoodToDiary" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="col-sm-11 modal-title text-center">Add Food to Diary</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="form-group row col-sm d-flex justify-content-center">
+                                <th:block th:include="~{loaders/search-loader}"/>
+                                <input id="add-food-modal-input"
+                                       class="form-control form-control-sm col-sm-8" type="text"
+                                       placeholder="Search Food"
+                                       aria-label="Search">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="add-food-to-diary-table">
+                                <table id="add-food-to-diary-table"
+                                       class="table table-striped table-hover table-sm">
+                                    <tbody id="add-food-modal-foods-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <table id="food-general-data-table" class="table table-striped">
+                            <colgroup>
+                                <col style="width: 30%">
+                                <col style="width: 30%">
+                                <col style="width: 20%">
+                                <col style="width: 20%">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td class="align-middle">
+                                    <div class="relative">
+                                        <canvas id="myChart3"></canvas>
+                                        <div class="absolute-center text-center">
+                                            <strong id="food-general-calories"></strong>
+                                            <p class="font-weight-light">kcal</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td id="add-food-to-diary-modal-nutrients" class="align-middle">
+                                    <div class="row">
+                                        <i class="fa fa-circle" style="color:rgba(40, 167, 69, 0.9)"></i>
+                                        <strong>Protein: </strong>
+                                        <p id="food-general-protein"></p>
+                                        <p>g</p>
+                                    </div>
+                                    <div class="row">
+                                        <i class="fa fa-circle" style="color:rgba(0, 123, 255, 0.9)"></i>
+                                        <strong>Carbs: </strong>
+                                        <p id="food-general-carbs"></p>
+                                        <p>g</p>
+                                    </div>
+                                    <div class="row">
+                                        <i class="fa fa-circle" style="color:rgba(220, 53, 69, 0.9)"></i>
+                                        <strong>Fat: </strong>
+                                        <p id="food-general-fat"></p>
+                                        <p>g</p>
+                                    </div>
+                                    <div class="row">
+                                        <i class="fa fa-circle"></i>
+                                        <strong>Price: </strong>
+                                        <p id="food-general-price"></p>
+                                        <p>lv</p>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="form-group row">
+                                        <label class="form-label mt-sm-1" for="serving-size">Serving Size</label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <input id="serving-size" style="width: 90px;" class="form-control" type="number"/>
+                                        <p class="mt-sm-1 ml-sm-1">g</p>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <button class="btn btn-outline-success" type="button">Add Food</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table id="foods-diary-table" class="table table-striped table-hover table-sm">
             <thead>
             <tr>
@@ -48,113 +141,96 @@
                 <td>212</td>
                 <td>2.99 lv</td>
             </tr>
+            <tr>
+                <td>Apple</td>
+                <td>500g</td>
+                <td>212</td>
+                <td>2.99 lv</td>
+            </tr>
+            <tr>
+                <td>Apple</td>
+                <td>500g</td>
+                <td>212</td>
+                <td>2.99 lv</td>
+            </tr>
+            <tr>
+                <td>Apple</td>
+                <td>500g</td>
+                <td>212</td>
+                <td>2.99 lv</td>
+            </tr>
+            <tr>
+                <td>Apple</td>
+                <td>500g</td>
+                <td>212</td>
+                <td>2.99 lv</td>
+            </tr>
+            <tr>
+                <td>Apple</td>
+                <td>500g</td>
+                <td>212</td>
+                <td>2.99 lv</td>
+            </tr>
             </tbody>
         </table>
         <div class="container row">
             <div class="col-sm-6 nutrients-progress-bars">
                 <span>Calories</span>
                 <div class="progress position-relative mb-sm-2">
-                    <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                    <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                         style="width: 25%;"
                          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">500 kcal / 2000 kcal
                         (25%)</small></div>
                 </div>
                 <span>Protein</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar bg-success text-dark" role="progressbar" style="width: 75%;"
+                    <div class="progress-bar progress-bar-custom-green text-dark" role="progressbar" style="width: 75%;"
                          aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">75 g / 100 g (75%)</small>
                     </div>
                 </div>
                 <span>Carbs</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar bg-info text-dark" role="progressbar" style="width: 100%;"
+                    <div class="progress-bar progress-bar-custom-blue text-dark" role="progressbar" style="width: 100%;"
                          aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">100 g / 100 g (100%)</small>
                     </div>
                 </div>
                 <span>Fat</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar bg-danger text-dark" role="progressbar" style="width: 45%;"
+                    <div class="progress-bar progress-bar-custom-red text-dark" role="progressbar" style="width: 45%;"
                          aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"><small
                             class="justify-content-center d-flex position-absolute w-100">44.6 g / 100 g (45%)</small>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
-                <canvas id="myChart"></canvas>
+                <div class="relative">
+                    <canvas id="myChart"></canvas>
+                    <div class="absolute-center text-center">
+                        <strong>2290</strong>
+                        <p class="font-weight-light">kcal</p>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-3">
-                <canvas id="myChart2"></canvas>
+                <div class="relative">
+                    <canvas id="myChart2"></canvas>
+                    <div class="absolute-center text-center">
+                        <strong>6.67</strong>
+                        <p class="font-weight-light">lv.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="container row">
             <div class="col-sm">
                 <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <span>Fiber</span>
-                        </td>
-                        <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
-                        </td>
-                        <td>
-                            <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span>Fiber</span>
-                        </td>
-                        <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
-                        </td>
-                        <td>
-                            <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span>Fiber</span>
-                        </td>
-                        <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
-                        </td>
-                        <td>
-                            <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm">
-                <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th colspan="4"><h5 class="text-center">Vitamins</h5></th>
+                        <th colspan="4"><h5 class="text-center">General</h5></th>
                     </tr>
                     </thead>
                     <colgroup>
@@ -176,7 +252,8 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
                             </div>
@@ -184,7 +261,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span>Fiber</span>
+                            <span>Sugars</span>
                         </td>
                         <td>
                             <span>25 / 38</span>
@@ -194,7 +271,8 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
                             </div>
@@ -202,7 +280,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span>Fiber</span>
+                            <span>Added Sugar</span>
                         </td>
                         <td>
                             <span>25 / 38</span>
@@ -212,7 +290,606 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 25%;"
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Sodium</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Cholesterol</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="4"><h5 class="text-center">Vitamins</h5></th>
+                    </tr>
+                    </thead>
+                    <colgroup>
+                        <col style="width: 50%">
+                        <col style="width: 15%">
+                        <col style="width: 5%">
+                        <col style="width: 30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span>B1 (Thiamine)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B2 (Riboflavin)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B3 (Niacin)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B5 (Pantothenic Acid)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B6 (Pyridoxine)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B9 (Folate)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>B12 (Cobalamin)</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Vitamin A</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Vitamin C</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Vitamin D</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Vitamin E</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Vitamin K</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="4"><h5 class="text-center">Fat</h5></th>
+                    </tr>
+                    </thead>
+                    <colgroup>
+                        <col style="width: 50%">
+                        <col style="width: 15%">
+                        <col style="width: 5%">
+                        <col style="width: 30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span>Saturated</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Trans-Fats</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Monounsaturated</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Polyunsaturated</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Omega-3</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Omega-6</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="4"><h5 class="text-center">Minerals</h5></th>
+                    </tr>
+                    </thead>
+                    <colgroup>
+                        <col style="width: 50%">
+                        <col style="width: 15%">
+                        <col style="width: 5%">
+                        <col style="width: 30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span>Calcium</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Copper</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Iron</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Magnesium</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Manganese</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Phosphorus</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Potassium</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Selenium</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Zinc</span>
+                        </td>
+                        <td>
+                            <span>25 / 38</span>
+                        </td>
+                        <td>
+                            <span>g</span>
+                        </td>
+                        <td>
+                            <div class="progress position-relative">
+                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
                             </div>
@@ -230,27 +907,22 @@
 <script>
     let ctx = $('#myChart');
     let ctx2 = $('#myChart2');
+    let ctx3 = $('#myChart3');
 
     let data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Protein', 'Carbs', 'Fat'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [180, 220, 45],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(92, 184, 92, 0.8)',
+                'rgba(2, 117, 216, 0.8)',
+                'rgba(217, 83, 79, 0.8)',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(92, 184, 92, 1)',
+                'rgba(2, 117, 216, 1)',
+                'rgba(217, 83, 79, 1)',
             ],
             borderWidth: 1
         }]
@@ -262,6 +934,13 @@
         },
         animation: {
             duration: 0
+        },
+        cutoutPercentage: 70,
+        responsive: true,
+        tooltips: {
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            displayColors: false,
+            yAlign: 'top'
         }
     };
 
@@ -275,6 +954,16 @@
         type: 'doughnut',
         data: data,
         options: options
+    });
+
+    let myChart3 = new Chart(ctx3, {
+        type: 'doughnut',
+        data: data,
+        options: options
     })
 </script>
+<script th:src="@{/js/foods/urls.js}" type="text/javascript"></script>
+<script th:src="@{/js/foods/loaders.js}" type="text/javascript"></script>
+<script th:src="@{/js/foods/fetch-handlers.js}" type="text/javascript"></script>
+<script th:src="@{/js/foods/search.js}" type="text/javascript"></script>
 </html>

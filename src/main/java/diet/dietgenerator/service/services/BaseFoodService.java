@@ -13,4 +13,9 @@ public interface BaseFoodService {
     <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAll(Pageable pageable, BaseFoodRepository<K> repository, Class<T> typeParameterClass);
 
     <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllByFoodGroup(String foodGroup, Pageable pageable, BaseFoodRepository<K> repository, Class<T> typeParameterClass);
+
+    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllFoodsByMatchingName(String name, BaseFoodRepository<K> repository, Class<T> typeParameterClass);
+
+    public <T extends BaseFoodServiceModel, K extends BaseFood> T getFoodByName(String foodName, BaseFoodRepository<K> repository, Class<T> typeParameterClass);
+
 }

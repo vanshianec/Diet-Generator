@@ -1,27 +1,72 @@
+//TODO !!! think of ways to split this code for each html page individually
+
+let firstModalLaunch = true;
 let timer = null;
 let searchWord = '';
+let foodType = 'basic';
 
-$('#search-food').on('keyup', function () {
+$('#modalAddFoodToDiary').on('show.bs.modal', function (e) {
+    if (firstModalLaunch) {
+        loadAllCustomFoods();
+        firstModalLaunch = false;
+    }
+});
+
+$('#create-food-modal-input').on('keyup', function () {
 
     let searchText = $(this).val();
+    foodType = 'basic';
+    loadFoodsContainingKeyWord(searchText);
+});
 
+$('#add-food-modal-input').on('keyup', function () {
+
+    let searchText = $(this).val();
+    foodType = 'custom';
+    $('#food-general-data-table').hide();
+
+    if (searchText.length === 0) {
+        loadAllCustomFoods();
+        return;
+    }
+
+    loadFoodsContainingKeyWord(searchText);
+});
+
+const loadAllCustomFoods = function () {
+    searchLoader.show();
+    foodType = 'custom';
+    fetch(URLS.searchCustomFoods)
+        .then(handleResponse)
+        .then(displayFoodsList)
+        .catch(handleError);
+};
+
+const loadFoodsContainingKeyWord = function (searchText) {
     if (searchText.length > 2) {
         searchWord = searchText;
         clearTimeout(timer);
         timer = setTimeout(searchFoods, 500);
     }
-});
+};
 
 function searchFoods() {
     searchLoader.show();
-    fetch(URLS.searchFoods + '?searchWord=' + searchWord)
+    fetch(URLS.searchFoods + '?searchWord=' + searchWord + '&foodType=' + foodType)
         .then(handleResponse)
         .then(displayFoodsList)
         .catch(handleError);
 }
 
 const displayFoodsList = function (foods) {
-    let $foodsList = $('#foods-list');
+    let $foodsList;
+
+    if (foodType === 'basic') {
+        $foodsList = $('#create-food-modal-foods-list');
+    } else if (foodType === 'custom') {
+        $foodsList = $('#add-food-modal-foods-list');
+    }
+
     $foodsList.html('');
 
     if (foods.length === 0) {
@@ -48,16 +93,25 @@ const setClickEvent = function () {
         let $this = $(this);
         $clickable.removeClass('selected');
         $this.addClass('selected');
+        $('#food-general-data-table').show();
 
         let foodName = $(this).text();
-        fetch(URLS.retrieveFoodNutrition + '?foodName=' + foodName)
-            .then(handleResponse)
-            .then(setCreateFoodNutrients)
-            .catch(handleError);
+
+        if (foodType === 'basic') {
+            fetch(URLS.retrieveFoodNutrition + '?foodName=' + foodName)
+                .then(handleResponse)
+                .then(setCreateFoodNutrients)
+                .catch(handleError);
+        } else if (foodType === 'custom') {
+            fetch(URLS.retrieveFoodGeneralData + '?foodName=' + foodName)
+                .then(handleResponse)
+                .then(displayFoodGeneralData)
+                .catch(handleError);
+        }
     });
 };
 
-const setCreateFoodNutrients = function(food){
+const setCreateFoodNutrients = function (food) {
     $('#food-calories').val(food.calories);
     $('#food-fat').val(food.fat);
     $('#food-carbohydrates').val(food.carbohydrates);
@@ -95,4 +149,19 @@ const setCreateFoodNutrients = function(food){
     $('#food-fat-monounsaturated').val(food.monounsaturatedFats);
     $('#food-fat-polyunsaturated').val(food.polyunsaturatedFats);
 };
+
+const displayFoodGeneralData = function ({calories, fat, carbohydrates, protein, price, productWeight}) {
+
+    $('#food-general-calories').text(calories);
+    $('#food-general-fat').text(roundToTwoDecimalPlaces(fat));
+    $('#food-general-carbs').text(roundToTwoDecimalPlaces(carbohydrates));
+    $('#food-general-protein').text(roundToTwoDecimalPlaces(protein));
+    $('#food-general-price').text(roundToTwoDecimalPlaces(price));
+    $('#serving-size').val(productWeight);
+};
+
+const roundToTwoDecimalPlaces = function (num) {
+    return (Math.round((num + Number.EPSILON) * 100) / 100).toFixed(2);
+};
+
 
