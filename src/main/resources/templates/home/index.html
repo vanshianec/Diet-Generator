@@ -16,9 +16,9 @@
     </th:block>
     <div class="container bg-light">
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                data-target="#modalAddFoodToDiary">Add Food
+                data-target="#modal-add-food-to-diary">Add Food
         </button>
-        <div id="modalAddFoodToDiary" class="modal fade" role="dialog">
+        <div id="modal-add-food-to-diary" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,12 +93,15 @@
                                         <label class="form-label mt-sm-1" for="serving-size">Serving Size</label>
                                     </div>
                                     <div class="form-group row">
-                                        <input id="serving-size" style="width: 90px;" class="form-control" type="number"/>
+                                        <input id="serving-size" style="width: 90px;" class="form-control"
+                                               type="number"/>
                                         <p class="mt-sm-1 ml-sm-1">g</p>
                                     </div>
                                 </td>
                                 <td class="align-middle">
-                                    <button id="add-food-to-diary-button" class="btn btn-outline-success" type="button">Add Food</button>
+                                    <button id="add-food-to-diary-button" class="btn btn-outline-success" type="button">
+                                        Add Food
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
@@ -129,31 +132,32 @@
             <div class="col-sm-6 nutrients-progress-bars">
                 <span>Calories</span>
                 <div class="progress position-relative mb-sm-2">
-                    <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                         style="width: 25%;"
-                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100">500 kcal / 2000 kcal
-                        (25%)</small></div>
+                    <div id="diary-data-calories" class="progress-bar progress-bar-custom-yellow text-dark"
+                         role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                            class="justify-content-center d-flex position-absolute w-100"></small></div>
                 </div>
                 <span>Protein</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar progress-bar-custom-green text-dark" role="progressbar" style="width: 75%;"
-                         aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100">75 g / 100 g (75%)</small>
+                    <div id="diary-data-protein" class="progress-bar progress-bar-custom-green text-dark"
+                         role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                            class="justify-content-center d-flex position-absolute w-100"></small>
                     </div>
                 </div>
                 <span>Carbs</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar progress-bar-custom-blue text-dark" role="progressbar" style="width: 100%;"
-                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100">100 g / 100 g (100%)</small>
+                    <div id="diary-data-carbs" class="progress-bar progress-bar-custom-blue text-dark"
+                         role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                            class="justify-content-center d-flex position-absolute w-100"></small>
                     </div>
                 </div>
                 <span>Fat</span>
                 <div class="progress position-relative  mb-sm-2">
-                    <div class="progress-bar progress-bar-custom-red text-dark" role="progressbar" style="width: 45%;"
-                         aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100">44.6 g / 100 g (45%)</small>
+                    <div id="diary-data-fat" class="progress-bar progress-bar-custom-red text-dark" role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                            class="justify-content-center d-flex position-absolute w-100"></small>
                     </div>
                 </div>
             </div>
@@ -204,7 +208,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fiber" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -223,7 +227,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-sugars" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -242,7 +246,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-added-sugar" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -261,7 +265,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-sodium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -280,7 +284,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-cholesterol" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -314,7 +318,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b1" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -333,7 +337,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b2" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -352,7 +356,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b3" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -371,7 +375,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b5" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -390,7 +394,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b6" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -409,7 +413,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b9" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -428,7 +432,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-b12" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -447,7 +451,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-a" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -466,7 +470,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-c" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -485,7 +489,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-d" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -504,7 +508,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-e" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -523,7 +527,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-vitamin-k" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -559,7 +563,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-saturated" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -578,7 +582,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-trans-fats" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -597,7 +601,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-monounsaturated"  class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -616,7 +620,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-polyunsaturated" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -635,7 +639,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-omega3" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -654,7 +658,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-fat-omega6" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -688,7 +692,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-calcium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -707,7 +711,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-copper" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -726,7 +730,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-iron" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -745,7 +749,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-magnesium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -764,7 +768,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-manganese" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -783,7 +787,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-phosphorus" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -802,7 +806,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-potassium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -821,7 +825,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-selenium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>
@@ -840,7 +844,7 @@
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                <div id="diary-data-zinc" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
                                      style="width: 25%;"
                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
                                         class="justify-content-center d-flex position-absolute w-100">25%</small></div>

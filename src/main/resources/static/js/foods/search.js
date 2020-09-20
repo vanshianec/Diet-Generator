@@ -14,7 +14,7 @@ let foodServingSize;
 
 //TODO see correct camel case for id naming
 
-$('#modalAddFoodToDiary').on('show.bs.modal', function (e) {
+$('#modal-add-food-to-diary').on('show.bs.modal', function (e) {
     if (firstModalLaunch) {
         loadAllCustomFoods();
         firstModalLaunch = false;
@@ -45,7 +45,7 @@ $('#add-food-modal-input').on('keyup', function () {
 const loadAllCustomFoods = function () {
     searchLoader.show();
     foodType = 'custom';
-    fetch(URLS.searchCustomFoods)
+    fetch(URLS.getAllCustomFoods)
         .then(handleResponse)
         .then(displayFoodsList)
         .catch(handleError);
@@ -178,10 +178,6 @@ const convertDataPerServing = function (data, servingSize, defaultServingSize) {
     return (servingSize / defaultServingSize) * data;
 };
 
-const roundToTwoDecimalPlaces = function (num) {
-    return (Math.round((num + Number.EPSILON) * 100) / 100);
-};
-
 $('#serving-size').on('keyup', function () {
     let servingSize = $(this).val();
     updateDisplayData(servingSize);
@@ -200,10 +196,10 @@ const updateDisplayData = function (servingSize) {
     let proteinPerServing = convertDataPerServing(foodProteinPerHundredGrams, servingSize, 100);
     let pricePerServing = convertDataPerServing(foodPricePerServing, servingSize, foodServingSize);
 
-    let roundedFat = roundToTwoDecimalPlaces(fatPerServing);
-    let roundedCarbs = roundToTwoDecimalPlaces(carbsPerServing);
-    let roundedProtein = roundToTwoDecimalPlaces(proteinPerServing);
-    let roundedPrice = roundToTwoDecimalPlaces(pricePerServing).toFixed(2);
+    let roundedFat = fatPerServing.toFixed(1);
+    let roundedCarbs = carbsPerServing.toFixed(1);
+    let roundedProtein = proteinPerServing.toFixed(1);
+    let roundedPrice = pricePerServing.toFixed(2);
 
     $calories.text(caloriesPerServing);
     $fat.text(roundedFat);
