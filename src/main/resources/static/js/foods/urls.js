@@ -3,5 +3,5 @@ const URLS = {
     searchFoods: '/api/foods/search',
     retrieveFoodNutrition: '/api/foods/nutrition',
     retrieveFoodGeneralData : '/api/foods/general-data',
-    searchCustomFoods : '/api/foods/custom/all'
+    getCustomFood : '/api/foods/custom'
 };

@@ -3,7 +3,16 @@
 let firstModalLaunch = true;
 let timer = null;
 let searchWord = '';
+let foodId;
 let foodType = 'basic';
+let foodFatPerHundredGrams;
+let foodCarbsPerHundredGrams;
+let foodProteinPerHundredGrams;
+let foodCaloriesPerHundredGrams;
+let foodPricePerServing;
+let foodServingSize;
+
+//TODO see correct camel case for id naming
 
 $('#modalAddFoodToDiary').on('show.bs.modal', function (e) {
     if (firstModalLaunch) {
@@ -77,7 +86,7 @@ const displayFoodsList = function (foods) {
 
     let columns = '';
     foods.forEach(food => {
-        columns += `<tr><td class="clickable">${food.name}</td></tr>`
+        columns += `<tr><td data-id=${food.id} class="clickable">${food.name}, ${food.purchasePlace}</td></tr>`
     });
 
     $foodsList.append(columns);
@@ -94,16 +103,15 @@ const setClickEvent = function () {
         $clickable.removeClass('selected');
         $this.addClass('selected');
         $('#food-general-data-table').show();
-
-        let foodName = $(this).text();
+        foodId = $(this).data("id");
 
         if (foodType === 'basic') {
-            fetch(URLS.retrieveFoodNutrition + '?foodName=' + foodName)
+            fetch(URLS.retrieveFoodNutrition + '?foodId=' + foodId)
                 .then(handleResponse)
                 .then(setCreateFoodNutrients)
                 .catch(handleError);
         } else if (foodType === 'custom') {
-            fetch(URLS.retrieveFoodGeneralData + '?foodName=' + foodName)
+            fetch(URLS.retrieveFoodGeneralData + '?foodId=' + foodId)
                 .then(handleResponse)
                 .then(displayFoodGeneralData)
                 .catch(handleError);
@@ -151,17 +159,62 @@ const setCreateFoodNutrients = function (food) {
 };
 
 const displayFoodGeneralData = function ({calories, fat, carbohydrates, protein, price, productWeight}) {
+    foodCaloriesPerHundredGrams = calories;
+    foodFatPerHundredGrams = fat;
+    foodCarbsPerHundredGrams = carbohydrates;
+    foodProteinPerHundredGrams = protein;
+    foodPricePerServing = price;
+    foodServingSize = productWeight;
 
-    $('#food-general-calories').text(calories);
-    $('#food-general-fat').text(roundToTwoDecimalPlaces(fat));
-    $('#food-general-carbs').text(roundToTwoDecimalPlaces(carbohydrates));
-    $('#food-general-protein').text(roundToTwoDecimalPlaces(protein));
-    $('#food-general-price').text(roundToTwoDecimalPlaces(price));
-    $('#serving-size').val(productWeight);
+    updateDisplayData(productWeight);
+};
+
+const convertDataPerServing = function (data, servingSize, defaultServingSize) {
+
+    if (defaultServingSize === undefined) {
+        defaultServingSize = 100;
+    }
+
+    return (servingSize / defaultServingSize) * data;
 };
 
 const roundToTwoDecimalPlaces = function (num) {
-    return (Math.round((num + Number.EPSILON) * 100) / 100).toFixed(2);
+    return (Math.round((num + Number.EPSILON) * 100) / 100);
 };
 
+$('#serving-size').on('keyup', function () {
+    let servingSize = $(this).val();
+    updateDisplayData(servingSize);
+});
 
+const updateDisplayData = function (servingSize) {
+    let $calories = $('#food-general-calories');
+    let $fat = $('#food-general-fat');
+    let $carbs = $('#food-general-carbs');
+    let $protein = $('#food-general-protein');
+    let $price = $('#food-general-price');
+
+    let caloriesPerServing = parseInt(convertDataPerServing(foodCaloriesPerHundredGrams, servingSize, 100));
+    let fatPerServing = convertDataPerServing(foodFatPerHundredGrams, servingSize, 100);
+    let carbsPerServing = convertDataPerServing(foodCarbsPerHundredGrams, servingSize, 100);
+    let proteinPerServing = convertDataPerServing(foodProteinPerHundredGrams, servingSize, 100);
+    let pricePerServing = convertDataPerServing(foodPricePerServing, servingSize, foodServingSize);
+
+    let roundedFat = roundToTwoDecimalPlaces(fatPerServing);
+    let roundedCarbs = roundToTwoDecimalPlaces(carbsPerServing);
+    let roundedProtein = roundToTwoDecimalPlaces(proteinPerServing);
+    let roundedPrice = roundToTwoDecimalPlaces(pricePerServing).toFixed(2);
+
+    $calories.text(caloriesPerServing);
+    $fat.text(roundedFat);
+    $carbs.text(roundedCarbs);
+    $protein.text(roundedProtein);
+    $price.text(roundedPrice);
+    $('#serving-size').val(servingSize);
+
+    addFoodToDiaryChart.data.datasets[0].data[0] = roundedProtein;
+    addFoodToDiaryChart.data.datasets[0].data[1] = roundedCarbs;
+    addFoodToDiaryChart.data.datasets[0].data[2] = roundedFat;
+
+    addFoodToDiaryChart.update();
+};

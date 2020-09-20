@@ -1,18 +1,15 @@
-package diet.dietgenerator.service.models.food.base;
+package diet.dietgenerator.web.api.models;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @Getter
 @Setter
-public abstract class BaseFoodServiceModel {
-
-    private Long id;
-    private String name;
-    private String foodGroup;
+@NoArgsConstructor
+@AllArgsConstructor
+public class FoodNutrientsViewResponseModel {
     private Integer calories;
     private Float fat;
     private Float carbohydrates;
@@ -49,5 +46,4 @@ public abstract class BaseFoodServiceModel {
     private Float vitaminK;
     private Float monounsaturatedFats;
     private Float polyunsaturatedFats;
-
 }

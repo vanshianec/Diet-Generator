@@ -1,10 +1,7 @@
 package diet.dietgenerator.web.api.controllers;
 
 import diet.dietgenerator.service.services.FoodService;
-import diet.dietgenerator.web.api.models.BasicFoodNutrientsViewResponseModel;
-import diet.dietgenerator.web.api.models.CustomFoodGeneralViewResponseModel;
-import diet.dietgenerator.web.api.models.FoodSearchViewResponseModel;
-import diet.dietgenerator.web.api.models.FoodTableViewResponseModel;
+import diet.dietgenerator.web.api.models.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -83,14 +80,24 @@ public class FoodsApiController {
     }
 
     @GetMapping("/nutrition")
-    public ResponseEntity<BasicFoodNutrientsViewResponseModel> getFoodNutrients(@RequestParam(value = "foodName") String foodName) {
-        BasicFoodNutrientsViewResponseModel food = modelMapper.map(foodService.getBasicFoodByName(foodName), BasicFoodNutrientsViewResponseModel.class);
+    public ResponseEntity<FoodNutrientsViewResponseModel> getFoodNutrients(@RequestParam(value = "foodId") Long id) {
+        FoodNutrientsViewResponseModel food = modelMapper.map(foodService.getBasicFoodById(id), FoodNutrientsViewResponseModel.class);
+        return new ResponseEntity<>(food, HttpStatus.OK);
+    }
+
+    @GetMapping("/custom")
+    ResponseEntity<CustomFoodViewResponseModel> getCustomFood(@RequestParam(value = "foodId") Long id,
+                                                              @RequestParam(value = "servingSize", required = false) Integer servingSize) {
+        CustomFoodViewResponseModel food = modelMapper.map(foodService.getCustomFoodById(id), CustomFoodViewResponseModel.class);
+        if (servingSize != null) {
+            food.setDynamicProductWeight(servingSize);
+        }
         return new ResponseEntity<>(food, HttpStatus.OK);
     }
 
     @GetMapping("/general-data")
-    public ResponseEntity<CustomFoodGeneralViewResponseModel> getCustomFoodGeneralData(@RequestParam(value = "foodName") String foodName) {
-        CustomFoodGeneralViewResponseModel food = modelMapper.map(foodService.getCustomFoodByName(foodName), CustomFoodGeneralViewResponseModel.class);
+    public ResponseEntity<CustomFoodGeneralViewResponseModel> getCustomFoodGeneralData(@RequestParam(value = "foodId") Long id) {
+        CustomFoodGeneralViewResponseModel food = modelMapper.map(foodService.getCustomFoodById(id), CustomFoodGeneralViewResponseModel.class);
         return new ResponseEntity<>(food, HttpStatus.OK);
     }
 

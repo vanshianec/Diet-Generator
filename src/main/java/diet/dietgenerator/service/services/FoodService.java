@@ -2,6 +2,7 @@ package diet.dietgenerator.service.services;
 
 import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
 import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
+import diet.dietgenerator.web.api.models.CustomFoodViewResponseModel;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface FoodService {
 
     List<CustomFoodServiceModel> getAllCustomFoodsByMatchingName(String searchWord);
 
-    BasicFoodServiceModel getBasicFoodByName(String foodName);
+    BasicFoodServiceModel getBasicFoodById(Long id);
 
-    CustomFoodServiceModel getCustomFoodByName(String foodName);
+    CustomFoodServiceModel getCustomFoodById(Long id);
 }

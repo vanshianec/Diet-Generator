@@ -63,13 +63,12 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
     }
 
     @Override
-    public BasicFoodServiceModel getBasicFoodByName(String foodName) {
-        return super.getFoodByName(foodName, basicFoodRepository, BasicFoodServiceModel.class);
+    public BasicFoodServiceModel getBasicFoodById(Long id) {
+        return super.getFoodById(id, basicFoodRepository, BasicFoodServiceModel.class);
     }
 
     @Override
-    public CustomFoodServiceModel getCustomFoodByName(String foodName) {
-        return super.getFoodByName(foodName, customFoodRepository, CustomFoodServiceModel.class);
+    public CustomFoodServiceModel getCustomFoodById(Long id) {
+        return super.getFoodById(id, customFoodRepository, CustomFoodServiceModel.class);
     }
-
 }

@@ -10,5 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoodSearchViewResponseModel {
+    private Long id;
     private String name;
+    private String purchasePlace;
 }

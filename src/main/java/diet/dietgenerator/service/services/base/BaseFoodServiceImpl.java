@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class BaseFoodServiceImpl implements BaseFoodService {
@@ -43,8 +44,9 @@ public abstract class BaseFoodServiceImpl implements BaseFoodService {
                 .collect(Collectors.toList());
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood> T getFoodByName(String foodName, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
-        return modelMapper.map(repository.findByName(foodName), typeParameterClass);
+    public <T extends BaseFoodServiceModel, K extends BaseFood> T getFoodById(Long id, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+        Optional<K> food = repository.findById(id);
+        return modelMapper.map(food.get(), typeParameterClass);
     }
 
 }

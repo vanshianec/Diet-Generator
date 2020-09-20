@@ -12,6 +12,7 @@ public class HandleAllExceptionsController {
     public ModelAndView handleException(Throwable exception) {
         ModelAndView modelAndView = new ModelAndView("error/error.html");
         modelAndView.addObject("exceptionMessage", exception.getMessage());
+        exception.printStackTrace();
         return modelAndView;
     }
 }
