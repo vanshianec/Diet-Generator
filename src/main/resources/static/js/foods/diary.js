@@ -42,7 +42,7 @@ const displayFoodInDiary = function (food) {
     foodsInDiaryList.push(food);
     let convertedFood = convertFoodData(food, food.dynamicProductWeight);
     addFoodToDiaryTable(convertedFood);
-    displayGeneralFoodData(convertedFood);
+    displayFoodData(convertedFood);
     //displayMicronutrientsFoodData(food);
 };
 
@@ -96,7 +96,7 @@ const convertFoodData = function (food, newServingSize) {
     foodCopy.vitaminK = convertDataPerServing(food.vitaminK, newServingSize);
     foodCopy.monounsaturatedFats = convertDataPerServing(food.monounsaturatedFats, newServingSize);
     foodCopy.polyunsaturatedFats = convertDataPerServing(food.polyunsaturatedFats, newServingSize);
-    foodCopy.price = convertDataPerServing(food.price, newServingSize, food.productWeight).toFixed(2);
+    foodCopy.price = convertDataPerServing(food.price, newServingSize, food.productWeight);
 
     return foodCopy;
 };
@@ -113,24 +113,28 @@ const setProgressBar = function ($bar, data, goalData, macros) {
         $bar.width(`${0}%`);
         $bar.attr('aria-valuenow', 0);
         $bar.find('small').text('No target');
-        $bar.parent().parent().parent().find('td:nth-child(2) span').text(formattedData);
+        $bar.parent().parent().parent().find('td:nth-child(2) span:first').text(formattedData);
         return;
     }
 
     let percentage = parseInt(calculatePercentage(data, goalData));
     $bar.width(`${percentage}%`);
     $bar.attr('aria-valuenow', percentage);
+    let barTextTag = $bar.find('small');
 
     if (macros) {
-        $bar.find('small').text(`${formattedData} g / ${goalData} g (${percentage}%)`);
+        barTextTag.text(`${formattedData} g / ${goalData} g (${percentage}%)`);
     } else {
-        $bar.parent().parent().parent().find('td:nth-child(2) span').text(`${formattedData} / ${goalData}`);
-        $bar.find('small').text(`${percentage}%`);
+        $bar.parent().parent().parent().find('td:nth-child(2) span:first').text(`${formattedData} / ${goalData}`);
+        barTextTag.text(`${percentage}%`);
     }
 };
 
-function displayGeneralFoodData(food) {
-    setProgressBar($('#diary-data-calories'), food.calories, goalCalories, true);
+function displayFoodData(food) {
+    let caloriesBar = $('#diary-data-calories');
+    setProgressBar(caloriesBar, food.calories, goalCalories, true);
+    let caloriesTextField = caloriesBar.find('small');
+    caloriesTextField.text(caloriesTextField.text().replaceAll('g', 'kcal'));
     setProgressBar($('#diary-data-protein'), food.protein, goalProtein, true);
     setProgressBar($('#diary-data-fat'), food.fat, goalFat, true);
     setProgressBar($('#diary-data-carbs'), food.carbohydrates, goalCarbs, true);
@@ -166,6 +170,21 @@ function displayGeneralFoodData(food) {
     setProgressBar($('#diary-data-potassium'), food.potassium, goalPotassium);
     setProgressBar($('#diary-data-selenium'), food.selenium, goalSelenium);
     setProgressBar($('#diary-data-zinc'), food.zinc, goalZinc);
+
+    $('#calories-breakdown-calories-amount').text(food.calories);
+    $('#price-breakdown-price-amount').text(food.price.toFixed(2));
+    caloriesBreakdownChart.data.datasets[0].data[0] = food.protein;
+    caloriesBreakdownChart.data.datasets[0].data[1] = food.carbohydrates;
+    caloriesBreakdownChart.data.datasets[0].data[2] = food.fat;
+    caloriesBreakdownChart.update();
+
+    priceBreakdownChart.data.datasets[0].data.push(food.price);
+    priceBreakdownChart.data.labels.push(food.name);
+    priceBreakdownChart.data.datasets[0].backgroundColor.push('rgba(92, 184, 92, 0.8)');
+    priceBreakdownChart.data.datasets[0].borderColor.push('rgba(92, 184, 92, 1)');
+    priceBreakdownChart.options.tooltips.callbacks.title = formatTitle;
+    priceBreakdownChart.update();
+
 }
 
 

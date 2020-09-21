@@ -208,9 +208,9 @@ const updateDisplayData = function (servingSize) {
     $price.text(roundedPrice);
     $('#serving-size').val(servingSize);
 
-    addFoodToDiaryChart.data.datasets[0].data[0] = roundedProtein;
-    addFoodToDiaryChart.data.datasets[0].data[1] = roundedCarbs;
-    addFoodToDiaryChart.data.datasets[0].data[2] = roundedFat;
+    addFoodToDiaryChart.data.datasets[0].data[0] = proteinPerServing;
+    addFoodToDiaryChart.data.datasets[0].data[1] = carbsPerServing;
+    addFoodToDiaryChart.data.datasets[0].data[2] = fatPerServing;
 
     addFoodToDiaryChart.update();
 };

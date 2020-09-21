@@ -120,68 +120,62 @@
             </tr>
             </thead>
             <tbody id="diary-foods-list">
-            <tr>
-                <td>Apple</td>
-                <td>500g</td>
-                <td>212</td>
-                <td>2.99 lv</td>
-            </tr>
             </tbody>
         </table>
         <div class="container row">
             <div class="col-sm-6 nutrients-progress-bars">
                 <span>Calories</span>
-                <div class="progress position-relative mb-sm-2">
+                <div class="progress position-relative mb-sm-2 progress-no-custom-color">
                     <div id="diary-data-calories" class="progress-bar progress-bar-custom-yellow text-dark"
                          role="progressbar"
                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100"></small></div>
+                            class="justify-content-center d-flex position-absolute w-100">0 kcal</small></div>
                 </div>
                 <span>Protein</span>
-                <div class="progress position-relative  mb-sm-2">
+                <div class="progress position-relative  mb-sm-2 progress-no-custom-color">
                     <div id="diary-data-protein" class="progress-bar progress-bar-custom-green text-dark"
                          role="progressbar"
                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100"></small>
+                            class="justify-content-center d-flex position-absolute w-100">0 g</small>
                     </div>
                 </div>
                 <span>Carbs</span>
-                <div class="progress position-relative  mb-sm-2">
+                <div class="progress position-relative  mb-sm-2 progress-no-custom-color">
                     <div id="diary-data-carbs" class="progress-bar progress-bar-custom-blue text-dark"
                          role="progressbar"
                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100"></small>
+                            class="justify-content-center d-flex position-absolute w-100">0 g</small>
                     </div>
                 </div>
                 <span>Fat</span>
-                <div class="progress position-relative  mb-sm-2">
+                <div class="progress position-relative  mb-sm-2 progress-no-custom-color">
                     <div id="diary-data-fat" class="progress-bar progress-bar-custom-red text-dark" role="progressbar"
                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
-                            class="justify-content-center d-flex position-absolute w-100"></small>
+                            class="justify-content-center d-flex position-absolute w-100">0 g</small>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="relative">
-                    <canvas id="myChart"></canvas>
+                    <canvas id="calories-breakdown-chart"></canvas>
                     <div class="absolute-center text-center">
-                        <strong>2290</strong>
+                        <strong id="calories-breakdown-calories-amount">0</strong>
                         <p class="font-weight-light">kcal</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="relative">
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="price-breakdown-chart"></canvas>
                     <div class="absolute-center text-center">
-                        <strong>6.67</strong>
+                        <strong id="price-breakdown-price-amount">0</strong>
                         <p class="font-weight-light">lv.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="container row">
+        <div id="micronutrients-container" class="container row">
             <div class="col-sm">
                 <table class="table table-striped">
                     <thead>
@@ -190,9 +184,8 @@
                     </tr>
                     </thead>
                     <colgroup>
-                        <col style="width: 50%">
-                        <col style="width: 15%">
-                        <col style="width: 5%">
+                        <col style="width: 35%">
+                        <col style="width: 35%">
                         <col style="width: 30%">
                     </colgroup>
                     <tbody>
@@ -201,17 +194,16 @@
                             <span>Fiber</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
+                            <span>0</span>
                             <span>g</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fiber" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fiber" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -220,17 +212,16 @@
                             <span>Sugars</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
+                            <span>0</span>
                             <span>g</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-sugars" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-sugars" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -239,17 +230,16 @@
                             <span>Added Sugar</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
+                            <span>0</span>
                             <span>g</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-added-sugar" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-added-sugar"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -258,17 +248,16 @@
                             <span>Sodium</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-sodium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-sodium" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -277,17 +266,16 @@
                             <span>Cholesterol</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-cholesterol" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-cholesterol"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -300,9 +288,8 @@
                     </tr>
                     </thead>
                     <colgroup>
-                        <col style="width: 50%">
-                        <col style="width: 15%">
-                        <col style="width: 5%">
+                        <col style="width: 35%">
+                        <col style="width: 35%">
                         <col style="width: 30%">
                     </colgroup>
                     <tbody>
@@ -311,17 +298,16 @@
                             <span>B1 (Thiamine)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b1" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b1"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -330,36 +316,35 @@
                             <span>B2 (Riboflavin)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b2" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b2"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span>B3 (Niacin)</span>
+                            <span>mg</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b3" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b3"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -368,17 +353,16 @@
                             <span>B5 (Pantothenic Acid)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b5" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b5"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -387,17 +371,16 @@
                             <span>B6 (Pyridoxine)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b6" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b6"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -406,17 +389,16 @@
                             <span>B9 (Folate)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mcg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b9" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b9"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -425,17 +407,16 @@
                             <span>B12 (Cobalamin)</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mcg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-b12" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-b12"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -444,17 +425,16 @@
                             <span>Vitamin A</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>IU</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-a" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-a" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -463,17 +443,16 @@
                             <span>Vitamin C</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-c" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-c" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -482,17 +461,16 @@
                             <span>Vitamin D</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>IU</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-d" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-d" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -501,17 +479,16 @@
                             <span>Vitamin E</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-e" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-e" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -520,17 +497,16 @@
                             <span>Vitamin K</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mcg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-vitamin-k" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-vitamin-k" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -545,9 +521,8 @@
                     </tr>
                     </thead>
                     <colgroup>
-                        <col style="width: 50%">
-                        <col style="width: 15%">
-                        <col style="width: 5%">
+                        <col style="width: 35%">
+                        <col style="width: 35%">
                         <col style="width: 30%">
                     </colgroup>
                     <tbody>
@@ -556,17 +531,16 @@
                             <span>Saturated</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
+                            <span>0</span>
                             <span>g</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-saturated" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-saturated"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -575,17 +549,16 @@
                             <span>Trans-Fats</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
+                            <span>0</span>
                             <span>g</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-trans-fats" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-trans-fats"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -594,17 +567,16 @@
                             <span>Monounsaturated</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-monounsaturated"  class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-monounsaturated"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -613,17 +585,16 @@
                             <span>Polyunsaturated</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-polyunsaturated" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-polyunsaturated"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -632,17 +603,16 @@
                             <span>Omega-3</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-omega3" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-omega3"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -651,17 +621,16 @@
                             <span>Omega-6</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-fat-omega6" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-fat-omega6"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -674,9 +643,8 @@
                     </tr>
                     </thead>
                     <colgroup>
-                        <col style="width: 50%">
-                        <col style="width: 15%">
-                        <col style="width: 5%">
+                        <col style="width: 35%">
+                        <col style="width: 35%">
                         <col style="width: 30%">
                     </colgroup>
                     <tbody>
@@ -685,17 +653,16 @@
                             <span>Calcium</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-calcium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-calcium" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -704,17 +671,16 @@
                             <span>Copper</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-copper" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-copper" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -723,17 +689,16 @@
                             <span>Iron</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-iron" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-iron" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -742,17 +707,16 @@
                             <span>Magnesium</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-magnesium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-magnesium" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -761,17 +725,16 @@
                             <span>Manganese</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-manganese" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-manganese" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -780,17 +743,16 @@
                             <span>Phosphorus</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-phosphorus" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-phosphorus"
+                                     class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -799,17 +761,16 @@
                             <span>Potassium</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-potassium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-potassium" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -818,17 +779,16 @@
                             <span>Selenium</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mcg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-selenium" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-selenium" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
@@ -837,17 +797,16 @@
                             <span>Zinc</span>
                         </td>
                         <td>
-                            <span>25 / 38</span>
-                        </td>
-                        <td>
-                            <span>g</span>
+                            <span>0</span>
+                            <span>mg</span>
                         </td>
                         <td>
                             <div class="progress position-relative">
-                                <div id="diary-data-zinc" class="progress-bar progress-bar-custom-yellow text-dark" role="progressbar"
-                                     style="width: 25%;"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><small
-                                        class="justify-content-center d-flex position-absolute w-100">25%</small></div>
+                                <div id="diary-data-zinc" class="progress-bar progress-bar-custom-yellow text-dark"
+                                     role="progressbar"
+                                     style="width: 0;"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><small
+                                        class="justify-content-center d-flex position-absolute w-100">0%</small></div>
                             </div>
                         </td>
                     </tr>
