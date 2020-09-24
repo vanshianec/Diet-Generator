@@ -86,7 +86,7 @@ const displayFoodsList = function (foods) {
 
     let columns = '';
     foods.forEach(food => {
-        columns += `<tr><td data-id=${food.id} class="clickable">${food.name}, ${food.purchasePlace}</td></tr>`
+        columns += `<tr><td data-id=${food.id} class="clickable">${food.name}, ${foodType ==='custom' ? food.purchasePlace : food.foodGroup}</td></tr>`
     });
 
     $foodsList.append(columns);

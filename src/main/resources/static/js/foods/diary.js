@@ -1,34 +1,207 @@
-const goalCalories = 2000;
-const goalProtein = 200;
-const goalCarbs = 200;
-const goalFat = 45;
-const goalFiber = 38;
-const goalSodium = 1500;
-const goalOmega3 = 1600;
-const goalOmega6 = 17000;
-const goalB1 = 1.2;
-const goalB2 = 1.3;
-const goalB3 = 16;
-const goalB5 = 5;
-const goalB6 = 1.3;
-const goalB9 = 400;
-const goalB12 = 2.4;
-const goalA = 3000;
-const goalC = 90;
-const goalD = 600;
-const goalE = 15;
-const goalK = 120;
+//TODO rename 'current' to 'total' :DD
+
+let goalCalories = 2000;
+let goalProtein = 200;
+let goalCarbs = 200;
+let goalFat = 45;
+let goalFiber = 38;
+const goalSugars = null;
+const goalAddedSugar = null;
+const goalSodium = null;
+const goalOmega3 = null;
+const goalOmega6 = null;
+const goalCholesterol = null;
+const goalSaturatedFats = null;
+const goalTransFats = null;
+const goalMonounsaturatedFats = null;
+const goalPolyunsaturatedFats = null;
+
+const goalVitaminB1 = 1.2;
+const goalVitaminB2 = 1.3;
+const goalVitaminB3 = 16;
+const goalVitaminB5 = 5;
+const goalVitaminB6 = 1.3;
+const goalVitaminB9 = 400;
+const goalVitaminB12 = 2.4;
+const goalVitaminA = 3000;
+const goalVitaminC = 90;
+const goalVitaminE = 15;
+const goalVitaminK = 120;
+const goalVitaminD = null;
 const goalCalcium = 1000;
 const goalCopper = 0.9;
 const goalIron = 8;
 const goalMagnesium = 400;
 const goalManganese = 2.3;
 const goalPhosphorus = 700;
-const goalPotassium = 3400;
+const goalPotassium = 4700;
 const goalSelenium = 55;
 const goalZinc = 11;
 
+let maxCalories = 2100;
+let maxSaturatedFats = null;
+const maxCholesterol = 300;
+const maxVitaminA = 10000;
+const maxVitaminB3 = 35;
+const maxVitaminB6 = 100;
+const maxVitaminC = 2000;
+const maxVitaminD = 2000;
+const maxVitaminE = 1000;
+const maxVitaminB9 = 1000;
+const maxVitaminK = 2000;
+const maxCalcium = 2500;
+const maxCopper = 10;
+const maxIron = 45;
+const maxManganese = 11;
+const maxPhosphorus = 4000;
+const maxSelenium = 400;
+const maxZinc = 40;
+
+/*
+const maxCholesterol = null;
+const maxVitaminA = null;
+const maxVitaminB3 = null;
+const maxVitaminB6 = null;
+const maxVitaminC = null;
+const maxVitaminD = null;
+const maxVitaminE = null;
+const maxVitaminB9 = null;
+const maxVitaminK = null;
+const maxCalcium = null;
+const maxCopper = null;
+const maxIron = null;
+const maxManganese = null;
+const maxPhosphorus = null;
+const maxSelenium = null;
+const maxZinc = null;
+
+ */
+
+let currentCalories = 0;
+let currentProtein = 0;
+let currentCarbs = 0;
+let currentFat = 0;
+let currentFiber = 0;
+let currentSugars = 0;
+let currentAddedSugar = 0;
+let currentSodium = 0;
+let currentOmega3 = 0;
+let currentOmega6 = 0;
+let currentCholesterol = 0;
+let currentSaturatedFats = 0;
+let currentTransFats = 0;
+let currentMonounsaturatedFats = 0;
+let currentPolyunsaturatedFats = 0;
+let currentVitaminB1 = 0;
+let currentVitaminB2 = 0;
+let currentVitaminB3 = 0;
+let currentVitaminB5 = 0;
+let currentVitaminB6 = 0;
+let currentVitaminB9 = 0;
+let currentVitaminB12 = 0;
+let currentVitaminA = 0;
+let currentVitaminC = 0;
+let currentVitaminD = 0;
+let currentVitaminE = 0;
+let currentVitaminK = 0;
+let currentCalcium = 0;
+let currentCopper = 0;
+let currentIron = 0;
+let currentMagnesium = 0;
+let currentManganese = 0;
+let currentPhosphorus = 0;
+let currentPotassium = 0;
+let currentSelenium = 0;
+let currentZinc = 0;
+let currentPrice = 0;
+
+//TODO use in the future when removing or updating foods in the diary
 let foodsInDiaryList = [];
+
+const generateDiet = function () {
+
+    goalCalories = $('#goal-calories-input').val();
+    maxCalories = $('#max-calories-input').val();
+    goalProtein = $('#goal-protein-input').val();
+    goalCarbs = $('#goal-carbs-input').val();
+    goalFat = $('#goal-fat-input').val();
+    goalFiber = $('#goal-fiber-input').val();
+    //maxSaturatedFats = (goalCalories * 0.1) / 9;
+
+    //TODO split into two objects
+
+    let requiredNutrients = {
+        maxCalories,
+        maxCholesterol,
+        maxVitaminA,
+        maxVitaminB3,
+        maxVitaminB6,
+        maxVitaminC,
+        maxVitaminD,
+        maxVitaminE,
+        maxVitaminB9,
+        maxVitaminK,
+        maxCalcium,
+        maxCopper,
+        maxIron,
+        maxManganese,
+        maxPhosphorus,
+        maxSelenium,
+        maxZinc,
+        goalCalories,
+        goalProtein,
+        goalCarbs,
+        goalFat,
+        goalFiber,
+        goalSugars,
+        goalAddedSugar,
+        goalSodium,
+        goalOmega3,
+        goalOmega6,
+        goalCholesterol,
+        goalSaturatedFats,
+        goalTransFats,
+        goalMonounsaturatedFats,
+        goalPolyunsaturatedFats,
+        goalVitaminD,
+        goalVitaminB1,
+        goalVitaminB2,
+        goalVitaminB3,
+        goalVitaminB5,
+        goalVitaminB6,
+        goalVitaminB9,
+        goalVitaminB12,
+        goalVitaminA,
+        goalVitaminC,
+        goalVitaminE,
+        goalVitaminK,
+        goalCalcium,
+        goalCopper,
+        goalIron,
+        goalMagnesium,
+        goalManganese,
+        goalPhosphorus,
+        goalPotassium,
+        goalSelenium,
+        goalZinc
+    };
+
+    fetch(URLS.generateDiet, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requiredNutrients)
+    })
+        .then(handleResponse)
+        .then(displayGeneratedFoodsInDiary)
+        .catch(handleError);
+
+};
+
+const displayGeneratedFoodsInDiary = function (foods) {
+    foods.forEach(food => displayFoodInDiary(food));
+};
 
 const addFoodToDiary = function () {
     let servingSize = $('#serving-size').val();
@@ -42,8 +215,10 @@ const displayFoodInDiary = function (food) {
     foodsInDiaryList.push(food);
     let convertedFood = convertFoodData(food, food.dynamicProductWeight);
     addFoodToDiaryTable(convertedFood);
-    displayFoodData(convertedFood);
-    //displayMicronutrientsFoodData(food);
+    addFoodNutrientsToTotalNutrients(convertedFood);
+    updateCaloriesBreakdownChart();
+    updatePriceBreakdownChart(convertedFood);
+    displayFoodData();
 };
 
 const addFoodToDiaryTable = function (food) {
@@ -51,9 +226,49 @@ const addFoodToDiaryTable = function (food) {
                     <td>${food.name}, ${food.purchasePlace}</td>
                          <td>${food.dynamicProductWeight} g</td>
                          <td>${food.calories}</td>
-                         <td>${food.price} lv</td>
+                         <td>${food.price.toFixed(2)} lv</td>
                     </tr>`;
     $('#diary-foods-list').append(row);
+};
+
+const addFoodNutrientsToTotalNutrients = function (food) {
+    currentCalories += food.calories;
+    currentProtein += food.protein;
+    currentCarbs += food.carbohydrates;
+    currentFat += food.fat;
+    currentFiber += food.fiber;
+    currentSugars += food.sugars;
+    currentAddedSugar += food.addedSugar;
+    currentSodium += food.sodium;
+    currentOmega3 += food.omega3;
+    currentOmega6 += food.omega6;
+    currentCholesterol += food.cholesterol;
+    currentSaturatedFats += food.saturatedFats;
+    currentTransFats += food.transFats;
+    currentMonounsaturatedFats += food.monounsaturatedFats;
+    currentPolyunsaturatedFats += food.polyunsaturatedFats;
+    currentVitaminB1 += food.vitaminB1;
+    currentVitaminB2 += food.vitaminB2;
+    currentVitaminB3 += food.vitaminB3;
+    currentVitaminB5 += food.vitaminB5;
+    currentVitaminB6 += food.vitaminB6;
+    currentVitaminB9 += food.vitaminB9;
+    currentVitaminB12 += food.vitaminB12;
+    currentVitaminA += food.vitaminA;
+    currentVitaminC += food.vitaminC;
+    currentVitaminD += food.vitaminD;
+    currentVitaminE += food.vitaminE;
+    currentVitaminK += food.vitaminK;
+    currentCalcium += food.calcium;
+    currentCopper += food.copper;
+    currentIron += food.iron;
+    currentMagnesium += food.magnesium;
+    currentManganese += food.manganese;
+    currentPhosphorus += food.phosphorus;
+    currentPotassium += food.potassium;
+    currentSelenium += food.selenium;
+    currentZinc += food.zinc;
+    currentPrice += food.price;
 };
 
 const convertFoodData = function (food, newServingSize) {
@@ -130,62 +345,67 @@ const setProgressBar = function ($bar, data, goalData, macros) {
     }
 };
 
-function displayFoodData(food) {
+let displayFoodData = function () {
     let caloriesBar = $('#diary-data-calories');
-    setProgressBar(caloriesBar, food.calories, goalCalories, true);
+    setProgressBar(caloriesBar, currentCalories, goalCalories, true);
     let caloriesTextField = caloriesBar.find('small');
     caloriesTextField.text(caloriesTextField.text().replaceAll('g', 'kcal'));
-    setProgressBar($('#diary-data-protein'), food.protein, goalProtein, true);
-    setProgressBar($('#diary-data-fat'), food.fat, goalFat, true);
-    setProgressBar($('#diary-data-carbs'), food.carbohydrates, goalCarbs, true);
-    setProgressBar($('#diary-data-fiber'), food.fiber, goalFiber);
-    setProgressBar($('#diary-data-sugars'), food.sugars, null);
-    setProgressBar($('#diary-data-added-sugar'), food.addedSugar, null);
-    setProgressBar($('#diary-data-sodium'), food.sodium, goalSodium);
-    setProgressBar($('#diary-data-cholesterol'), food.cholesterol, null);
-    setProgressBar($('#diary-data-fat-saturated'), food.saturatedFats, null);
-    setProgressBar($('#diary-data-fat-trans-fats'), food.transFats, null);
-    setProgressBar($('#diary-data-fat-monounsaturated'), food.monounsaturatedFats, null);
-    setProgressBar($('#diary-data-fat-polyunsaturated'), food.polyunsaturatedFats, null);
-    setProgressBar($('#diary-data-fat-omega3'), food.omega3, goalOmega3);
-    setProgressBar($('#diary-data-fat-omega6'), food.omega6, goalOmega6);
-    setProgressBar($('#diary-data-vitamin-b1'), food.vitaminB1, goalB1);
-    setProgressBar($('#diary-data-vitamin-b2'), food.vitaminB2, goalB2);
-    setProgressBar($('#diary-data-vitamin-b3'), food.vitaminB3, goalB3);
-    setProgressBar($('#diary-data-vitamin-b5'), food.vitaminB5, goalB5);
-    setProgressBar($('#diary-data-vitamin-b6'), food.vitaminB6, goalB6);
-    setProgressBar($('#diary-data-vitamin-b9'), food.vitaminB9, goalB9);
-    setProgressBar($('#diary-data-vitamin-b12'), food.vitaminB12, goalB12);
-    setProgressBar($('#diary-data-vitamin-a'), food.vitaminA, goalA);
-    setProgressBar($('#diary-data-vitamin-c'), food.vitaminC, goalC);
-    setProgressBar($('#diary-data-vitamin-d'), food.vitaminD, goalD);
-    setProgressBar($('#diary-data-vitamin-e'), food.vitaminE, goalE);
-    setProgressBar($('#diary-data-vitamin-k'), food.vitaminK, goalK);
-    setProgressBar($('#diary-data-calcium'), food.calcium, goalCalcium);
-    setProgressBar($('#diary-data-copper'), food.copper, goalCopper);
-    setProgressBar($('#diary-data-iron'), food.iron, goalIron);
-    setProgressBar($('#diary-data-magnesium'), food.magnesium, goalMagnesium);
-    setProgressBar($('#diary-data-manganese'), food.manganese, goalManganese);
-    setProgressBar($('#diary-data-phosphorus'), food.phosphorus, goalPhosphorus);
-    setProgressBar($('#diary-data-potassium'), food.potassium, goalPotassium);
-    setProgressBar($('#diary-data-selenium'), food.selenium, goalSelenium);
-    setProgressBar($('#diary-data-zinc'), food.zinc, goalZinc);
+    setProgressBar($('#diary-data-protein'), currentProtein, goalProtein, true);
+    setProgressBar($('#diary-data-fat'), currentFat, goalFat, true);
+    setProgressBar($('#diary-data-carbs'), currentCarbs, goalCarbs, true);
+    setProgressBar($('#diary-data-fiber'), currentFiber, goalFiber);
+    setProgressBar($('#diary-data-sugars'), currentSugars, goalSugars);
+    setProgressBar($('#diary-data-added-sugar'), currentAddedSugar, goalAddedSugar);
+    setProgressBar($('#diary-data-sodium'), currentSodium, goalSodium);
+    setProgressBar($('#diary-data-cholesterol'), currentCholesterol, goalCholesterol);
+    setProgressBar($('#diary-data-fat-saturated'), currentSaturatedFats, goalSaturatedFats);
+    setProgressBar($('#diary-data-fat-trans-fats'), currentTransFats, goalTransFats);
+    setProgressBar($('#diary-data-fat-monounsaturated'), currentMonounsaturatedFats, goalMonounsaturatedFats);
+    setProgressBar($('#diary-data-fat-polyunsaturated'), currentPolyunsaturatedFats, goalPolyunsaturatedFats);
+    setProgressBar($('#diary-data-fat-omega3'), currentOmega3, goalOmega3);
+    setProgressBar($('#diary-data-fat-omega6'), currentOmega6, goalOmega6);
+    setProgressBar($('#diary-data-vitamin-b1'), currentVitaminB1, goalVitaminB1);
+    setProgressBar($('#diary-data-vitamin-b2'), currentVitaminB2, goalVitaminB2);
+    setProgressBar($('#diary-data-vitamin-b3'), currentVitaminB3, goalVitaminB3);
+    setProgressBar($('#diary-data-vitamin-b5'), currentVitaminB5, goalVitaminB5);
+    setProgressBar($('#diary-data-vitamin-b6'), currentVitaminB6, goalVitaminB6);
+    setProgressBar($('#diary-data-vitamin-b9'), currentVitaminB9, goalVitaminB9);
+    setProgressBar($('#diary-data-vitamin-b12'), currentVitaminB12, goalVitaminB12);
+    setProgressBar($('#diary-data-vitamin-a'), currentVitaminA, goalVitaminA);
+    setProgressBar($('#diary-data-vitamin-c'), currentVitaminC, goalVitaminC);
+    setProgressBar($('#diary-data-vitamin-d'), currentVitaminD, goalVitaminD);
+    setProgressBar($('#diary-data-vitamin-e'), currentVitaminE, goalVitaminE);
+    setProgressBar($('#diary-data-vitamin-k'), currentVitaminK, goalVitaminK);
+    setProgressBar($('#diary-data-calcium'), currentCalcium, goalCalcium);
+    setProgressBar($('#diary-data-copper'), currentCopper, goalCopper);
+    setProgressBar($('#diary-data-iron'), currentIron, goalIron);
+    setProgressBar($('#diary-data-magnesium'), currentMagnesium, goalMagnesium);
+    setProgressBar($('#diary-data-manganese'), currentManganese, goalManganese);
+    setProgressBar($('#diary-data-phosphorus'), currentPhosphorus, goalPhosphorus);
+    setProgressBar($('#diary-data-potassium'), currentPotassium, goalPotassium);
+    setProgressBar($('#diary-data-selenium'), currentSelenium, goalSelenium);
+    setProgressBar($('#diary-data-zinc'), currentZinc, goalZinc);
+};
 
-    $('#calories-breakdown-calories-amount').text(food.calories);
-    $('#price-breakdown-price-amount').text(food.price.toFixed(2));
-    caloriesBreakdownChart.data.datasets[0].data[0] = food.protein;
-    caloriesBreakdownChart.data.datasets[0].data[1] = food.carbohydrates;
-    caloriesBreakdownChart.data.datasets[0].data[2] = food.fat;
+const updateCaloriesBreakdownChart = function () {
+    $('#calories-breakdown-calories-amount').text(currentCalories);
+    caloriesBreakdownChart.data.datasets[0].data[0] = currentProtein;
+    caloriesBreakdownChart.data.datasets[0].data[1] = currentCarbs;
+    caloriesBreakdownChart.data.datasets[0].data[2] = currentFat;
     caloriesBreakdownChart.update();
 
+};
+
+const updatePriceBreakdownChart = function (food) {
+    $('#price-breakdown-price-amount').text(currentPrice.toFixed(2));
     priceBreakdownChart.data.datasets[0].data.push(food.price);
     priceBreakdownChart.data.labels.push(food.name);
     priceBreakdownChart.data.datasets[0].backgroundColor.push('rgba(92, 184, 92, 0.8)');
     priceBreakdownChart.data.datasets[0].borderColor.push('rgba(92, 184, 92, 1)');
     priceBreakdownChart.options.tooltips.callbacks.title = formatTitle;
     priceBreakdownChart.update();
-
-}
-
+};
 
 $('#add-food-to-diary-button').on('click', addFoodToDiary);
+
+$('#generate-diet-button').on('click', generateDiet);

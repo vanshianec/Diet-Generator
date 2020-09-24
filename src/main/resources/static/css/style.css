@@ -2,7 +2,7 @@
     width: 20%;
 }
 
-body:not('#index-body') {
+body:not(#index-body) {
     background-image: url('../images/background.jpg');
     background-position: center;
     background-attachment: fixed;
@@ -46,7 +46,7 @@ footer {
 }
 
 .progress-bar-custom-yellow {
-    background-color: rgba(255, 193, 7, 0.9);
+    background-color: rgba(255, 193, 7, 0.8);
 }
 
 .progress-bar-custom-green {

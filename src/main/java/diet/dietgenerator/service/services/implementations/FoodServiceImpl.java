@@ -4,9 +4,12 @@ import diet.dietgenerator.data.models.CustomFood;
 import diet.dietgenerator.data.repositories.BasicFoodRepository;
 import diet.dietgenerator.data.repositories.CustomFoodRepository;
 import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
+import diet.dietgenerator.service.models.food.CustomFoodDynamicWeightServiceModel;
 import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
+import diet.dietgenerator.service.models.food.FoodRequiredNutrientsServiceModel;
 import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.service.services.base.BaseFoodServiceImpl;
+import diet.dietgenerator.utils.linearsolver.FoodsLowestCostSolver;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -70,5 +73,11 @@ public class FoodServiceImpl extends BaseFoodServiceImpl implements FoodService 
     @Override
     public CustomFoodServiceModel getCustomFoodById(Long id) {
         return super.getFoodById(id, customFoodRepository, CustomFoodServiceModel.class);
+    }
+
+    @Override
+    public List<CustomFoodDynamicWeightServiceModel> generateLowestCostDiet(FoodRequiredNutrientsServiceModel requiredNutrients) {
+        FoodsLowestCostSolver solver = new FoodsLowestCostSolver(modelMapper, requiredNutrients, getAllCustomFoods(Pageable.unpaged()));
+        return solver.getLowestCostFoods();
     }
 }

@@ -12,5 +12,6 @@ import lombok.Setter;
 public class FoodSearchViewResponseModel {
     private Long id;
     private String name;
+    private String foodGroup;
     private String purchasePlace;
 }

@@ -15,9 +15,44 @@
         </div>
     </th:block>
     <div class="container bg-light">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                data-target="#modal-add-food-to-diary">Add Food
-        </button>
+        <div class="row border-top border-bottom">
+            <div class="col-sm-2 form-row">
+                <label for="goal-calories-input" class="col-form-label col-sm-5">Calories:</label>
+                <input id="goal-calories-input" class="form-control col-sm-5" type="number" value="2000">
+                <span class="col-form-label col-sm-2">kcal,</span>
+            </div>
+            <div class="col-sm-3 form-row">
+                <label for="max-calories-input" class="col-form-label col-sm-5">Max Calories:</label>
+                <input id="max-calories-input" class="form-control col-sm-4" type="number" value="2100">
+                <span class="col-form-label col-sm-3">kcal</span>
+            </div>
+            <div class="col-sm form-row border-left">
+                <label for="goal-protein-input" class="col-form-label col-sm-5">Protein:</label>
+                <input id="goal-protein-input" class="form-control col-sm-5" type="number" value="200">
+                <span class="col-form-label col-sm-2">g</span>
+            </div>
+            <div class="col-sm form-row border-left">
+                <label for="goal-carbs-input" class="col-form-label col-sm-5">Carbs:</label>
+                <input id="goal-carbs-input" class="form-control col-sm-5" type="number" value="200">
+                <span class="col-form-label col-sm-2">g</span>
+            </div>
+            <div class="col-sm form-row border-left">
+                <label for="goal-fat-input" class="col-form-label col-sm-5">Fat:</label>
+                <input id="goal-fat-input" class="form-control col-sm-5" type="number" value="47">
+                <span class="col-form-label col-sm-2">g</span>
+            </div>
+            <div class="col-sm form-row border-left">
+                <label for="goal-fiber-input" class="col-form-label col-sm-5">Fiber:</label>
+                <input id="goal-fiber-input" class="form-control col-sm-5" type="number" value="38">
+                <span class="col-form-label col-sm-2">g</span>
+            </div>
+        </div>
+        <div class="m-sm-3">
+            <button id="generate-diet-button" type="button" class="btn btn-primary btn-lg">Generate Diet</button>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                    data-target="#modal-add-food-to-diary">Add Food
+            </button>
+        </div>
         <div id="modal-add-food-to-diary" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

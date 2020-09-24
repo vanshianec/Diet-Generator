@@ -442,11 +442,11 @@
             </th:block>
             <label class="text-white" for="choose-food-category">Category : </label>
             <select id="choose-food-category">
+                <option value="custom">Custom Foods</option>
+                <option value="basic">Basic Foods</option>
                 <th:block th:unless="${session.username == null}">
                     <option value="TODO_ADD_USER_ID_FOR_FOODS">My Foods</option>
                 </th:block>
-                <option value="basic">Basic Foods</option>
-                <option value="custom">Custom Foods</option>
             </select>
             <label class="text-white" for="choose-food-group">Food Group : </label>
             <select id="choose-food-group">

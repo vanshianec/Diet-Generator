@@ -1,8 +1,9 @@
 package diet.dietgenerator.service.services;
 
 import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
+import diet.dietgenerator.service.models.food.CustomFoodDynamicWeightServiceModel;
 import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
-import diet.dietgenerator.web.api.models.CustomFoodViewResponseModel;
+import diet.dietgenerator.service.models.food.FoodRequiredNutrientsServiceModel;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface FoodService {
     BasicFoodServiceModel getBasicFoodById(Long id);
 
     CustomFoodServiceModel getCustomFoodById(Long id);
+
+    List<CustomFoodDynamicWeightServiceModel> generateLowestCostDiet(FoodRequiredNutrientsServiceModel requiredNutrients);
 }
