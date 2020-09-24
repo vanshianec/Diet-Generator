@@ -1,10 +1,19 @@
 //TODO rename 'current' to 'total' :DD
 
+<<<<<<< HEAD
 let goalCalories = 2000;
 let goalProtein = 200;
 let goalCarbs = 200;
 let goalFat = 45;
 let goalFiber = 38;
+=======
+const goalCalories = 2000;
+const maxCalories = 2100;
+const goalProtein = 180;
+const goalCarbs = 30;
+const goalFat = 35;
+const goalFiber = 0;
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 const goalSugars = null;
 const goalAddedSugar = null;
 const goalSodium = null;
@@ -15,6 +24,10 @@ const goalSaturatedFats = null;
 const goalTransFats = null;
 const goalMonounsaturatedFats = null;
 const goalPolyunsaturatedFats = null;
+<<<<<<< HEAD
+=======
+const goalVitaminD = null;
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 
 const goalVitaminB1 = 1.2;
 const goalVitaminB2 = 1.3;
@@ -27,7 +40,10 @@ const goalVitaminA = 3000;
 const goalVitaminC = 90;
 const goalVitaminE = 15;
 const goalVitaminK = 120;
+<<<<<<< HEAD
 const goalVitaminD = null;
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 const goalCalcium = 1000;
 const goalCopper = 0.9;
 const goalIron = 8;
@@ -38,6 +54,7 @@ const goalPotassium = 4700;
 const goalSelenium = 55;
 const goalZinc = 11;
 
+<<<<<<< HEAD
 let maxCalories = 2100;
 let maxSaturatedFats = null;
 const maxCholesterol = 300;
@@ -77,6 +94,8 @@ const maxZinc = null;
 
  */
 
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 let currentCalories = 0;
 let currentProtein = 0;
 let currentCarbs = 0;
@@ -119,6 +138,7 @@ let currentPrice = 0;
 let foodsInDiaryList = [];
 
 const generateDiet = function () {
+<<<<<<< HEAD
 
     goalCalories = $('#goal-calories-input').val();
     maxCalories = $('#max-calories-input').val();
@@ -148,6 +168,9 @@ const generateDiet = function () {
         maxPhosphorus,
         maxSelenium,
         maxZinc,
+=======
+    let requiredNutrients = {
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
         goalCalories,
         goalProtein,
         goalCarbs,

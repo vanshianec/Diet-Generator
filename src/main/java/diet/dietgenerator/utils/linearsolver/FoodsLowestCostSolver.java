@@ -20,6 +20,7 @@ public class FoodsLowestCostSolver {
     MPObjective objective;
     private FoodRequiredNutrientsServiceModel foodRequirements;
     private List<CustomFoodServiceModel> foods;
+<<<<<<< HEAD
 
     private MPConstraint maxCholesterol;
     private MPConstraint maxVitaminA;
@@ -39,6 +40,8 @@ public class FoodsLowestCostSolver {
     private MPConstraint maxZinc;
     private MPConstraint maxCalories;
 
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
     private MPConstraint minCalories;
     private MPConstraint minProtein;
     private MPConstraint minCarbs;
@@ -91,6 +94,7 @@ public class FoodsLowestCostSolver {
     }
 
     private void setConstraints() {
+<<<<<<< HEAD
 
         //TODO split setting in two methods
 
@@ -112,6 +116,8 @@ public class FoodsLowestCostSolver {
         maxSelenium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxSelenium()), "cc15");
         maxZinc = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxZinc()), "cc16");
 
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
         minCalories = solver.makeConstraint(foodRequirements.getGoalCalories(), infinity, "c0");
         minProtein = solver.makeConstraint(foodRequirements.getGoalProtein(), infinity, "c1");
         minCarbs = solver.makeConstraint(foodRequirements.getGoalCarbs(), infinity, "c2");
@@ -155,6 +161,7 @@ public class FoodsLowestCostSolver {
         int index = 0;
         for (CustomFoodServiceModel food : foods) {
             MPVariable variable = solver.makeNumVar(0.0, infinity, index + "");
+<<<<<<< HEAD
             maxCholesterol.setCoefficient(variable, notNull(food.getCholesterol()));
             maxVitaminA.setCoefficient(variable, notNull(food.getVitaminA()));
             maxVitaminB3.setCoefficient(variable, notNull(food.getVitaminB3()));
@@ -173,6 +180,8 @@ public class FoodsLowestCostSolver {
             maxZinc.setCoefficient(variable, notNull(food.getZinc()));
             maxCalories.setCoefficient(variable, food.getCalories());
 
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
             minCalories.setCoefficient(variable, food.getCalories());
             minProtein.setCoefficient(variable, food.getProtein());
             minCarbs.setCoefficient(variable, food.getCarbohydrates());
@@ -245,8 +254,11 @@ public class FoodsLowestCostSolver {
         return value == null ? 0f : value;
     }
 
+<<<<<<< HEAD
     private Float nullToInfinity(Float value) {
         return value == null ? (float) infinity : value;
     }
 
+=======
+>>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 }
