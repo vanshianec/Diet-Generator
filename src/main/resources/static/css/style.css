@@ -28,12 +28,12 @@ footer {
     overflow-y: auto;
 }
 
-.clickable {
+.clickable-food-diary {
     cursor: pointer;
 }
 
-.selected {
-    background-color: #b9b9b6;
+.clickable-food-modal {
+    cursor: pointer;
 }
 
 .progress {
@@ -78,6 +78,10 @@ footer {
     top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.fa-trash:hover{
+    color: red;
 }
 
 #add-food-to-diary-modal-nutrients i {

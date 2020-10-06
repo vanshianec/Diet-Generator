@@ -17,10 +17,9 @@ public class FoodsLowestCostSolver {
     private final ModelMapper modelMapper;
     private MPSolver solver;
     private double infinity;
-    MPObjective objective;
+    private MPObjective objective;
     private FoodRequiredNutrientsServiceModel foodRequirements;
     private List<CustomFoodServiceModel> foods;
-<<<<<<< HEAD
 
     private MPConstraint maxCholesterol;
     private MPConstraint maxVitaminA;
@@ -40,8 +39,6 @@ public class FoodsLowestCostSolver {
     private MPConstraint maxZinc;
     private MPConstraint maxCalories;
 
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
     private MPConstraint minCalories;
     private MPConstraint minProtein;
     private MPConstraint minCarbs;
@@ -78,7 +75,7 @@ public class FoodsLowestCostSolver {
     private MPConstraint minPotassium;
     private MPConstraint minSelenium;
     private MPConstraint minZinc;
-    List<MPVariable> variables;
+    private List<MPVariable> variables;
 
     public FoodsLowestCostSolver(ModelMapper modelMapper, FoodRequiredNutrientsServiceModel foodRequirements, List<CustomFoodServiceModel> foods) {
         this.modelMapper = modelMapper;
@@ -94,30 +91,11 @@ public class FoodsLowestCostSolver {
     }
 
     private void setConstraints() {
-<<<<<<< HEAD
+        setMaxConstraints();
+        setMinConstraints();
+    }
 
-        //TODO split setting in two methods
-
-        maxCalories = solver.makeConstraint(-infinity, foodRequirements.getMaxCalories(), "cc0");
-        maxCholesterol = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCholesterol()), "cc1");
-        maxVitaminA = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminA()), "cc2");
-        maxVitaminB3 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB3()), "cc3");
-        maxVitaminB6 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB6()), "cc4");
-        maxVitaminC = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminC()), "cc5");
-        maxVitaminD = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminD()), "cc6");
-        maxVitaminE = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminE()), "cc7");
-        maxVitaminB9 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB9()), "cc8");
-        maxVitaminK = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminK()), "cc9");
-        maxCalcium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCalcium()), "cc10");
-        maxCopper = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCopper()), "cc11");
-        maxIron = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxIron()), "cc12");
-        maxManganese = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxManganese()), "cc13");
-        maxPhosphorus = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxPhosphorus()), "cc14");
-        maxSelenium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxSelenium()), "cc15");
-        maxZinc = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxZinc()), "cc16");
-
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
+    private void setMinConstraints() {
         minCalories = solver.makeConstraint(foodRequirements.getGoalCalories(), infinity, "c0");
         minProtein = solver.makeConstraint(foodRequirements.getGoalProtein(), infinity, "c1");
         minCarbs = solver.makeConstraint(foodRequirements.getGoalCarbs(), infinity, "c2");
@@ -156,74 +134,98 @@ public class FoodsLowestCostSolver {
         minZinc = solver.makeConstraint(notNull(foodRequirements.getGoalZinc()), infinity, "c35");
     }
 
+    private void setMaxConstraints() {
+        maxCalories = solver.makeConstraint(-infinity, foodRequirements.getMaxCalories(), "cc0");
+        maxCholesterol = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCholesterol()), "cc1");
+        maxVitaminA = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminA()), "cc2");
+        maxVitaminB3 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB3()), "cc3");
+        maxVitaminB6 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB6()), "cc4");
+        maxVitaminC = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminC()), "cc5");
+        maxVitaminD = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminD()), "cc6");
+        maxVitaminE = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminE()), "cc7");
+        maxVitaminB9 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB9()), "cc8");
+        maxVitaminK = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminK()), "cc9");
+        maxCalcium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCalcium()), "cc10");
+        maxCopper = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCopper()), "cc11");
+        maxIron = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxIron()), "cc12");
+        maxManganese = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxManganese()), "cc13");
+        maxPhosphorus = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxPhosphorus()), "cc14");
+        maxSelenium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxSelenium()), "cc15");
+        maxZinc = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxZinc()), "cc16");
+    }
+
     private void setVariables() {
 
         int index = 0;
         for (CustomFoodServiceModel food : foods) {
             MPVariable variable = solver.makeNumVar(0.0, infinity, index + "");
-<<<<<<< HEAD
-            maxCholesterol.setCoefficient(variable, notNull(food.getCholesterol()));
-            maxVitaminA.setCoefficient(variable, notNull(food.getVitaminA()));
-            maxVitaminB3.setCoefficient(variable, notNull(food.getVitaminB3()));
-            maxVitaminB6.setCoefficient(variable, notNull(food.getVitaminB6()));
-            maxVitaminC.setCoefficient(variable, notNull(food.getVitaminC()));
-            maxVitaminD.setCoefficient(variable, notNull(food.getVitaminD()));
-            maxVitaminE.setCoefficient(variable, notNull(food.getVitaminE()));
-            maxVitaminB9.setCoefficient(variable, notNull(food.getVitaminB9()));
-            maxVitaminK.setCoefficient(variable, notNull(food.getVitaminK()));
-            maxCalcium.setCoefficient(variable, notNull(food.getCalcium()));
-            maxCopper.setCoefficient(variable, notNull(food.getCopper()));
-            maxIron.setCoefficient(variable, notNull(food.getIron()));
-            maxManganese.setCoefficient(variable, notNull(food.getManganese()));
-            maxPhosphorus.setCoefficient(variable, notNull(food.getPhosphorus()));
-            maxSelenium.setCoefficient(variable, notNull(food.getSelenium()));
-            maxZinc.setCoefficient(variable, notNull(food.getZinc()));
-            maxCalories.setCoefficient(variable, food.getCalories());
-
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
-            minCalories.setCoefficient(variable, food.getCalories());
-            minProtein.setCoefficient(variable, food.getProtein());
-            minCarbs.setCoefficient(variable, food.getCarbohydrates());
-            minFat.setCoefficient(variable, food.getFat());
-            minFiber.setCoefficient(variable, notNull(food.getFiber()));
-            minSugars.setCoefficient(variable, notNull(food.getSugars()));
-            minAddedSugar.setCoefficient(variable, notNull(food.getAddedSugar()));
-            minSodium.setCoefficient(variable, notNull(food.getSodium()));
-            minCholesterol.setCoefficient(variable, notNull(food.getCholesterol()));
-            minSaturatedFats.setCoefficient(variable, notNull(food.getSaturatedFats()));
-            minTransFats.setCoefficient(variable, notNull(food.getTransFats()));
-            minMonounsaturatedFats.setCoefficient(variable, notNull(food.getMonounsaturatedFats()));
-            minPolyunsaturatedFats.setCoefficient(variable, notNull(food.getPolyunsaturatedFats()));
-            minOmega3.setCoefficient(variable, notNull(food.getOmega3()));
-            minOmega6.setCoefficient(variable, notNull(food.getOmega6()));
-            minVitaminB1.setCoefficient(variable, notNull(food.getVitaminB1()));
-            minVitaminB2.setCoefficient(variable, notNull(food.getVitaminB2()));
-            minVitaminB3.setCoefficient(variable, notNull(food.getVitaminB3()));
-            minVitaminB5.setCoefficient(variable, notNull(food.getVitaminB5()));
-            minVitaminB6.setCoefficient(variable, notNull(food.getVitaminB6()));
-            minVitaminB9.setCoefficient(variable, notNull(food.getVitaminB9()));
-            minVitaminB12.setCoefficient(variable, notNull(food.getVitaminB12()));
-            minVitaminA.setCoefficient(variable, notNull(food.getVitaminA()));
-            minVitaminC.setCoefficient(variable, notNull(food.getVitaminC()));
-            minVitaminD.setCoefficient(variable, notNull(food.getVitaminD()));
-            minVitaminE.setCoefficient(variable, notNull(food.getVitaminE()));
-            minVitaminK.setCoefficient(variable, notNull(food.getVitaminK()));
-            minCalcium.setCoefficient(variable, notNull(food.getCalcium()));
-            minCopper.setCoefficient(variable, notNull(food.getCopper()));
-            minIron.setCoefficient(variable, notNull(food.getIron()));
-            minMagnesium.setCoefficient(variable, notNull(food.getMagnesium()));
-            minManganese.setCoefficient(variable, notNull(food.getManganese()));
-            minPhosphorus.setCoefficient(variable, notNull(food.getPhosphorus()));
-            minPotassium.setCoefficient(variable, notNull(food.getPotassium()));
-            minSelenium.setCoefficient(variable, notNull(food.getSelenium()));
-            minZinc.setCoefficient(variable, notNull(food.getZinc()));
+            setMaxVariables(food, variable);
+            setMinVariables(food, variable);
             //set price per 100 grams
             objective.setCoefficient(variable, (100 * food.getPrice()) / food.getProductWeight());
             variables.add(variable);
             index++;
         }
 
+    }
+
+    private void setMinVariables(CustomFoodServiceModel food, MPVariable variable) {
+        minCalories.setCoefficient(variable, food.getCalories());
+        minProtein.setCoefficient(variable, food.getProtein());
+        minCarbs.setCoefficient(variable, food.getCarbohydrates());
+        minFat.setCoefficient(variable, food.getFat());
+        minFiber.setCoefficient(variable, notNull(food.getFiber()));
+        minSugars.setCoefficient(variable, notNull(food.getSugars()));
+        minAddedSugar.setCoefficient(variable, notNull(food.getAddedSugar()));
+        minSodium.setCoefficient(variable, notNull(food.getSodium()));
+        minCholesterol.setCoefficient(variable, notNull(food.getCholesterol()));
+        minSaturatedFats.setCoefficient(variable, notNull(food.getSaturatedFats()));
+        minTransFats.setCoefficient(variable, notNull(food.getTransFats()));
+        minMonounsaturatedFats.setCoefficient(variable, notNull(food.getMonounsaturatedFats()));
+        minPolyunsaturatedFats.setCoefficient(variable, notNull(food.getPolyunsaturatedFats()));
+        minOmega3.setCoefficient(variable, notNull(food.getOmega3()));
+        minOmega6.setCoefficient(variable, notNull(food.getOmega6()));
+        minVitaminB1.setCoefficient(variable, notNull(food.getVitaminB1()));
+        minVitaminB2.setCoefficient(variable, notNull(food.getVitaminB2()));
+        minVitaminB3.setCoefficient(variable, notNull(food.getVitaminB3()));
+        minVitaminB5.setCoefficient(variable, notNull(food.getVitaminB5()));
+        minVitaminB6.setCoefficient(variable, notNull(food.getVitaminB6()));
+        minVitaminB9.setCoefficient(variable, notNull(food.getVitaminB9()));
+        minVitaminB12.setCoefficient(variable, notNull(food.getVitaminB12()));
+        minVitaminA.setCoefficient(variable, notNull(food.getVitaminA()));
+        minVitaminC.setCoefficient(variable, notNull(food.getVitaminC()));
+        minVitaminD.setCoefficient(variable, notNull(food.getVitaminD()));
+        minVitaminE.setCoefficient(variable, notNull(food.getVitaminE()));
+        minVitaminK.setCoefficient(variable, notNull(food.getVitaminK()));
+        minCalcium.setCoefficient(variable, notNull(food.getCalcium()));
+        minCopper.setCoefficient(variable, notNull(food.getCopper()));
+        minIron.setCoefficient(variable, notNull(food.getIron()));
+        minMagnesium.setCoefficient(variable, notNull(food.getMagnesium()));
+        minManganese.setCoefficient(variable, notNull(food.getManganese()));
+        minPhosphorus.setCoefficient(variable, notNull(food.getPhosphorus()));
+        minPotassium.setCoefficient(variable, notNull(food.getPotassium()));
+        minSelenium.setCoefficient(variable, notNull(food.getSelenium()));
+        minZinc.setCoefficient(variable, notNull(food.getZinc()));
+    }
+
+    private void setMaxVariables(CustomFoodServiceModel food, MPVariable variable) {
+        maxCholesterol.setCoefficient(variable, notNull(food.getCholesterol()));
+        maxVitaminA.setCoefficient(variable, notNull(food.getVitaminA()));
+        maxVitaminB3.setCoefficient(variable, notNull(food.getVitaminB3()));
+        maxVitaminB6.setCoefficient(variable, notNull(food.getVitaminB6()));
+        maxVitaminC.setCoefficient(variable, notNull(food.getVitaminC()));
+        maxVitaminD.setCoefficient(variable, notNull(food.getVitaminD()));
+        maxVitaminE.setCoefficient(variable, notNull(food.getVitaminE()));
+        maxVitaminB9.setCoefficient(variable, notNull(food.getVitaminB9()));
+        maxVitaminK.setCoefficient(variable, notNull(food.getVitaminK()));
+        maxCalcium.setCoefficient(variable, notNull(food.getCalcium()));
+        maxCopper.setCoefficient(variable, notNull(food.getCopper()));
+        maxIron.setCoefficient(variable, notNull(food.getIron()));
+        maxManganese.setCoefficient(variable, notNull(food.getManganese()));
+        maxPhosphorus.setCoefficient(variable, notNull(food.getPhosphorus()));
+        maxSelenium.setCoefficient(variable, notNull(food.getSelenium()));
+        maxZinc.setCoefficient(variable, notNull(food.getZinc()));
+        maxCalories.setCoefficient(variable, food.getCalories());
     }
 
     public List<CustomFoodDynamicWeightServiceModel> getLowestCostFoods() {
@@ -254,11 +256,8 @@ public class FoodsLowestCostSolver {
         return value == null ? 0f : value;
     }
 
-<<<<<<< HEAD
     private Float nullToInfinity(Float value) {
         return value == null ? (float) infinity : value;
     }
 
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 }

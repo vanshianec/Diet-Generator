@@ -1,19 +1,10 @@
 //TODO rename 'current' to 'total' :DD
 
-<<<<<<< HEAD
 let goalCalories = 2000;
 let goalProtein = 200;
 let goalCarbs = 200;
 let goalFat = 45;
 let goalFiber = 38;
-=======
-const goalCalories = 2000;
-const maxCalories = 2100;
-const goalProtein = 180;
-const goalCarbs = 30;
-const goalFat = 35;
-const goalFiber = 0;
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 const goalSugars = null;
 const goalAddedSugar = null;
 const goalSodium = null;
@@ -24,10 +15,6 @@ const goalSaturatedFats = null;
 const goalTransFats = null;
 const goalMonounsaturatedFats = null;
 const goalPolyunsaturatedFats = null;
-<<<<<<< HEAD
-=======
-const goalVitaminD = null;
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 
 const goalVitaminB1 = 1.2;
 const goalVitaminB2 = 1.3;
@@ -40,10 +27,7 @@ const goalVitaminA = 3000;
 const goalVitaminC = 90;
 const goalVitaminE = 15;
 const goalVitaminK = 120;
-<<<<<<< HEAD
 const goalVitaminD = null;
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 const goalCalcium = 1000;
 const goalCopper = 0.9;
 const goalIron = 8;
@@ -54,7 +38,6 @@ const goalPotassium = 4700;
 const goalSelenium = 55;
 const goalZinc = 11;
 
-<<<<<<< HEAD
 let maxCalories = 2100;
 let maxSaturatedFats = null;
 const maxCholesterol = 300;
@@ -74,28 +57,6 @@ const maxPhosphorus = 4000;
 const maxSelenium = 400;
 const maxZinc = 40;
 
-/*
-const maxCholesterol = null;
-const maxVitaminA = null;
-const maxVitaminB3 = null;
-const maxVitaminB6 = null;
-const maxVitaminC = null;
-const maxVitaminD = null;
-const maxVitaminE = null;
-const maxVitaminB9 = null;
-const maxVitaminK = null;
-const maxCalcium = null;
-const maxCopper = null;
-const maxIron = null;
-const maxManganese = null;
-const maxPhosphorus = null;
-const maxSelenium = null;
-const maxZinc = null;
-
- */
-
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
 let currentCalories = 0;
 let currentProtein = 0;
 let currentCarbs = 0;
@@ -134,21 +95,58 @@ let currentSelenium = 0;
 let currentZinc = 0;
 let currentPrice = 0;
 
-//TODO use in the future when removing or updating foods in the diary
+let totalCalories = 0;
+let totalProtein = 0;
+let totalCarbs = 0;
+let totalFat = 0;
+let totalFiber = 0;
+let totalSugars = 0;
+let totalAddedSugar = 0;
+let totalSodium = 0;
+let totalOmega3 = 0;
+let totalOmega6 = 0;
+let totalCholesterol = 0;
+let totalSaturatedFats = 0;
+let totalTransFats = 0;
+let totalMonounsaturatedFats = 0;
+let totalPolyunsaturatedFats = 0;
+let totalVitaminB1 = 0;
+let totalVitaminB2 = 0;
+let totalVitaminB3 = 0;
+let totalVitaminB5 = 0;
+let totalVitaminB6 = 0;
+let totalVitaminB9 = 0;
+let totalVitaminB12 = 0;
+let totalVitaminA = 0;
+let totalVitaminC = 0;
+let totalVitaminD = 0;
+let totalVitaminE = 0;
+let totalVitaminK = 0;
+let totalCalcium = 0;
+let totalCopper = 0;
+let totalIron = 0;
+let totalMagnesium = 0;
+let totalManganese = 0;
+let totalPhosphorus = 0;
+let totalPotassium = 0;
+let totalSelenium = 0;
+let totalZinc = 0;
+let totalPrice = 0;
+
 let foodsInDiaryList = [];
 
 const generateDiet = function () {
-<<<<<<< HEAD
 
+    resetCurrentFoodData();
+    clearDiaryTableView();
+    resetPriceBreakdownChart();
     goalCalories = $('#goal-calories-input').val();
     maxCalories = $('#max-calories-input').val();
     goalProtein = $('#goal-protein-input').val();
     goalCarbs = $('#goal-carbs-input').val();
     goalFat = $('#goal-fat-input').val();
     goalFiber = $('#goal-fiber-input').val();
-    //maxSaturatedFats = (goalCalories * 0.1) / 9;
-
-    //TODO split into two objects
+    maxSaturatedFats = (goalCalories * 0.1) / 9;
 
     let requiredNutrients = {
         maxCalories,
@@ -168,9 +166,6 @@ const generateDiet = function () {
         maxPhosphorus,
         maxSelenium,
         maxZinc,
-=======
-    let requiredNutrients = {
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
         goalCalories,
         goalProtein,
         goalCarbs,
@@ -219,7 +214,60 @@ const generateDiet = function () {
         .then(handleResponse)
         .then(displayGeneratedFoodsInDiary)
         .catch(handleError);
+};
 
+const resetCurrentFoodData = function () {
+    currentCalories = 0;
+    currentProtein = 0;
+    currentCarbs = 0;
+    currentFat = 0;
+    currentFiber = 0;
+    currentSugars = 0;
+    currentAddedSugar = 0;
+    currentSodium = 0;
+    currentOmega3 = 0;
+    currentOmega6 = 0;
+    currentCholesterol = 0;
+    currentSaturatedFats = 0;
+    currentTransFats = 0;
+    currentMonounsaturatedFat = 0;
+    currentPolyunsaturatedFat = 0;
+    currentVitaminB1 = 0;
+    currentVitaminB2 = 0;
+    currentVitaminB3 = 0;
+    currentVitaminB5 = 0;
+    currentVitaminB6 = 0;
+    currentVitaminB9 = 0;
+    currentVitaminB12 = 0;
+    currentVitaminA = 0;
+    currentVitaminC = 0;
+    currentVitaminD = 0;
+    currentVitaminE = 0;
+    currentVitaminK = 0;
+    currentCalcium = 0;
+    currentCopper = 0;
+    currentIron = 0;
+    currentMagnesium = 0;
+    currentManganese = 0;
+    currentPhosphorus = 0;
+    currentPotassium = 0;
+    currentSelenium = 0;
+    currentZinc = 0;
+    currentPrice = 0;
+};
+
+const clearDiaryTableView = function () {
+    $('#diary-foods-list').html('');
+};
+
+const resetPriceBreakdownChart = function () {
+    $('#price-breakdown-price-amount').text('0');
+    priceBreakdownChart.data.datasets[0].data = [];
+    priceBreakdownChart.data.labels = [];
+    priceBreakdownChart.data.datasets[0].backgroundColor = [];
+    priceBreakdownChart.data.datasets[0].borderColor = [];
+    priceBreakdownChart.options.tooltips.callbacks.title = formatTitle;
+    priceBreakdownChart.update();
 };
 
 const displayGeneratedFoodsInDiary = function (foods) {
@@ -235,23 +283,139 @@ const addFoodToDiary = function () {
 };
 
 const displayFoodInDiary = function (food) {
-    foodsInDiaryList.push(food);
     let convertedFood = convertFoodData(food, food.dynamicProductWeight);
+    foodsInDiaryList.push(convertedFood);
     addFoodToDiaryTable(convertedFood);
     addFoodNutrientsToTotalNutrients(convertedFood);
+    setFoodClickEvent();
     updateCaloriesBreakdownChart();
     updatePriceBreakdownChart(convertedFood);
     displayFoodData();
 };
 
 const addFoodToDiaryTable = function (food) {
-    let row = `<tr>
-                    <td>${food.name}, ${food.purchasePlace}</td>
+    let row = `<tr data-id=${foodsInDiaryList.length - 1} class="clickable-food-diary">
+                         <td>${food.name}, ${food.purchasePlace}</td>
                          <td>${food.dynamicProductWeight} g</td>
                          <td>${food.calories}</td>
-                         <td>${food.price.toFixed(2)} lv</td>
+                         <td>
+                            <div class="row">
+                                <span class="col-sm-7">${food.price.toFixed(2)} lv</span>
+                                <div style="display: inline-block" class="remove-food-icon col-sm-5">
+                                <i class="fa fa-trash fa-lg" data-toggle="tooltip" title="Remove"></i>
+                                </div>  
+                            </div>
+                         </td>                              
                     </tr>`;
+    setRemoveFoodClickEvent();
     $('#diary-foods-list').append(row);
+};
+
+const setRemoveFoodClickEvent = function () {
+    $('.remove-food-icon').on('click', function () {
+        const $this = $(this);
+        const foodRow = $this.parent().parent().parent();
+        const foodIndex = foodRow.data("id");
+        console.log(foodIndex);
+    });
+}
+
+const setFoodClickEvent = function () {
+    const $clickable = $('.clickable-food-diary');
+
+    $clickable.on('click', function () {
+        const $this = $(this);
+        $clickable.removeClass('table-active');
+        $this.addClass('table-active');
+        const foodIndex = $this.data("id");
+        const food = foodsInDiaryList[foodIndex];
+        saveFoodsData();
+        displaySelectedFoodData(food);
+        updateCaloriesBreakdownChart();
+        resetPriceBreakdownChart();
+        updatePriceBreakdownChart(food);
+        displayFoodData();
+    });
+};
+
+const saveFoodsData = function () {
+    totalCalories = currentCalories;
+    totalProtein = currentProtein;
+    totalCarbs = currentCarbs;
+    totalFat = currentFat;
+    totalFiber = currentFiber;
+    totalSugars = currentSugars;
+    totalAddedSugar = currentAddedSugar;
+    totalSodium = currentSodium;
+    totalOmega3 = currentOmega3;
+    totalOmega6 = currentOmega6;
+    totalCholesterol = currentCholesterol;
+    totalSaturatedFats = currentSaturatedFats;
+    totalTransFats = currentTransFats;
+    totalMonounsaturatedFats = currentMonounsaturatedFats;
+    totalPolyunsaturatedFats = currentPolyunsaturatedFats;
+    totalVitaminB1 = currentVitaminB1;
+    totalVitaminB2 = currentVitaminB2;
+    totalVitaminB3 = currentVitaminB3;
+    totalVitaminB5 = currentVitaminB5;
+    totalVitaminB6 = currentVitaminB6;
+    totalVitaminB9 = currentVitaminB9;
+    totalVitaminB12 = currentVitaminB12;
+    totalVitaminA = currentVitaminA;
+    totalVitaminC = currentVitaminC;
+    totalVitaminD = currentVitaminD;
+    totalVitaminE = currentVitaminE;
+    totalVitaminK = currentVitaminK;
+    totalCalcium = currentCalcium;
+    totalCopper = currentCopper;
+    totalIron = currentIron;
+    totalMagnesium = currentMagnesium;
+    totalManganese = currentManganese;
+    totalPhosphorus = currentPhosphorus;
+    totalPotassium = currentPotassium;
+    totalSelenium = currentSelenium;
+    totalZinc = currentZinc;
+    totalPrice = currentPrice;
+};
+
+const displaySelectedFoodData = function (food) {
+    currentCalories = food.calories;
+    currentProtein = food.protein;
+    currentCarbs = food.carbohydrates;
+    currentFat = food.fat;
+    currentFiber = food.fiber;
+    currentSugars = food.sugars;
+    currentAddedSugar = food.addedSugar;
+    currentSodium = food.sodium;
+    currentOmega3 = food.omega3;
+    currentOmega6 = food.omega6;
+    currentCholesterol = food.cholesterol;
+    currentSaturatedFats = food.saturatedFats;
+    currentTransFats = food.transFats;
+    currentMonounsaturatedFats = food.monounsaturatedFats;
+    currentPolyunsaturatedFats = food.polyunsaturatedFats;
+    currentVitaminB1 = food.vitaminB1;
+    currentVitaminB2 = food.vitaminB2;
+    currentVitaminB3 = food.vitaminB3;
+    currentVitaminB5 = food.vitaminB5;
+    currentVitaminB6 = food.vitaminB6;
+    currentVitaminB9 = food.vitaminB9;
+    currentVitaminB12 = food.vitaminB12;
+    currentVitaminA = food.vitaminA;
+    currentVitaminC = food.vitaminC;
+    currentVitaminD = food.vitaminD;
+    currentVitaminE = food.vitaminE;
+    currentVitaminK = food.vitaminK;
+    currentCalcium = food.calcium;
+    currentCopper = food.copper;
+    currentIron = food.iron;
+    currentMagnesium = food.magnesium;
+    currentManganese = food.manganese;
+    currentPhosphorus = food.phosphorus;
+    currentPotassium = food.potassium;
+    currentSelenium = food.selenium;
+    currentZinc = food.zinc;
+    currentPrice = food.price;
 };
 
 const addFoodNutrientsToTotalNutrients = function (food) {
@@ -368,7 +532,7 @@ const setProgressBar = function ($bar, data, goalData, macros) {
     }
 };
 
-let displayFoodData = function () {
+const displayFoodData = function () {
     let caloriesBar = $('#diary-data-calories');
     setProgressBar(caloriesBar, currentCalories, goalCalories, true);
     let caloriesTextField = caloriesBar.find('small');
@@ -423,8 +587,11 @@ const updatePriceBreakdownChart = function (food) {
     $('#price-breakdown-price-amount').text(currentPrice.toFixed(2));
     priceBreakdownChart.data.datasets[0].data.push(food.price);
     priceBreakdownChart.data.labels.push(food.name);
-    priceBreakdownChart.data.datasets[0].backgroundColor.push('rgba(92, 184, 92, 0.8)');
-    priceBreakdownChart.data.datasets[0].borderColor.push('rgba(92, 184, 92, 1)');
+    let red = Math.floor(Math.random() * 256);
+    let green = Math.floor(Math.random() * 256);
+    let blue = Math.floor(Math.random() * 256);
+    priceBreakdownChart.data.datasets[0].backgroundColor.push(`rgba(${red}, ${green}, ${blue}, 0.8)`);
+    priceBreakdownChart.data.datasets[0].borderColor.push(`rgba(${red}, ${green}, ${blue}, 1)`);
     priceBreakdownChart.options.tooltips.callbacks.title = formatTitle;
     priceBreakdownChart.update();
 };

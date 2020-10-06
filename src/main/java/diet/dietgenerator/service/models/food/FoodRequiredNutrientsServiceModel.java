@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 public class FoodRequiredNutrientsServiceModel {
 
-<<<<<<< HEAD
     private Float maxCholesterol;
     private Float maxVitaminA;
     private Float maxVitaminB3;
@@ -29,8 +28,6 @@ public class FoodRequiredNutrientsServiceModel {
     private Float maxZinc;
     private Float maxCalories;
 
-=======
->>>>>>> e91cfde3e848bf1c8f3a81d24a394a2c6d32a344
     private Float goalCalories;
     private Float goalProtein;
     private Float goalCarbs;

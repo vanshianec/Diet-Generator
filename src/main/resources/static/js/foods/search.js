@@ -86,7 +86,7 @@ const displayFoodsList = function (foods) {
 
     let columns = '';
     foods.forEach(food => {
-        columns += `<tr><td data-id=${food.id} class="clickable">${food.name}, ${foodType ==='custom' ? food.purchasePlace : food.foodGroup}</td></tr>`
+        columns += `<tr data-id=${food.id} class="clickable-food-modal"><td>${food.name}, ${foodType ==='custom' ? food.purchasePlace : food.foodGroup}</td></tr>`
     });
 
     $foodsList.append(columns);
@@ -96,14 +96,14 @@ const displayFoodsList = function (foods) {
 
 const setClickEvent = function () {
 
-    let $clickable = $('.clickable');
+    const $clickable = $('.clickable-food-modal');
 
     $clickable.on('click', function () {
         let $this = $(this);
-        $clickable.removeClass('selected');
-        $this.addClass('selected');
+        $clickable.removeClass('table-active');
+        $this.addClass('table-active');
         $('#food-general-data-table').show();
-        foodId = $(this).data("id");
+        foodId = $this.data("id");
 
         if (foodType === 'basic') {
             fetch(URLS.retrieveFoodNutrition + '?foodId=' + foodId)

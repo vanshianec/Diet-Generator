@@ -53,9 +53,6 @@ let caloriesBreakdownOptions = {
     legend: {
         display: false
     },
-    animation: {
-        duration: 0
-    },
     cutoutPercentage: 70,
     responsive: true,
     tooltips: {
