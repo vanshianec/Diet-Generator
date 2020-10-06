@@ -301,25 +301,23 @@ const addFoodToDiaryTable = function (food) {
                          <td>
                             <div class="row">
                                 <span class="col-sm-7">${food.price.toFixed(2)} lv</span>
-                                <div style="display: inline-block" class="remove-food-icon col-sm-5">
-                                <i class="fa fa-trash fa-lg" data-toggle="tooltip" title="Remove"></i>
+                                <div style="display: inline-block" class="col-sm-5">
+                                <i class="fa fa-trash fa-lg remove-food-icon" data-toggle="tooltip" title="Remove" onclick="removeFoodFromDiary(this)"></i>
                                 </div>  
                             </div>
                          </td>                              
                     </tr>`;
-    setRemoveFoodClickEvent();
     $('#diary-foods-list').append(row);
 };
 
-const setRemoveFoodClickEvent = function () {
-    $('.remove-food-icon').on('click', function () {
-        const $this = $(this);
-        const foodRow = $this.parent().parent().parent();
+const removeFoodFromDiary = function (context) {
+        const $this = $(context);
+        const foodRow = $this.parent().parent().parent().parent();
         const foodIndex = foodRow.data("id");
         console.log(foodIndex);
-    });
 }
 
+//TODO FIX THIS
 const setFoodClickEvent = function () {
     const $clickable = $('.clickable-food-diary');
 
