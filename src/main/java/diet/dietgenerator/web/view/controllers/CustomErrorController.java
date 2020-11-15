@@ -1,6 +1,6 @@
 package diet.dietgenerator.web.view.controllers;
 
-import diet.dietgenerator.exceptions.NotFoundException;
+import diet.dietgenerator.exceptions.RecourseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -21,7 +21,7 @@ public class CustomErrorController extends AbstractErrorController {
         super(errorAttributes);
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(RecourseNotFoundException.class)
     public String notFound() {
         return "error/not-found.html";
     }
@@ -36,7 +36,7 @@ public class CustomErrorController extends AbstractErrorController {
     public ResponseEntity<?> handleErrors(HttpServletRequest request) {
         HttpStatus status = getStatus(request);
         if (status.equals(HttpStatus.NOT_FOUND)) {
-            throw new NotFoundException();
+            throw new RecourseNotFoundException();
         }
 
         return ResponseEntity.status(status).body(getErrorAttributes(request, false));

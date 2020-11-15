@@ -2,51 +2,76 @@ package diet.dietgenerator.service.services.base;
 
 import diet.dietgenerator.data.models.base.BaseFood;
 import diet.dietgenerator.data.repositories.base.BaseFoodRepository;
+import diet.dietgenerator.exceptions.FoodNotFoundException;
+import diet.dietgenerator.exceptions.RecourseNotFoundException;
 import diet.dietgenerator.service.models.food.base.BaseFoodServiceModel;
-import diet.dietgenerator.service.services.BaseFoodService;
+import diet.dietgenerator.service.services.FoodService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class BaseFoodServiceImpl implements BaseFoodService {
+
+public abstract class BaseFoodServiceImpl<T extends BaseFood> implements FoodService {
 
     private final ModelMapper modelMapper;
+    private final BaseFoodRepository<T> repository;
+    private final Class<T> foodClassType;
+    private final Class<? extends BaseFoodServiceModel> foodServiceModelClassType;
 
-    protected BaseFoodServiceImpl(ModelMapper modelMapper) {
+    protected BaseFoodServiceImpl(ModelMapper modelMapper, BaseFoodRepository<T> repository, Class<T> foodClassType, Class<? extends BaseFoodServiceModel> foodServiceModelClassType) {
         this.modelMapper = modelMapper;
+        this.repository = repository;
+        this.foodClassType = foodClassType;
+        this.foodServiceModelClassType = foodServiceModelClassType;
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAll(Pageable pageable, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+    //TODO SPLIT THESE METHODS
+
+    @Override
+    public List<BaseFoodServiceModel> getAllFoods(Pageable pageable) {
         return repository.findAll(pageable)
                 .stream()
-                .map(f -> modelMapper.map(f, typeParameterClass))
+                .map(f -> modelMapper.map(f, foodServiceModelClassType))
                 .collect(Collectors.toList());
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllByFoodGroup(String foodGroup, Pageable pageable, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+    @Override
+    public List<BaseFoodServiceModel> getAllFoodsByFoodGroup(String foodGroup, Pageable pageable) {
         if (foodGroup == null) {
-            return getAll(pageable, repository, typeParameterClass);
+            return getAllFoods(pageable);
         }
 
-        return repository.findAllByFoodGroup(foodGroup, pageable)
+        Page<T> foods = repository.findAllByFoodGroup(foodGroup, pageable);
+        return foods
                 .stream()
-                .map(f -> modelMapper.map(f, typeParameterClass))
+                .map(f -> modelMapper.map(f, foodServiceModelClassType))
                 .collect(Collectors.toList());
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood> List<T> getAllFoodsByMatchingName(String name,  BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
+    @Override
+    public List<BaseFoodServiceModel> getAllFoodsByMatchingName(String name) {
         return repository.findAllByNameContainingIgnoreCase(name)
                 .stream()
-                .map(f -> modelMapper.map(f, typeParameterClass))
+                .map(f -> modelMapper.map(f, foodServiceModelClassType))
                 .collect(Collectors.toList());
     }
 
-    public <T extends BaseFoodServiceModel, K extends BaseFood> T getFoodById(Long id, BaseFoodRepository<K> repository, Class<T> typeParameterClass) {
-        Optional<K> food = repository.findById(id);
-        return modelMapper.map(food.get(), typeParameterClass);
+    @Override
+    public BaseFoodServiceModel getFoodById(Long id) {
+        Optional<T> food = repository.findById(id);
+        if (!food.isPresent()) {
+            throw new FoodNotFoundException("There is no such food with id: " + id);
+        }
+
+        return modelMapper.map(food.get(), foodServiceModelClassType);
     }
 
+    @Override
+    public void createFood(BaseFoodServiceModel serviceModel) {
+        repository.save(modelMapper.map(serviceModel, foodClassType));
+    }
 }

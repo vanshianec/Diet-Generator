@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FoodsLowestCostSolver {
 
-    private final ModelMapper modelMapper;
+    private ModelMapper modelMapper;
     private MPSolver solver;
     private double infinity;
     private MPObjective objective;
@@ -77,8 +77,7 @@ public class FoodsLowestCostSolver {
     private MPConstraint minZinc;
     private List<MPVariable> variables;
 
-    public FoodsLowestCostSolver(ModelMapper modelMapper, FoodRequiredNutrientsServiceModel foodRequirements, List<CustomFoodServiceModel> foods) {
-        this.modelMapper = modelMapper;
+    public FoodsLowestCostSolver(FoodRequiredNutrientsServiceModel foodRequirements, List<CustomFoodServiceModel> foods) {
         solver = MPSolver.createSolver("LinearProgrammingExample", "GLOP");
         infinity = java.lang.Double.POSITIVE_INFINITY;
         objective = solver.objective();
@@ -86,8 +85,33 @@ public class FoodsLowestCostSolver {
         this.foodRequirements = foodRequirements;
         this.foods = foods;
         variables = new ArrayList<>();
+        modelMapper = new ModelMapper();
         setConstraints();
         setVariables();
+    }
+
+    public List<CustomFoodDynamicWeightServiceModel> getLowestCostFoods() {
+        List<CustomFoodDynamicWeightServiceModel> foodsResult = new ArrayList<>();
+
+        final MPSolver.ResultStatus resultStatus = solver.solve();
+        // Check that the problem has an optimal solution.
+        if (resultStatus != MPSolver.ResultStatus.OPTIMAL) {
+            System.err.println("The problem does not have an optimal solution!");
+            return null;
+        }
+
+        for (MPVariable variable : variables) {
+            double solutionValue = variable.solutionValue();
+            if (solutionValue != 0) {
+                CustomFoodDynamicWeightServiceModel food = modelMapper.map(foods.get(Integer.parseInt(variable.name())), CustomFoodDynamicWeightServiceModel.class);
+                food.setDynamicProductWeight((int) (solutionValue * 100));
+                foodsResult.add(food);
+            }
+        }
+
+        System.out.println("Optimal objective value = " + solver.objective().value());
+
+        return foodsResult;
     }
 
     private void setConstraints() {
@@ -226,30 +250,6 @@ public class FoodsLowestCostSolver {
         maxSelenium.setCoefficient(variable, notNull(food.getSelenium()));
         maxZinc.setCoefficient(variable, notNull(food.getZinc()));
         maxCalories.setCoefficient(variable, food.getCalories());
-    }
-
-    public List<CustomFoodDynamicWeightServiceModel> getLowestCostFoods() {
-        List<CustomFoodDynamicWeightServiceModel> foodsResult = new ArrayList<>();
-
-        final MPSolver.ResultStatus resultStatus = solver.solve();
-        // Check that the problem has an optimal solution.
-        if (resultStatus != MPSolver.ResultStatus.OPTIMAL) {
-            System.err.println("The problem does not have an optimal solution!");
-            return null;
-        }
-
-        for (MPVariable variable : variables) {
-            double solutionValue = variable.solutionValue();
-            if (solutionValue != 0) {
-                CustomFoodDynamicWeightServiceModel food = modelMapper.map(foods.get(Integer.parseInt(variable.name())), CustomFoodDynamicWeightServiceModel.class);
-                food.setDynamicProductWeight((int) (solutionValue * 100));
-                foodsResult.add(food);
-            }
-        }
-
-        System.out.println("Optimal objective value = " + solver.objective().value());
-
-        return foodsResult;
     }
 
     private Float notNull(Float value) {
