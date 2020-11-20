@@ -35,4 +35,8 @@ public class CustomFood extends BaseFood {
     )
     private List<User> users;
 
+    @Override
+    public FoodType getFoodType() {
+        return FoodType.CUSTOM;
+    }
 }

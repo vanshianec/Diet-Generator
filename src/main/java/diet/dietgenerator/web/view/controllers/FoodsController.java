@@ -4,7 +4,6 @@ import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
 import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.web.view.models.CustomFoodViewModel;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,11 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class FoodsController {
 
     private final ModelMapper modelMapper;
-    private final FoodService customFoodService;
+    private final FoodService foodService;
 
-    public FoodsController(ModelMapper modelMapper, @Qualifier("CustomFood") FoodService customFoodService) {
+    public FoodsController(ModelMapper modelMapper, FoodService foodService) {
         this.modelMapper = modelMapper;
-        this.customFoodService = customFoodService;
+        this.foodService = foodService;
     }
 
     @GetMapping("/all")
@@ -32,7 +31,7 @@ public class FoodsController {
     @PostMapping("/create")
     public ModelAndView createFood(@ModelAttribute CustomFoodViewModel model, ModelAndView modelAndView) {
         CustomFoodServiceModel serviceModel = modelMapper.map(model, CustomFoodServiceModel.class);
-        customFoodService.createFood(serviceModel);
+        foodService.createCustomFood(serviceModel);
         modelAndView.setViewName("redirect:/foods/all");
         return modelAndView;
     }
