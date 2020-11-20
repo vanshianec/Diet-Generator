@@ -7,6 +7,7 @@ import diet.dietgenerator.service.services.FoodService;
 import diet.dietgenerator.utils.linearsolver.FoodsLowestCostSolver;
 import diet.dietgenerator.web.api.models.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -21,11 +22,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/foods")
 public class FoodsApiController {
 
-    private final FoodService foodService;
+    private final FoodService basicFoodService;
+    private final FoodService customFoodService;
     private final ModelMapper modelMapper;
 
-    public FoodsApiController(FoodService foodService, ModelMapper modelMapper) {
-        this.foodService = foodService;
+    public FoodsApiController(@Qualifier("BasicFood") FoodService basicFoodService,
+                              @Qualifier("CustomFood") FoodService customFoodService,
+                              ModelMapper modelMapper) {
+
+        this.basicFoodService = basicFoodService;
+        this.customFoodService = customFoodService;
         this.modelMapper = modelMapper;
     }
 
@@ -36,14 +42,14 @@ public class FoodsApiController {
                                                                               @RequestParam(value = "additionalNutrient", defaultValue = "fiber") String additionalNutrient,
                                                                               @PageableDefault(page = 0, size = 20) Pageable pageable) {
         List<FoodTableViewResponseModel> foods;
-        List<? extends BaseFoodServiceModel> serviceModels;
+        List<BaseFoodServiceModel> serviceModels;
 
         //TODO CHANGE foodCategory to foodType
 
         if (foodCategory.equals("basic")) {
-            serviceModels = foodService.getAllBasicFoodsByFoodGroup(foodGroup, pageable);
+            serviceModels = basicFoodService.getAllFoodsByFoodGroup(foodGroup, pageable);
         } else if (foodCategory.equals("custom")) {
-            serviceModels = foodService.getAllCustomFoodsByFoodGroup(foodGroup, pageable);
+            serviceModels = customFoodService.getAllFoodsByFoodGroup(foodGroup, pageable);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -63,12 +69,12 @@ public class FoodsApiController {
                                                                                   @RequestParam(value = "searchWord") String searchWord) {
 
         List<FoodSearchViewResponseModel> foods;
-        List<? extends BaseFoodServiceModel> serviceModels;
+        List<BaseFoodServiceModel> serviceModels;
 
         if (foodType.equals("basic")) {
-            serviceModels = foodService.getAllBasicFoodsByMatchingName(searchWord);
+            serviceModels = basicFoodService.getAllFoodsByMatchingName(searchWord);
         } else if (foodType.equals("custom")) {
-            serviceModels = foodService.getAllCustomFoodsByMatchingName(searchWord);
+            serviceModels = customFoodService.getAllFoodsByMatchingName(searchWord);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -82,14 +88,14 @@ public class FoodsApiController {
 
     @GetMapping("/nutrition")
     public ResponseEntity<FoodNutrientsViewResponseModel> getFoodNutrients(@RequestParam(value = "foodId") Long id) {
-        FoodNutrientsViewResponseModel food = modelMapper.map(foodService.getBasicFoodById(id), FoodNutrientsViewResponseModel.class);
+        FoodNutrientsViewResponseModel food = modelMapper.map(basicFoodService.getFoodById(id), FoodNutrientsViewResponseModel.class);
         return new ResponseEntity<>(food, HttpStatus.OK);
     }
 
     @GetMapping("/custom")
     ResponseEntity<CustomFoodDynamicWeightViewResponseModel> getCustomFood(@RequestParam(value = "foodId") Long id,
                                                                            @RequestParam(value = "servingSize", required = false) Integer servingSize) {
-        CustomFoodDynamicWeightViewResponseModel food = modelMapper.map(foodService.getCustomFoodById(id), CustomFoodDynamicWeightViewResponseModel.class);
+        CustomFoodDynamicWeightViewResponseModel food = modelMapper.map(customFoodService.getFoodById(id), CustomFoodDynamicWeightViewResponseModel.class);
         if (servingSize != null) {
             food.setDynamicProductWeight(servingSize);
         }
@@ -98,14 +104,14 @@ public class FoodsApiController {
 
     @GetMapping("/general-data")
     public ResponseEntity<CustomFoodGeneralViewResponseModel> getCustomFoodGeneralData(@RequestParam(value = "foodId") Long id) {
-        CustomFoodServiceModel model = foodService.getCustomFoodById(id);
+        BaseFoodServiceModel model = customFoodService.getFoodById(id);
         CustomFoodGeneralViewResponseModel food = modelMapper.map(model, CustomFoodGeneralViewResponseModel.class);
         return new ResponseEntity<>(food, HttpStatus.OK);
     }
 
     @GetMapping("/custom/all")
     public ResponseEntity<List<FoodSearchViewResponseModel>> getAllCustomFoods() {
-        List<FoodSearchViewResponseModel> foods = foodService.getAllCustomFoods(Pageable.unpaged())
+        List<FoodSearchViewResponseModel> foods = customFoodService.getAllFoods(Pageable.unpaged())
                 .stream()
                 .map(f -> modelMapper.map(f, FoodSearchViewResponseModel.class))
                 .collect(Collectors.toList());
@@ -115,7 +121,7 @@ public class FoodsApiController {
 
     @PostMapping("/generate")
     public ResponseEntity<List<CustomFoodDynamicWeightViewResponseModel>> generateDiet(@RequestBody FoodRequiredNutrientsRequestModel requiredNutrients) {
-        List<CustomFoodServiceModel> serviceModels = foodService.getAllCustomFoods(Pageable.unpaged())
+        List<CustomFoodServiceModel> serviceModels = customFoodService.getAllFoods(Pageable.unpaged())
                 .stream()
                 .map(f -> modelMapper.map(f, CustomFoodServiceModel.class))
                 .collect(Collectors.toList());

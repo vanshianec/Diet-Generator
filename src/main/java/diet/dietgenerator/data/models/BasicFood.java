@@ -6,9 +6,4 @@ import javax.persistence.*;
 @Entity
 @Table(name = "foods")
 public class BasicFood extends BaseFood {
-
-    @Override
-    public FoodType getFoodType() {
-        return FoodType.BASIC;
-    }
 }

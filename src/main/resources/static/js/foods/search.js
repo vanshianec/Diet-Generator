@@ -1,3 +1,5 @@
+//TODO !!! think of ways to split this code for each html page individually
+
 let firstModalLaunch = true;
 let timer = null;
 let searchWord = '';
@@ -9,6 +11,8 @@ let foodProteinPerHundredGrams;
 let foodCaloriesPerHundredGrams;
 let foodPricePerServing;
 let foodServingSize;
+
+//TODO see correct camel case for id naming
 
 $('#modal-add-food-to-diary').on('show.bs.modal', function (e) {
     if (firstModalLaunch) {
