@@ -1,28 +1,28 @@
 package diet.dietgenerator.service.services;
 
-import diet.dietgenerator.data.models.base.BaseFood;
 import diet.dietgenerator.service.models.food.BasicFoodServiceModel;
-import diet.dietgenerator.service.models.food.CustomFoodDynamicWeightServiceModel;
 import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
-import diet.dietgenerator.service.models.food.FoodRequiredNutrientsServiceModel;
-import diet.dietgenerator.service.models.food.base.BaseFoodServiceModel;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface FoodService {
 
-    List<BaseFoodServiceModel> getAllFoods(Pageable pageable);
+    List<BasicFoodServiceModel> getAllBasicFoods(Pageable pageable);
 
-    List<BaseFoodServiceModel> getAllFoodsByFoodGroup(String foodGroup, Pageable pageable);
+    List<BasicFoodServiceModel> getAllBasicFoodsByFoodGroup(String foodGroup, Pageable pageable);
 
-    void createFood(BaseFoodServiceModel serviceModel);
+    List<BasicFoodServiceModel> getAllBasicFoodsByMatchingName(String name);
 
-    List<BaseFoodServiceModel> getAllFoodsByMatchingName(String name);
+    BasicFoodServiceModel getBasicFoodById(Long id);
 
-    BaseFoodServiceModel getFoodById(Long id);
+    List<CustomFoodServiceModel> getAllCustomFoods(Pageable pageable);
 
-    //TODO
+    List<CustomFoodServiceModel> getAllCustomFoodsByFoodGroup(String foodGroup, Pageable pageable);
 
-    // List<CustomFoodDynamicWeightServiceModel> generateLowestCostDiet(FoodRequiredNutrientsServiceModel requiredNutrients);
+    List<CustomFoodServiceModel> getAllCustomFoodsByMatchingName(String name);
+
+    CustomFoodServiceModel getCustomFoodById(Long id);
+
+    void createCustomFood(CustomFoodServiceModel serviceModel);
 }
