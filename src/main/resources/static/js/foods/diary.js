@@ -1,5 +1,3 @@
-//TODO rename 'current' to 'total' :DD
-
 let goalCalories = 2000;
 let goalProtein = 200;
 let goalCarbs = 200;
@@ -287,14 +285,13 @@ const displayFoodInDiary = function (food) {
     foodsInDiaryList.push(convertedFood);
     addFoodToDiaryTable(convertedFood);
     addFoodNutrientsToTotalNutrients(convertedFood);
-    setFoodClickEvent();
     updateCaloriesBreakdownChart();
-    updatePriceBreakdownChart(convertedFood);
+    addFoodToPriceBreakdownChart(convertedFood);
     displayFoodData();
 };
 
 const addFoodToDiaryTable = function (food) {
-    let row = `<tr data-id=${foodsInDiaryList.length - 1} class="clickable-food-diary">
+    let row = `<tr data-id=${foodsInDiaryList.length - 1} class="clickable-food-diary" onclick="showSelectedFoodData(this)">
                          <td>${food.name}, ${food.purchasePlace}</td>
                          <td>${food.dynamicProductWeight} g</td>
                          <td>${food.calories}</td>
@@ -311,30 +308,83 @@ const addFoodToDiaryTable = function (food) {
 };
 
 const removeFoodFromDiary = function (context) {
-        const $this = $(context);
-        const foodRow = $this.parent().parent().parent().parent();
-        const foodIndex = foodRow.data("id");
-        console.log(foodIndex);
+    const $this = $(context);
+    const foodRow = $this.parent().parent().parent().parent();
+    const foodIndex = foodRow.data("id");
+    console.log(foodIndex);
 }
 
-//TODO FIX THIS
-const setFoodClickEvent = function () {
+const showSelectedFoodData = function (context) {
+    const $this = $(context);
     const $clickable = $('.clickable-food-diary');
 
-    $clickable.on('click', function () {
-        const $this = $(this);
+    resetPriceBreakdownChart();
+
+    if ($this.hasClass('table-active')) {
+        $clickable.removeClass('table-active');
+        loadAllFoodsData();
+
+    } else {
         $clickable.removeClass('table-active');
         $this.addClass('table-active');
         const foodIndex = $this.data("id");
         const food = foodsInDiaryList[foodIndex];
         saveFoodsData();
-        displaySelectedFoodData(food);
-        updateCaloriesBreakdownChart();
-        resetPriceBreakdownChart();
-        updatePriceBreakdownChart(food);
-        displayFoodData();
-    });
+        setSelectedFoodData(food);
+        addFoodToPriceBreakdownChart(food);
+    }
+
+    updateCaloriesBreakdownChart();
+    displayFoodData();
 };
+
+const loadAllFoodsData = function () {
+    restoreFoodsData();
+
+    for (let food of foodsInDiaryList) {
+        addFoodToPriceBreakdownChart(food);
+    }
+}
+
+const restoreFoodsData = function () {
+    currentCalories = totalCalories;
+    currentProtein = totalProtein;
+    currentCarbs = totalCarbs;
+    currentFat = totalFat;
+    currentFiber = totalFiber;
+    currentSugars = totalSugars;
+    currentAddedSugar = totalAddedSugar;
+    currentSodium = totalSodium;
+    currentOmega3 = totalOmega3;
+    currentOmega6 = totalOmega6;
+    currentCholesterol = totalCholesterol;
+    currentSaturatedFats = totalSaturatedFats;
+    currentTransFats = totalTransFats;
+    currentMonounsaturatedFats = totalMonounsaturatedFats;
+    currentPolyunsaturatedFats = totalPolyunsaturatedFats;
+    currentVitaminB1 = totalVitaminB1;
+    currentVitaminB2 = totalVitaminB2;
+    currentVitaminB3 = totalVitaminB3;
+    currentVitaminB5 = totalVitaminB5;
+    currentVitaminB6 = totalVitaminB6;
+    currentVitaminB9 = totalVitaminB9;
+    currentVitaminB12 = totalVitaminB12;
+    currentVitaminA = totalVitaminA;
+    currentVitaminC = totalVitaminC;
+    currentVitaminD = totalVitaminD;
+    currentVitaminE = totalVitaminE;
+    currentVitaminK = totalVitaminK;
+    currentCalcium = totalCalcium;
+    currentCopper = totalCopper;
+    currentIron = totalIron;
+    currentMagnesium = totalMagnesium;
+    currentManganese = totalManganese;
+    currentPhosphorus = totalPhosphorus;
+    currentPotassium = totalPotassium;
+    currentSelenium = totalSelenium;
+    currentZinc = totalZinc;
+    currentPrice = totalPrice;
+}
 
 const saveFoodsData = function () {
     totalCalories = currentCalories;
@@ -376,7 +426,7 @@ const saveFoodsData = function () {
     totalPrice = currentPrice;
 };
 
-const displaySelectedFoodData = function (food) {
+const setSelectedFoodData = function (food) {
     currentCalories = food.calories;
     currentProtein = food.protein;
     currentCarbs = food.carbohydrates;
@@ -581,7 +631,7 @@ const updateCaloriesBreakdownChart = function () {
 
 };
 
-const updatePriceBreakdownChart = function (food) {
+const addFoodToPriceBreakdownChart = function (food) {
     $('#price-breakdown-price-amount').text(currentPrice.toFixed(2));
     priceBreakdownChart.data.datasets[0].data.push(food.price);
     priceBreakdownChart.data.labels.push(food.name);
