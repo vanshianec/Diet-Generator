@@ -6,7 +6,7 @@ import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 import diet.dietgenerator.service.models.food.CustomFoodDynamicWeightServiceModel;
 import diet.dietgenerator.service.models.food.CustomFoodServiceModel;
-import diet.dietgenerator.service.models.food.FoodRequiredNutrientsServiceModel;
+import diet.dietgenerator.service.models.food.FoodNutrientsServiceModel;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -18,7 +18,8 @@ public class FoodsLowestCostSolver {
     private MPSolver solver;
     private double infinity;
     private MPObjective objective;
-    private FoodRequiredNutrientsServiceModel foodRequirements;
+    private FoodNutrientsServiceModel goalNutrients;
+    private FoodNutrientsServiceModel maxNutrients;
     private List<CustomFoodServiceModel> foods;
 
     private MPConstraint maxCholesterol;
@@ -77,12 +78,16 @@ public class FoodsLowestCostSolver {
     private MPConstraint minZinc;
     private List<MPVariable> variables;
 
-    public FoodsLowestCostSolver(FoodRequiredNutrientsServiceModel foodRequirements, List<CustomFoodServiceModel> foods) {
+    public FoodsLowestCostSolver(FoodNutrientsServiceModel goalNutrients,
+                                 FoodNutrientsServiceModel maxNutrients,
+                                 List<CustomFoodServiceModel> foods) {
+
         solver = MPSolver.createSolver("LinearProgrammingExample", "GLOP");
         infinity = java.lang.Double.POSITIVE_INFINITY;
         objective = solver.objective();
         objective.setMinimization();
-        this.foodRequirements = foodRequirements;
+        this.goalNutrients = goalNutrients;
+        this.maxNutrients = maxNutrients;
         this.foods = foods;
         variables = new ArrayList<>();
         modelMapper = new ModelMapper();
@@ -120,62 +125,63 @@ public class FoodsLowestCostSolver {
     }
 
     private void setMinConstraints() {
-        minCalories = solver.makeConstraint(foodRequirements.getGoalCalories(), infinity, "c0");
-        minProtein = solver.makeConstraint(foodRequirements.getGoalProtein(), infinity, "c1");
-        minCarbs = solver.makeConstraint(foodRequirements.getGoalCarbs(), infinity, "c2");
-        minFat = solver.makeConstraint(foodRequirements.getGoalFat(), infinity, "c3");
-        minFiber = solver.makeConstraint(notNull(foodRequirements.getGoalFiber()), infinity, "c4");
-        minSodium = solver.makeConstraint(notNull(foodRequirements.getGoalSodium()), infinity, "c5");
-        minCholesterol = solver.makeConstraint(notNull(foodRequirements.getGoalCholesterol()), infinity, "c6");
-        minSugars = solver.makeConstraint(notNull(foodRequirements.getGoalSugars()), infinity, "c7");
-        minAddedSugar = solver.makeConstraint(notNull(foodRequirements.getGoalAddedSugar()), infinity, "c8");
-        minSaturatedFats = solver.makeConstraint(notNull(foodRequirements.getGoalSaturatedFats()), infinity, "c9");
-        minTransFats = solver.makeConstraint(notNull(foodRequirements.getGoalTransFats()), infinity, "c10");
-        minMonounsaturatedFats = solver.makeConstraint(notNull(foodRequirements.getGoalMonounsaturatedFats()), infinity, "c11");
-        minPolyunsaturatedFats = solver.makeConstraint(notNull(foodRequirements.getGoalPolyunsaturatedFats()), infinity, "c12");
-        minOmega3 = solver.makeConstraint(notNull(foodRequirements.getGoalOmega3()), infinity, "c13");
-        minOmega6 = solver.makeConstraint(notNull(foodRequirements.getGoalOmega6()), infinity, "c14");
-        minVitaminB1 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB1()), infinity, "c15");
-        minVitaminB2 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB2()), infinity, "c16");
-        minVitaminB3 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB3()), infinity, "c17");
-        minVitaminB5 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB5()), infinity, "c18");
-        minVitaminB6 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB6()), infinity, "c19");
-        minVitaminB9 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB9()), infinity, "c20");
-        minVitaminB12 = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminB12()), infinity, "c21");
-        minVitaminA = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminA()), infinity, "c22");
-        minVitaminC = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminC()), infinity, "c23");
-        minVitaminD = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminD()), infinity, "c24");
-        minVitaminE = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminE()), infinity, "c25");
-        minVitaminK = solver.makeConstraint(notNull(foodRequirements.getGoalVitaminK()), infinity, "c26");
-        minCalcium = solver.makeConstraint(notNull(foodRequirements.getGoalCalcium()), infinity, "c27");
-        minCopper = solver.makeConstraint(notNull(foodRequirements.getGoalCopper()), infinity, "c28");
-        minIron = solver.makeConstraint(notNull(foodRequirements.getGoalIron()), infinity, "c29");
-        minMagnesium = solver.makeConstraint(notNull(foodRequirements.getGoalMagnesium()), infinity, "c30");
-        minManganese = solver.makeConstraint(notNull(foodRequirements.getGoalManganese()), infinity, "c31");
-        minPhosphorus = solver.makeConstraint(notNull(foodRequirements.getGoalPhosphorus()), infinity, "c32");
-        minPotassium = solver.makeConstraint(notNull(foodRequirements.getGoalPotassium()), infinity, "c33");
-        minSelenium = solver.makeConstraint(notNull(foodRequirements.getGoalSelenium()), infinity, "c34");
-        minZinc = solver.makeConstraint(notNull(foodRequirements.getGoalZinc()), infinity, "c35");
+        minCalories = solver.makeConstraint(goalNutrients.getCalories(), infinity, "c0");
+        minProtein = solver.makeConstraint(goalNutrients.getProtein(), infinity, "c1");
+        minCarbs = solver.makeConstraint(goalNutrients.getCarbohydrates(), infinity, "c2");
+        minFat = solver.makeConstraint(goalNutrients.getFat(), infinity, "c3");
+        minFiber = solver.makeConstraint(notNull(goalNutrients.getFiber()), infinity, "c4");
+        minSodium = solver.makeConstraint(notNull(goalNutrients.getSodium()), infinity, "c5");
+        minCholesterol = solver.makeConstraint(notNull(goalNutrients.getCholesterol()), infinity, "c6");
+        minSugars = solver.makeConstraint(notNull(goalNutrients.getSugars()), infinity, "c7");
+        minAddedSugar = solver.makeConstraint(notNull(goalNutrients.getAddedSugar()), infinity, "c8");
+        minSaturatedFats = solver.makeConstraint(notNull(goalNutrients.getSaturatedFats()), infinity, "c9");
+        minTransFats = solver.makeConstraint(notNull(goalNutrients.getTransFats()), infinity, "c10");
+        minMonounsaturatedFats = solver.makeConstraint(notNull(goalNutrients.getMonounsaturatedFats()), infinity, "c11");
+        minPolyunsaturatedFats = solver.makeConstraint(notNull(goalNutrients.getPolyunsaturatedFats()), infinity, "c12");
+        minOmega3 = solver.makeConstraint(notNull(goalNutrients.getOmega3()), infinity, "c13");
+        minOmega6 = solver.makeConstraint(notNull(goalNutrients.getOmega6()), infinity, "c14");
+        minVitaminB1 = solver.makeConstraint(notNull(goalNutrients.getVitaminB1()), infinity, "c15");
+        minVitaminB2 = solver.makeConstraint(notNull(goalNutrients.getVitaminB2()), infinity, "c16");
+        minVitaminB3 = solver.makeConstraint(notNull(goalNutrients.getVitaminB3()), infinity, "c17");
+        minVitaminB5 = solver.makeConstraint(notNull(goalNutrients.getVitaminB5()), infinity, "c18");
+        minVitaminB6 = solver.makeConstraint(notNull(goalNutrients.getVitaminB6()), infinity, "c19");
+        minVitaminB9 = solver.makeConstraint(notNull(goalNutrients.getVitaminB9()), infinity, "c20");
+        minVitaminB12 = solver.makeConstraint(notNull(goalNutrients.getVitaminB12()), infinity, "c21");
+        minVitaminA = solver.makeConstraint(notNull(goalNutrients.getVitaminA()), infinity, "c22");
+        minVitaminC = solver.makeConstraint(notNull(goalNutrients.getVitaminC()), infinity, "c23");
+        minVitaminD = solver.makeConstraint(notNull(goalNutrients.getVitaminD()), infinity, "c24");
+        minVitaminE = solver.makeConstraint(notNull(goalNutrients.getVitaminE()), infinity, "c25");
+        minVitaminK = solver.makeConstraint(notNull(goalNutrients.getVitaminK()), infinity, "c26");
+        minCalcium = solver.makeConstraint(notNull(goalNutrients.getCalcium()), infinity, "c27");
+        minCopper = solver.makeConstraint(notNull(goalNutrients.getCopper()), infinity, "c28");
+        minIron = solver.makeConstraint(notNull(goalNutrients.getIron()), infinity, "c29");
+        minMagnesium = solver.makeConstraint(notNull(goalNutrients.getMagnesium()), infinity, "c30");
+        minManganese = solver.makeConstraint(notNull(goalNutrients.getManganese()), infinity, "c31");
+        minPhosphorus = solver.makeConstraint(notNull(goalNutrients.getPhosphorus()), infinity, "c32");
+        minPotassium = solver.makeConstraint(notNull(goalNutrients.getPotassium()), infinity, "c33");
+        minSelenium = solver.makeConstraint(notNull(goalNutrients.getSelenium()), infinity, "c34");
+        minZinc = solver.makeConstraint(notNull(goalNutrients.getZinc()), infinity, "c35");
     }
 
     private void setMaxConstraints() {
-        maxCalories = solver.makeConstraint(-infinity, foodRequirements.getMaxCalories(), "cc0");
-        maxCholesterol = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCholesterol()), "cc1");
-        maxVitaminA = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminA()), "cc2");
-        maxVitaminB3 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB3()), "cc3");
-        maxVitaminB6 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB6()), "cc4");
-        maxVitaminC = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminC()), "cc5");
-        maxVitaminD = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminD()), "cc6");
-        maxVitaminE = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminE()), "cc7");
-        maxVitaminB9 = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminB9()), "cc8");
-        maxVitaminK = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxVitaminK()), "cc9");
-        maxCalcium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCalcium()), "cc10");
-        maxCopper = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxCopper()), "cc11");
-        maxIron = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxIron()), "cc12");
-        maxManganese = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxManganese()), "cc13");
-        maxPhosphorus = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxPhosphorus()), "cc14");
-        maxSelenium = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxSelenium()), "cc15");
-        maxZinc = solver.makeConstraint(-infinity, nullToInfinity(foodRequirements.getMaxZinc()), "cc16");
+        //TODO add notNull for the other field types of maxNutrients variable
+        maxCalories = solver.makeConstraint(-infinity, maxNutrients.getCalories(), "cc0");
+        maxCholesterol = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getCholesterol()), "cc1");
+        maxVitaminA = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminA()), "cc2");
+        maxVitaminB3 = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminB3()), "cc3");
+        maxVitaminB6 = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminB6()), "cc4");
+        maxVitaminC = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminC()), "cc5");
+        maxVitaminD = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminD()), "cc6");
+        maxVitaminE = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminE()), "cc7");
+        maxVitaminB9 = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminB9()), "cc8");
+        maxVitaminK = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getVitaminK()), "cc9");
+        maxCalcium = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getCalcium()), "cc10");
+        maxCopper = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getCopper()), "cc11");
+        maxIron = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getIron()), "cc12");
+        maxManganese = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getManganese()), "cc13");
+        maxPhosphorus = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getPhosphorus()), "cc14");
+        maxSelenium = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getSelenium()), "cc15");
+        maxZinc = solver.makeConstraint(-infinity, nullToInfinity(maxNutrients.getZinc()), "cc16");
     }
 
     private void setVariables() {

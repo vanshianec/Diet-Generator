@@ -34,9 +34,4 @@ public class CustomFood extends BaseFood {
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> users;
-
-    @Override
-    public FoodType getFoodType() {
-        return FoodType.CUSTOM;
-    }
 }

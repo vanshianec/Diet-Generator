@@ -1,6 +1,5 @@
 package diet.dietgenerator.data.models.base;
 
-import diet.dietgenerator.data.models.FoodType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +17,6 @@ public abstract class BaseFood extends BaseEntity{
 
     @Column(name = "food_group")
     private String foodGroup;
-
-    public abstract FoodType getFoodType();
 
     @Column(nullable = false)
     private Integer calories;
