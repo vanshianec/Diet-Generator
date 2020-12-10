@@ -50,7 +50,9 @@ class FoodData {
     }
 
     setData(otherFoodData) {
-        Object.assign(this, otherFoodData);
+        Object.keys(this).forEach(property => {
+            this[property] = otherFoodData[property];
+        })
     }
 
     addData(otherFoodData) {

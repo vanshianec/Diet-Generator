@@ -97,7 +97,7 @@ const diaryNutritionDataIds = [
     '#diary-data-zinc'
 ]
 
-let currentFoodData = new FoodData();
+let currentFoodsData = new FoodData();
 let goalNutrients = new FoodData(goalNutrientsDefaultValues);
 let maxNutrients = new FoodData(maxNutrientsDefaultValues);
 
@@ -105,6 +105,9 @@ let foodsInDiaryList = [];
 
 
 const addFoodToDiary = function () {
+    deselectSelectedFood();
+    restoreFoodsInDiaryData();
+
     let servingSize = $('#serving-size').val();
     fetch(URLS.getCustomFood + '?foodId=' + foodId + '&servingSize=' + servingSize)
         .then(handleResponse)
@@ -114,11 +117,12 @@ const addFoodToDiary = function () {
 
 const generateDiet = function () {
 
-    resetCurrentFoodData();
+    resetCurrentFoodsData();
     clearDiaryTable();
     resetPriceBreakdownChart();
     setGoalNutrients();
     setMaxNutrients();
+    foodsInDiaryList = [];
 
     fetch(URLS.generateDiet, {
         method: 'POST',
@@ -137,8 +141,8 @@ $('#add-food-to-diary-button').on('click', addFoodToDiary);
 
 $('#generate-diet-button').on('click', generateDiet);
 
-const resetCurrentFoodData = function () {
-    currentFoodData.setData(new FoodData());
+const resetCurrentFoodsData = function () {
+    currentFoodsData.setData(new FoodData());
 };
 
 const clearDiaryTable = function () {
@@ -168,6 +172,17 @@ const setMaxNutrients = function () {
     maxNutrients.saturatedFats = (goalNutrients.calories * 0.1) / 9;
 }
 
+const deselectSelectedFood = function () {
+    const $clickable = $('.clickable-food-diary');
+    $clickable.removeClass('table-active');
+}
+
+const restoreFoodsInDiaryData = function () {
+    resetCurrentFoodsData();
+    resetPriceBreakdownChart();
+    loadAllFoodsData();
+}
+
 const displayGeneratedFoodsInDiary = function (foods) {
     foods.forEach(food => displayFoodInDiary(food));
 };
@@ -179,7 +194,7 @@ const displayFoodInDiary = function (food) {
     addFoodDataToCurrentData(food);
     updateCaloriesBreakdownChart();
     addFoodToPriceBreakdownChart(food);
-    displayFoodData();
+    displayFoodsData();
 };
 
 const addFoodToDiaryTable = function (food) {
@@ -191,7 +206,7 @@ const addFoodToDiaryTable = function (food) {
                             <div class="row">
                                 <span class="col-sm-7">${food.price.toFixed(2)} lv</span>
                                 <div style="display: inline-block" class="col-sm-5">
-                                <i class="fa fa-trash fa-lg remove-food-icon" data-toggle="tooltip" title="Remove" onclick="removeFoodFromDiary(this)"></i>
+                                <i class="fa fa-trash fa-lg remove-food-icon" data-toggle="tooltip" title="Remove" onclick="removeFoodFromDiary(this, event)"></i>
                                 </div>  
                             </div>
                          </td>                              
@@ -199,11 +214,26 @@ const addFoodToDiaryTable = function (food) {
     $('#diary-foods-list').append(row);
 };
 
-const removeFoodFromDiary = function (context) {
-    const $this = $(context);
-    const foodRow = $this.parent().parent().parent().parent();
+const removeFoodFromDiary = function (context, event) {
+    const foodRow = $(context).parent().parent().parent().parent();
     const foodIndex = foodRow.data("id");
+    foodsInDiaryList.splice(foodIndex, 1);
+    foodRow.remove();
 
+    resetFoodsTableIndices();
+    deselectSelectedFood();
+    restoreFoodsInDiaryData();
+    updateCaloriesBreakdownChart();
+    displayFoodsData();
+
+    event.preventDefault();
+    event.stopPropagation();
+}
+
+const resetFoodsTableIndices = function () {
+    $('#diary-foods-list > tr').each(function (index) {
+        $(this).attr("data-id", index);
+    })
 }
 
 const showSelectedFoodData = function (context) {
@@ -214,6 +244,7 @@ const showSelectedFoodData = function (context) {
 
     if ($this.hasClass('table-active')) {
         $clickable.removeClass('table-active');
+        resetCurrentFoodsData();
         loadAllFoodsData();
 
     } else {
@@ -223,13 +254,12 @@ const showSelectedFoodData = function (context) {
     }
 
     updateCaloriesBreakdownChart();
-    displayFoodData();
+    displayFoodsData();
 };
 
 const loadAllFoodsData = function () {
-    resetCurrentFoodData();
     for (const food of foodsInDiaryList) {
-        currentFoodData.addData(food);
+        addFoodDataToCurrentData(food);
         addFoodToPriceBreakdownChart(food);
     }
 }
@@ -242,11 +272,11 @@ const loadSelectedFoodData = function (context) {
 }
 
 const setCurrentFoodData = function (food) {
-    currentFoodData.setData(food);
+    currentFoodsData.setData(food);
 };
 
 const addFoodDataToCurrentData = function (food) {
-    currentFoodData.addData(food);
+    currentFoodsData.addData(food);
 };
 
 const convertFoodDataForDynamicWeight = function (food) {
@@ -312,10 +342,12 @@ const isMacronutrient = function ($bar) {
         || $bar.is($('#diary-data-fat'));
 }
 
-const displayFoodData = function () {
-    Object.keys(currentFoodData).forEach((value, index) => {
-        setProgressBar($(diaryNutritionDataIds[index]), currentFoodData[value], goalNutrients[value]);
+const displayFoodsData = function () {
+    Object.keys(currentFoodsData).forEach((value, index) => {
+        setProgressBar($(diaryNutritionDataIds[index]), currentFoodsData[value], goalNutrients[value]);
     })
+
+    console.trace();
 
     let caloriesBar = $('#diary-data-calories');
     let caloriesTextField = caloriesBar.find('small');
@@ -323,16 +355,16 @@ const displayFoodData = function () {
 };
 
 const updateCaloriesBreakdownChart = function () {
-    $('#calories-breakdown-calories-amount').text(currentFoodData.calories);
-    caloriesBreakdownChart.data.datasets[0].data[0] = currentFoodData.protein;
-    caloriesBreakdownChart.data.datasets[0].data[1] = currentFoodData.carbohydrates;
-    caloriesBreakdownChart.data.datasets[0].data[2] = currentFoodData.fat;
+    $('#calories-breakdown-calories-amount').text(currentFoodsData.calories);
+    caloriesBreakdownChart.data.datasets[0].data[0] = currentFoodsData.protein;
+    caloriesBreakdownChart.data.datasets[0].data[1] = currentFoodsData.carbohydrates;
+    caloriesBreakdownChart.data.datasets[0].data[2] = currentFoodsData.fat;
     caloriesBreakdownChart.update();
 
 };
 
 const addFoodToPriceBreakdownChart = function (food) {
-    $('#price-breakdown-price-amount').text(currentFoodData.price.toFixed(2));
+    $('#price-breakdown-price-amount').text(currentFoodsData.price.toFixed(2));
     priceBreakdownChart.data.datasets[0].data.push(food.price);
     priceBreakdownChart.data.labels.push(food.name);
     let red = Math.floor(Math.random() * 256);
