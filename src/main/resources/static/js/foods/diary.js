@@ -101,7 +101,8 @@ let currentFoodsData = new FoodData();
 let goalNutrients = new FoodData(goalNutrientsDefaultValues);
 let maxNutrients = new FoodData(maxNutrientsDefaultValues);
 
-let foodsInDiaryList = [];
+let foodsInDiaryKeyIndex = 0;
+let foodsInDiaryMap = new Map();
 
 
 const addFoodToDiary = function () {
@@ -115,6 +116,27 @@ const addFoodToDiary = function () {
         .catch(handleError);
 };
 
+const deselectSelectedFood = function () {
+    const $clickable = $('.clickable-food-diary');
+    $clickable.removeClass('table-active');
+}
+
+const restoreFoodsInDiaryData = function () {
+    resetCurrentFoodsData();
+    resetPriceBreakdownChart();
+    loadAllFoodsData();
+}
+
+const displayFoodInDiary = function (food) {
+    convertFoodDataForDynamicWeight(food);
+    foodsInDiaryMap.set(foodsInDiaryKeyIndex++, food);
+    addFoodToDiaryTable(food);
+    addFoodDataToCurrentData(food);
+    updateCaloriesBreakdownChart();
+    addFoodToPriceBreakdownChart(food);
+    displayFoodsData();
+};
+
 const generateDiet = function () {
 
     resetCurrentFoodsData();
@@ -122,7 +144,8 @@ const generateDiet = function () {
     resetPriceBreakdownChart();
     setGoalNutrients();
     setMaxNutrients();
-    foodsInDiaryList = [];
+    foodsInDiaryMap.clear();
+    foodsInDiaryKeyIndex = 0;
 
     fetch(URLS.generateDiet, {
         method: 'POST',
@@ -136,14 +159,10 @@ const generateDiet = function () {
         .catch(handleError);
 }
 
-
-$('#add-food-to-diary-button').on('click', addFoodToDiary);
-
-$('#generate-diet-button').on('click', generateDiet);
-
 const resetCurrentFoodsData = function () {
     currentFoodsData.setData(new FoodData());
 };
+
 
 const clearDiaryTable = function () {
     $('#diary-foods-list').html('');
@@ -172,33 +191,16 @@ const setMaxNutrients = function () {
     maxNutrients.saturatedFats = (goalNutrients.calories * 0.1) / 9;
 }
 
-const deselectSelectedFood = function () {
-    const $clickable = $('.clickable-food-diary');
-    $clickable.removeClass('table-active');
-}
-
-const restoreFoodsInDiaryData = function () {
-    resetCurrentFoodsData();
-    resetPriceBreakdownChart();
-    loadAllFoodsData();
-}
-
 const displayGeneratedFoodsInDiary = function (foods) {
     foods.forEach(food => displayFoodInDiary(food));
 };
 
-const displayFoodInDiary = function (food) {
-    convertFoodDataForDynamicWeight(food);
-    foodsInDiaryList.push(food);
-    addFoodToDiaryTable(food);
-    addFoodDataToCurrentData(food);
-    updateCaloriesBreakdownChart();
-    addFoodToPriceBreakdownChart(food);
-    displayFoodsData();
-};
+$('#add-food-to-diary-button').on('click', addFoodToDiary);
+
+$('#generate-diet-button').on('click', generateDiet);
 
 const addFoodToDiaryTable = function (food) {
-    let row = `<tr data-id=${foodsInDiaryList.length - 1} class="clickable-food-diary" onclick="showSelectedFoodData(this)">
+    let row = `<tr data-id=${foodsInDiaryKeyIndex - 1} class="clickable-food-diary" onclick="showSelectedFoodData(this)">
                          <td>${food.name}, ${food.purchasePlace}</td>
                          <td>${food.dynamicProductWeight} g</td>
                          <td>${food.calories}</td>
@@ -217,10 +219,9 @@ const addFoodToDiaryTable = function (food) {
 const removeFoodFromDiary = function (context, event) {
     const foodRow = $(context).parent().parent().parent().parent();
     const foodIndex = foodRow.data("id");
-    foodsInDiaryList.splice(foodIndex, 1);
+    foodsInDiaryMap.delete(foodIndex);
     foodRow.remove();
 
-    resetFoodsTableIndices();
     deselectSelectedFood();
     restoreFoodsInDiaryData();
     updateCaloriesBreakdownChart();
@@ -228,12 +229,6 @@ const removeFoodFromDiary = function (context, event) {
 
     event.preventDefault();
     event.stopPropagation();
-}
-
-const resetFoodsTableIndices = function () {
-    $('#diary-foods-list > tr').each(function (index) {
-        $(this).attr("data-id", index);
-    })
 }
 
 const showSelectedFoodData = function (context) {
@@ -258,7 +253,7 @@ const showSelectedFoodData = function (context) {
 };
 
 const loadAllFoodsData = function () {
-    for (const food of foodsInDiaryList) {
+    for (const food of foodsInDiaryMap.values()) {
         addFoodDataToCurrentData(food);
         addFoodToPriceBreakdownChart(food);
     }
@@ -266,7 +261,7 @@ const loadAllFoodsData = function () {
 
 const loadSelectedFoodData = function (context) {
     const foodIndex = context.data("id");
-    const food = foodsInDiaryList[foodIndex];
+    const food = foodsInDiaryMap.get(foodIndex);
     setCurrentFoodData(food);
     addFoodToPriceBreakdownChart(food);
 }
@@ -347,6 +342,7 @@ const displayFoodsData = function () {
         setProgressBar($(diaryNutritionDataIds[index]), currentFoodsData[value], goalNutrients[value]);
     })
 
+    console.log(currentFoodsData);
     console.trace();
 
     let caloriesBar = $('#diary-data-calories');
